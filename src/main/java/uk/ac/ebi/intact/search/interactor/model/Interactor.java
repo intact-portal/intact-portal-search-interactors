@@ -10,7 +10,7 @@ import java.util.List;
 /**
  * @author Elisabet Barrera
  */
-@SolrDocument(solrCoreName = "gettingstarted")
+@SolrDocument(solrCoreName = "interactors")
 public class Interactor {
 
     @Id
