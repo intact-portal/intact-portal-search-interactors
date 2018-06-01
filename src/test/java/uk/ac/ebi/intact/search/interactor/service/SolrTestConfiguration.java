@@ -23,7 +23,7 @@ public class SolrTestConfiguration {
 
     @Bean
     public SolrClient solrClient() {
-        return new HttpSolrClient("http://localhost:8983/solr");
+        return new HttpSolrClient("http://ves-hx-47.ebi.ac.uk:8983/solr");
     }
 
     @Bean

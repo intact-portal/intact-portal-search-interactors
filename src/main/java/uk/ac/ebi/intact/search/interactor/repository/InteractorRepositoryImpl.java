@@ -2,7 +2,7 @@
 //
 //import org.springframework.data.solr.repository.support.SimpleSolrRepository;
 //import org.springframework.stereotype.Repository;
-//import uk.ac.ebi.intact.search.interactor.model.Interactor;
+//import uk.ac.ebi.intact.search.interactor.model.SearchInteractor;
 //
 //import java.util.List;
 //
@@ -11,11 +11,11 @@
 // */
 //
 //@Repository
-//public class InteractorRepositoryImpl extends SimpleSolrRepository<Interactor, String> implements InteractorRepository{
+//public class InteractorRepositoryImpl extends SimpleSolrRepository<SearchInteractor, String> implements InteractorRepository{
 //
 //
 //    @Override
-//    public List<Interactor> findByName(String name) {
+//    public List<SearchInteractor> findByName(String name) {
 //        return null;
 //    }
 //}

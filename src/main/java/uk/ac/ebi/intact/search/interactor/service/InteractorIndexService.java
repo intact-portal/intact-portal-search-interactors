@@ -4,13 +4,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import uk.ac.ebi.intact.search.interactor.model.Interactor;
+import uk.ac.ebi.intact.search.interactor.model.SearchInteractor;
 import uk.ac.ebi.intact.search.interactor.repository.InteractorRepository;
 
 import java.util.Collection;
 
 /**
- *
  * Custom and generic CRUD operations for indexing purposes.
  *
  * @author Elisabet Barrera
@@ -19,10 +18,12 @@ import java.util.Collection;
 @Service
 public class InteractorIndexService {
 
-    @Autowired
-    @Qualifier("interactorRepository")
-    private InteractorRepository interactorRepository;
+    private final InteractorRepository interactorRepository;
 
+    @Autowired
+    public InteractorIndexService(@Qualifier("interactorRepository") InteractorRepository interactorRepository) {
+        this.interactorRepository = interactorRepository;
+    }
 
     @Transactional
     public void deleteAll() {
@@ -30,13 +31,13 @@ public class InteractorIndexService {
     }
 
     @Transactional
-    public void save(Interactor interactor) {
-        this.interactorRepository.save(interactor);
+    public void save(SearchInteractor searchInteractor) {
+        this.interactorRepository.save(searchInteractor);
     }
 
     @Transactional
-    public void save(Collection<Interactor> interactors) {
-        this.interactorRepository.save(interactors);
+    public void save(Collection<SearchInteractor> searchInteractors) {
+        this.interactorRepository.save(searchInteractors);
     }
 
     @Transactional

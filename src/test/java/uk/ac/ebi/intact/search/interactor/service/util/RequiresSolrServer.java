@@ -1,7 +1,5 @@
 package uk.ac.ebi.intact.search.interactor.service.util;
 
-import java.io.IOException;
-
 import org.apache.http.client.methods.CloseableHttpResponse;
 import org.apache.http.client.methods.HttpGet;
 import org.apache.http.impl.client.CloseableHttpClient;
@@ -12,6 +10,8 @@ import org.junit.AssumptionViolatedException;
 import org.junit.rules.TestRule;
 import org.junit.runner.Description;
 import org.junit.runners.model.Statement;
+
+import java.io.IOException;
 
 /**
  * {@link TestRule} implementation using {@link CloseableHttpClient} to check if Solr is running by sending
@@ -31,7 +31,7 @@ public class RequiresSolrServer implements TestRule {
     }
 
     public static RequiresSolrServer onLocalhost() {
-        return new RequiresSolrServer("http://localhost:8983/solr");
+        return new RequiresSolrServer("http://ves-hx-47.ebi.ac.uk:8983/solr");
     }
 
     @Override

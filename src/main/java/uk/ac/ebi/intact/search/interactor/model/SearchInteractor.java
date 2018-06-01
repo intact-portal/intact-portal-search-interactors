@@ -5,13 +5,13 @@ import org.springframework.data.annotation.Id;
 import org.springframework.data.solr.core.mapping.Indexed;
 import org.springframework.data.solr.core.mapping.SolrDocument;
 
-import java.util.List;
+import java.util.Set;
 
 /**
  * @author Elisabet Barrera
  */
 @SolrDocument(solrCoreName = "interactors")
-public class Interactor {
+public class SearchInteractor {
 
     @Id
     @Field("interactor_id")
@@ -25,10 +25,10 @@ public class Interactor {
     private String description;
 
     @Field("interactor_alias")
-    private List<String> interactorAlias;
+    private Set<String> interactorAlias;
 
     @Field("interactor_alt_ids")
-    private List<String> interactorAltIds;
+    private Set<String> interactorAltIds;
 
     @Field("interactor_type")
     private String interactorType;
@@ -40,20 +40,20 @@ public class Interactor {
     private Integer taxId;
 
     @Field("interactor_xrefs")
-    private List<String> interactorXrefs;
+    private Set<String> interactorXrefs;
 
     @Field("interaction_count")
     private Integer interactionCount;
 
     @Field("interaction_ids")
-    private List<String> interactionIds;
+    private Set<String> interactionIds;
 
-    public Interactor() {
+    public SearchInteractor() {
     }
 
-    public Interactor(String interactorId, String description, String interactorName, List<String> interactorAlias,
-                      List<String> interactorAltIds, String interactorType, String species, Integer taxId,
-                      List<String> interactorXrefs, Integer interactionCount, List<String> interactionIds) {
+    public SearchInteractor(String interactorId, String description, String interactorName, Set<String> interactorAlias,
+                            Set<String> interactorAltIds, String interactorType, String species, Integer taxId,
+                            Set<String> interactorXrefs, Integer interactionCount, Set<String> interactionIds) {
         this.interactorId = interactorId;
         this.description = description;
         this.interactorName = interactorName;
@@ -91,19 +91,19 @@ public class Interactor {
         this.interactorName = interactorName;
     }
 
-    public List<String> getInteractorAlias() {
+    public Set<String> getInteractorAlias() {
         return interactorAlias;
     }
 
-    public void setInteractorAlias(List<String> interactorAlias) {
+    public void setInteractorAlias(Set<String> interactorAlias) {
         this.interactorAlias = interactorAlias;
     }
 
-    public List<String> getInteractorAltIds() {
+    public Set<String> getInteractorAltIds() {
         return interactorAltIds;
     }
 
-    public void setInteractorAltIds(List<String> interactorAltIds) {
+    public void setInteractorAltIds(Set<String> interactorAltIds) {
         this.interactorAltIds = interactorAltIds;
     }
 
@@ -131,11 +131,11 @@ public class Interactor {
         this.taxId = taxId;
     }
 
-    public List<String> getInteractorXrefs() {
+    public Set<String> getInteractorXrefs() {
         return interactorXrefs;
     }
 
-    public void setInteractorXrefs(List<String> interactorXrefs) {
+    public void setInteractorXrefs(Set<String> interactorXrefs) {
         this.interactorXrefs = interactorXrefs;
     }
 
@@ -147,17 +147,17 @@ public class Interactor {
         this.interactionCount = interactionCount;
     }
 
-    public List<String> getInteractionIds() {
+    public Set<String> getInteractionIds() {
         return interactionIds;
     }
 
-    public void setInteractionIds(List<String> interactionIds) {
+    public void setInteractionIds(Set<String> interactionIds) {
         this.interactionIds = interactionIds;
     }
 
     @Override
     public String toString() {
-        return "Interactor{" +
+        return "SearchInteractor{" +
                 "interactorId='" + interactorId + '\'' +
                 ", interactorName='" + interactorName + '\'' +
                 ", description='" + description + '\'' +

@@ -2,11 +2,11 @@ package uk.ac.ebi.intact.search.interactor.service;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.solr.core.query.result.FacetPage;
 import org.springframework.stereotype.Service;
-import uk.ac.ebi.intact.search.interactor.model.Interactor;
+import uk.ac.ebi.intact.search.interactor.model.SearchInteractor;
 import uk.ac.ebi.intact.search.interactor.repository.InteractorRepository;
-
-import java.util.List;
 
 /**
  *
@@ -18,19 +18,24 @@ import java.util.List;
 @Service
 public class InteractorSearchService {
 
-    @Autowired
-    @Qualifier("interactorRepository")
-    private InteractorRepository interactorRepository;
+    private final InteractorRepository interactorRepository;
 
-    public Iterable<Interactor> findAll() {
+    @Autowired
+    public InteractorSearchService(@Qualifier("interactorRepository") InteractorRepository interactorRepository) {
+        this.interactorRepository = interactorRepository;
+    }
+
+    public Iterable<SearchInteractor> findAll() {
         return this.interactorRepository.findAll();
     }
 
-    public Interactor findBy(String id) {
+    public FacetPage<SearchInteractor> getTaxIdFacets(Pageable pageable) {return this.interactorRepository.getTaxIdFacets(pageable);}
+
+    public SearchInteractor findBy(String id) {
         return this.interactorRepository.findOne(id);
     }
 
-//    public List<Interactor> retrieveInteractors (String name) {
+//    public List<SearchInteractor> retrieveInteractors (String name) {
 //        return this.interactorRepository.findByName(name);
 //    }
 
