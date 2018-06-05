@@ -17,8 +17,8 @@ public interface InteractorRepository extends SolrCrudRepository<SearchInteracto
 
 //    List<SearchInteractor> findByName(String name);
 
-    @Facet(fields = {"tax_id"}, limit = 100)
-    @Query(value = "*:*")
+    @Facet(fields = {"species_name_str", "interactor_type_str"}, limit = 100)
+    @Query(value = "*:*") //TODO: taxId and interactor_type
     FacetPage<SearchInteractor> getTaxIdFacets(Pageable pageable);
 
 }
