@@ -9,21 +9,21 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.data.solr.core.SolrTemplate;
 import org.springframework.data.solr.repository.config.EnableSolrRepositories;
 
+
 /**
  * @author Elisabet Barrera
  */
 
 @Configuration
 @EnableSolrRepositories(basePackages = "uk.ac.ebi.intact.search.interactor.repository",
-        schemaCreationSupport = true,
-        multicoreSupport = true)
+        schemaCreationSupport = true)
 @ComponentScan(basePackages = {"uk.ac.ebi.intact.search.interactor.service"})
 @SpringBootApplication
 public class SolrTestConfiguration {
 
     @Bean
     public SolrClient solrClient() {
-        return new HttpSolrClient("http://ves-hx-47.ebi.ac.uk:8983/solr");
+        return new HttpSolrClient("http://localhost:8983/solr");
     }
 
     @Bean

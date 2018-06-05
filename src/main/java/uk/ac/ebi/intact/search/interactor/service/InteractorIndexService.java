@@ -7,8 +7,6 @@ import org.springframework.transaction.annotation.Transactional;
 import uk.ac.ebi.intact.search.interactor.model.SearchInteractor;
 import uk.ac.ebi.intact.search.interactor.repository.InteractorRepository;
 
-import java.util.Collection;
-
 /**
  * Custom and generic CRUD operations for indexing purposes.
  *
@@ -36,13 +34,13 @@ public class InteractorIndexService {
     }
 
     @Transactional
-    public void save(Collection<SearchInteractor> searchInteractors) {
-        this.interactorRepository.save(searchInteractors);
+    public void saveAll(Iterable<SearchInteractor> searchInteractors) {
+        this.interactorRepository.saveAll(searchInteractors);
     }
 
     @Transactional
-    public void delete(String id) {
-        this.interactorRepository.delete(id);
+    public void deleteById(String id) {
+        this.interactorRepository.deleteById(id);
     }
 
 }

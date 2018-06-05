@@ -8,6 +8,8 @@ import org.springframework.stereotype.Service;
 import uk.ac.ebi.intact.search.interactor.model.SearchInteractor;
 import uk.ac.ebi.intact.search.interactor.repository.InteractorRepository;
 
+import java.util.Optional;
+
 /**
  *
  * Custom and generic CRUD operations for searching purposes.
@@ -31,8 +33,8 @@ public class InteractorSearchService {
 
     public FacetPage<SearchInteractor> getTaxIdFacets(Pageable pageable) {return this.interactorRepository.getTaxIdFacets(pageable);}
 
-    public SearchInteractor findBy(String id) {
-        return this.interactorRepository.findOne(id);
+    public Optional<SearchInteractor> findById(String id) {
+        return this.interactorRepository.findById(id);
     }
 
 //    public List<SearchInteractor> retrieveInteractors (String name) {

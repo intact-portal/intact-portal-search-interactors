@@ -48,13 +48,13 @@ public class SearchInteractorController {
 
     @RequestMapping("/delete/{interactorId}")
     public void delete(@PathVariable String interactorId) {
-        this.interactorIndexService.delete(interactorId);
+        this.interactorIndexService.deleteById(interactorId);
     }
 
     @RequestMapping("/save")
     public void saveAllDocuments(Collection<SearchInteractor> searchInteractors) {
         //Store Documents
-        this.interactorIndexService.save(searchInteractors);
+        this.interactorIndexService.saveAll(searchInteractors);
     }
 
     @RequestMapping("/getAll")
@@ -69,6 +69,6 @@ public class SearchInteractorController {
 
     @RequestMapping("/getAllTaxIdFacets")
     public FacetPage<SearchInteractor> getAllDocsTaxIdFacets() {
-        return this.interactorSearchService.getTaxIdFacets(new PageRequest(1,1));
+        return this.interactorSearchService.getTaxIdFacets(new PageRequest(0,1));
     }
 }

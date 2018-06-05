@@ -13,6 +13,7 @@ import uk.ac.ebi.intact.search.interactor.service.util.RequiresSolrServer;
 import javax.annotation.Resource;
 import java.util.Arrays;
 import java.util.HashSet;
+import java.util.Optional;
 
 /**
  * @author Elisabet Barrera
@@ -89,7 +90,7 @@ public class InteractorIndexServiceTest {
 
         interactorIndexService.save(searchInteractor1);
 
-        SearchInteractor itr = interactorSearchService.findBy("P06730");
+        Optional<SearchInteractor> interactor = interactorSearchService.findById("P06730");
 
     }
 
@@ -98,7 +99,7 @@ public class InteractorIndexServiceTest {
         // empty collection
         interactorIndexService.deleteAll();
 
-        interactorIndexService.save(Arrays.asList(searchInteractor1, searchInteractor2, searchInteractor3));
+        interactorIndexService.saveAll(Arrays.asList(searchInteractor1, searchInteractor2, searchInteractor3));
 
     }
 

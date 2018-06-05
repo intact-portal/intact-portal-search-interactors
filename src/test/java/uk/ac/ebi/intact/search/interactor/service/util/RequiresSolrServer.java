@@ -31,7 +31,7 @@ public class RequiresSolrServer implements TestRule {
     }
 
     public static RequiresSolrServer onLocalhost() {
-        return new RequiresSolrServer("http://ves-hx-47.ebi.ac.uk:8983/solr");
+        return new RequiresSolrServer("http://localhost:8983/solr");
     }
 
     @Override
