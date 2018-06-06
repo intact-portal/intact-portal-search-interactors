@@ -3,9 +3,7 @@ package uk.ac.ebi.intact.search.interactor.controller;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.solr.core.query.result.FacetPage;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import uk.ac.ebi.intact.search.interactor.model.SearchInteractor;
 import uk.ac.ebi.intact.search.interactor.service.InteractorIndexService;
 import uk.ac.ebi.intact.search.interactor.service.InteractorSearchService;
@@ -13,6 +11,7 @@ import uk.ac.ebi.intact.search.interactor.service.InteractorSearchService;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
+import java.util.Set;
 
 /**
  * @author Elisabet Barrera
@@ -70,5 +69,48 @@ public class SearchInteractorController {
     @RequestMapping("/getAllTaxIdFacets")
     public FacetPage<SearchInteractor> getAllDocsTaxIdFacets() {
         return this.interactorSearchService.getTaxIdFacets(new PageRequest(0,1));
+    }
+
+    @RequestMapping(value = "/getAllTaxIdFacets", params = {"page", "size"}, method = RequestMethod.GET)
+    public FacetPage<SearchInteractor> getAllDocsTaxIdFacets(
+            @RequestParam(value = "page", defaultValue = "0") int page,
+            @RequestParam(value = "size", defaultValue = "1") int size) {
+        return this.interactorSearchService.getTaxIdFacets(page, size);
+    }
+
+    @RequestMapping(value = "/getSpeciesAndInteractorTypeFacets",
+            params = {
+                "query",
+                "speciesFilter",
+                "interactorTypeFilter",
+                "page",
+                "pageSize"
+            },
+            method = RequestMethod.GET)
+    public FacetPage<SearchInteractor> getSpeciesAndInteractorTypeFacets(
+            @RequestParam(value = "query") String query,
+            @RequestParam(value = "speciesFilter", required = false) Set<String> speciesFilter,
+            @RequestParam(value = "interactorTypeFilter", required = false) Set<String> interactorTypeFilter,
+            @RequestParam(value = "page", defaultValue = "0") int page,
+            @RequestParam(value = "pageSize", defaultValue = "10") int pageSize) {
+        return this.interactorSearchService.getSpeciesAndInteractorTypeFacets(query, speciesFilter, interactorTypeFilter, page, pageSize);
+    }
+
+    @RequestMapping(value = "/findInteractorWithFacet",
+            params = {
+                    "query",
+                    "speciesFilter",
+                    "interactorTypeFilter",
+                    "page",
+                    "pageSize"
+            },
+            method = RequestMethod.GET)
+    public SearchInteractorResult findInteractorWithFacet(
+            @RequestParam(value = "query") String query,
+            @RequestParam(value = "speciesFilter", required = false) Set<String> speciesFilter,
+            @RequestParam(value = "interactorTypeFilter", required = false) Set<String> interactorTypeFilter,
+            @RequestParam(value = "page", defaultValue = "0") int page,
+            @RequestParam(value = "pageSize", defaultValue = "10") int pageSize) {
+        return this.interactorSearchService.findInteractorWithFacet(query, speciesFilter, interactorTypeFilter, page, pageSize);
     }
 }

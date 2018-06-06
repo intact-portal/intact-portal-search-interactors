@@ -7,45 +7,49 @@ import org.springframework.data.solr.core.mapping.SolrDocument;
 
 import java.util.Set;
 
+import static uk.ac.ebi.intact.search.interactor.model.SearchInteractorFields.*;
+
 /**
  * @author Elisabet Barrera
  */
-@SolrDocument(solrCoreName = "interactors")
+@SolrDocument(solrCoreName = SearchInteractor.INTERACTORS)
 public class SearchInteractor {
 
+    public static final String INTERACTORS = "interactors";
+
     @Id
-    @Field("interactor_id")
+    @Field(INTERACTOR_ID)
     @Indexed
     private String interactorId;
 
-    @Field("interactor_name")
+    @Field(INTERACTOR_NAME)
     private String interactorName;
 
-    @Field("description")
+    @Field(INTERACTOR_DESCRIPTION)
     private String description;
 
-    @Field("interactor_alias")
+    @Field(INTERACTOR_ALIAS)
     private Set<String> interactorAlias;
 
-    @Field("interactor_alt_ids")
+    @Field(INTERACTOR_ALT_IDS)
     private Set<String> interactorAltIds;
 
-    @Field("interactor_type")
+    @Field(INTERACTOR_TYPE)
     private String interactorType;
 
-    @Field("species_name")
+    @Field(SPECIES_NAME)
     private String species;
 
-    @Field("tax_id")
+    @Field(TAX_ID)
     private Integer taxId;
 
-    @Field("interactor_xrefs")
+    @Field(INTERACTOR_XREFS)
     private Set<String> interactorXrefs;
 
-    @Field("interaction_count")
+    @Field(INTERACTION_COUNT)
     private Integer interactionCount;
 
-    @Field("interaction_ids")
+    @Field(INTERACTION_IDS)
     private Set<String> interactionIds;
 
     public SearchInteractor() {

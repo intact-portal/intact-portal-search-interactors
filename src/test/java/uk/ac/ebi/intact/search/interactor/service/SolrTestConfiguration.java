@@ -38,4 +38,17 @@ public class SolrTestConfiguration {
 //    void deleteDocumentsOnShutdown() {
 //        service.deleteAll();
 //    }
+
+
+//   //TODO Try this configuration for embeddedSolr (testing)
+//    @Bean
+//    public SolrClient solrClient() {
+//        EmbeddedSolrServerFactory factory = new EmbeddedSolrServerFactory("classpath:com/acme/solr");
+//        return factory.getSolrServer();
+//    }
+//
+//    @Bean
+//    public SolrOperations solrTemplate() {
+//        return new SolrTemplate(solrClient());
+//    }
 }
