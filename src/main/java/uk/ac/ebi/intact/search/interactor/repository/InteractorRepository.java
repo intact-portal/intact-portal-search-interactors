@@ -1,5 +1,6 @@
 package uk.ac.ebi.intact.search.interactor.repository;
 
+import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.solr.core.query.result.FacetPage;
 import org.springframework.data.solr.repository.Facet;
@@ -29,6 +30,8 @@ public interface InteractorRepository extends SolrCrudRepository<SearchInteracto
     @Query(value = "default:*", filters = {"species_name:?1", "interactor_type:?2"}, defaultOperator = AND)
     FacetPage<SearchInteractor> getSpeciesAndInteractorTypeFacets(String query, Set<String> speciesFilter, Set<String> interactorTypeFilter, Pageable pageable);
 
+    @Query(value = "default:*")
+    Page<SearchInteractor> findInteractor(String query, Pageable pageable);
 
 
 }

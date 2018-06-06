@@ -2,6 +2,7 @@ package uk.ac.ebi.intact.search.interactor.service;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.solr.core.query.result.FacetPage;
@@ -51,6 +52,11 @@ public class InteractorSearchService {
     public SearchInteractorResult findInteractorWithFacet(String query, Set<String> speciesFilter, Set<String> interactorTypeFilter, int page, int pageSize) {
         PageRequest pageRequest = new PageRequest(page, pageSize);
         return interactorRepository.findInteractorWithFacet(query, speciesFilter, interactorTypeFilter, null, pageRequest);
+    }
+
+    public Page<SearchInteractor> findInteractor(String query) {
+        PageRequest pageRequest = new PageRequest(1, 10);
+        return interactorRepository.findInteractor(query, pageRequest);
     }
 
     public Optional<SearchInteractor> findById(String id) {

@@ -1,6 +1,7 @@
 package uk.ac.ebi.intact.search.interactor.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.solr.core.query.result.FacetPage;
 import org.springframework.web.bind.annotation.*;
@@ -112,5 +113,11 @@ public class SearchInteractorController {
             @RequestParam(value = "page", defaultValue = "0") int page,
             @RequestParam(value = "pageSize", defaultValue = "10") int pageSize) {
         return this.interactorSearchService.findInteractorWithFacet(query, speciesFilter, interactorTypeFilter, page, pageSize);
+    }
+
+    @RequestMapping("/findInteractor/{query}")
+    public Page<SearchInteractor> findInteractor(
+            @PathVariable String query) {
+        return this.interactorSearchService.findInteractor(query);
     }
 }
