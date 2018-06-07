@@ -28,7 +28,7 @@ public class CustomizedInteractorRepositoryImpl implements CustomizedInteractorR
 
     // default sorting for the query results
     //TODO Solve problems with multivalue fields that are not allow to be sorted. Schema-less create all the fields as multivalues
-    private static final Sort DEFAULT_QUERY_SORT_WITH_QUERY = new Sort(Sort.Direction.DESC, SearchInteractorFields.INTERACTION_COUNT);
+//    private static final Sort DEFAULT_QUERY_SORT_WITH_QUERY = new Sort(Sort.Direction.DESC, SearchInteractorFields.INTERACTION_COUNT);
 
     @Autowired
     public CustomizedInteractorRepositoryImpl(SolrOperations solrOperations) {
@@ -66,7 +66,7 @@ public class CustomizedInteractorRepositoryImpl implements CustomizedInteractorR
         if (sort != null) {
             search.addSort(sort);
         } else {
-            search.addSort(DEFAULT_QUERY_SORT_WITH_QUERY);
+//            search.addSort(DEFAULT_QUERY_SORT_WITH_QUERY);
         }
 
         return  new SearchInteractorResult(solrOperations.queryForFacetPage(SearchInteractor.INTERACTORS, search, SearchInteractor.class));
