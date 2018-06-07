@@ -27,10 +27,10 @@ public interface InteractorRepository extends SolrCrudRepository<SearchInteracto
     FacetPage<SearchInteractor> getTaxIdFacets(Pageable pageable);
 
     @Facet(fields = {"species_name_str", "interactor_type_str"}, limit = 100)
-    @Query(value = "default:*", filters = {"species_name:?1", "interactor_type:?2"}, defaultOperator = AND)
+    @Query(value = "default:?0", filters = {"species_name:?1", "interactor_type:?2"}, defaultOperator = AND)
     FacetPage<SearchInteractor> getSpeciesAndInteractorTypeFacets(String query, Set<String> speciesFilter, Set<String> interactorTypeFilter, Pageable pageable);
 
-    @Query(value = "default:*")
+    @Query(value = "default:?0")
     Page<SearchInteractor> findInteractor(String query, Pageable pageable);
 
 
