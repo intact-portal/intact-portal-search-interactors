@@ -82,9 +82,11 @@ public class CustomizedInteractorRepositoryImpl implements CustomizedInteractorR
 
             for (String word : words) {
                 if (conditions == null) {
-                    conditions = new Criteria(SearchInteractorFields.DEFAULT).contains(word);
+                    conditions = new Criteria(SearchInteractorFields.DEFAULT).contains(word)
+                    .or(SearchInteractorFields.DEFAULT).is(word);
                 } else {
-                    conditions = conditions.or(SearchInteractorFields.DEFAULT).contains(word);
+                    conditions = conditions.or(SearchInteractorFields.DEFAULT).contains(word)
+                    .or(SearchInteractorFields.DEFAULT).is(word);
                 }
             }
         } else {
