@@ -69,7 +69,7 @@ public class SearchInteractorController {
 
     @RequestMapping("/getAllTaxIdFacets")
     public FacetPage<SearchInteractor> getAllDocsTaxIdFacets() {
-        return this.interactorSearchService.getTaxIdFacets(new PageRequest(0,1));
+        return this.interactorSearchService.getTaxIdFacets(new PageRequest(0,20));
     }
 
     @RequestMapping(value = "/getAllTaxIdFacets", params = {"page", "size"}, method = RequestMethod.GET)

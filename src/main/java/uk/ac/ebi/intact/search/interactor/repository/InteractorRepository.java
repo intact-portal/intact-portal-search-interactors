@@ -33,6 +33,7 @@ public interface InteractorRepository extends SolrCrudRepository<SearchInteracto
 
     //TODO Add this field as default. It has text_en as FieldType in solr and copy all the values for now
     @Query(value = "text:?0")
+//    @Query(value = DEFAULT + ":?0")
     Page<SearchInteractor> findInteractor(String query, Pageable pageable);
 
 
