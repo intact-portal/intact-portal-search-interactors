@@ -55,7 +55,7 @@ public class InteractorSearchService {
     }
 
     public Page<SearchInteractor> findInteractor(String query) {
-        PageRequest pageRequest = new PageRequest(1, 10);
+        PageRequest pageRequest = new PageRequest(0, 10);
         return interactorRepository.findInteractor(query, pageRequest);
     }
 

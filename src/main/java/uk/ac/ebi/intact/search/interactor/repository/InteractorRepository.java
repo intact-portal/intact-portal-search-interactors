@@ -30,7 +30,7 @@ public interface InteractorRepository extends SolrCrudRepository<SearchInteracto
     @Query(value = "default:?0", filters = {"species_name:?1", "interactor_type:?2"}, defaultOperator = AND)
     FacetPage<SearchInteractor> getSpeciesAndInteractorTypeFacets(String query, Set<String> speciesFilter, Set<String> interactorTypeFilter, Pageable pageable);
 
-    @Query(value = "default:?0")
+    @Query(value = "text:?0")
     Page<SearchInteractor> findInteractor(String query, Pageable pageable);
 
 
