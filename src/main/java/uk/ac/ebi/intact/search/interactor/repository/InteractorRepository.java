@@ -12,6 +12,7 @@ import uk.ac.ebi.intact.search.interactor.model.SearchInteractor;
 import java.util.Set;
 
 import static org.springframework.data.solr.core.query.Query.Operator.AND;
+import static uk.ac.ebi.intact.search.interactor.model.SearchInteractorFields.*;
 
 /**
  * @author Elisabet Barrera
@@ -22,14 +23,15 @@ public interface InteractorRepository extends SolrCrudRepository<SearchInteracto
 
 //    List<SearchInteractor> findByName(String name);
 
-    @Facet(fields = {"species_name_str", "interactor_type_str"}, limit = 100)
+    @Facet(fields = {SPECIES_NAME_STR, INTERACTOR_TYPE_STR}, limit = 100)
     @Query(value = "*:*") //TODO: taxId and interactor_type
     FacetPage<SearchInteractor> getTaxIdFacets(Pageable pageable);
 
-    @Facet(fields = {"species_name_str", "interactor_type_str"}, limit = 100)
-    @Query(value = "default:?0", filters = {"species_name:?1", "interactor_type:?2"}, defaultOperator = AND)
+    @Facet(fields = {SPECIES_NAME_STR, INTERACTOR_TYPE_STR}, limit = 100)
+    @Query(value = DEFAULT + ":?0", filters = {SPECIES_NAME + ":?1", INTERACTOR_TYPE + "?2"}, defaultOperator = AND)
     FacetPage<SearchInteractor> getSpeciesAndInteractorTypeFacets(String query, Set<String> speciesFilter, Set<String> interactorTypeFilter, Pageable pageable);
 
+    //TODO Add this field as default. It has text_en as FieldType in solr and copy all the values for now
     @Query(value = "text:?0")
     Page<SearchInteractor> findInteractor(String query, Pageable pageable);
 
