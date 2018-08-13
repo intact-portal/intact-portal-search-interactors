@@ -29,5 +29,7 @@ public class SearchInteractorFields {
 
     public static final String DEFAULT = "default"; //Copy field for general search
 
+    public static final String FEATURE_SHORTLABEL= "feature_shortlabel";
+
 
 }
