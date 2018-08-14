@@ -103,11 +103,11 @@ public class SearchInteractorResult implements Page<SearchInteractor> {
         return page.getFacetFields();
     }
 
-    public Map<String, Set<FacetCount>> getFacetResultPage() {
-        Map<String, Set<FacetCount>> facetPerFieldMap = new HashMap<>();
+    public Map<String, List<FacetCount>> getFacetResultPage() {
+        Map<String, List<FacetCount>> facetPerFieldMap = new HashMap<>();
 
         for (Field field : page.getFacetFields()) {
-            Set<FacetCount> facet = new HashSet<>();
+            List<FacetCount> facet = new ArrayList<>();
             for (FacetFieldEntry facetFieldEntry : page.getFacetResultPage(field).getContent()) {
                 facet.add(new FacetCount(facetFieldEntry.getValue(), facetFieldEntry.getValueCount()));
             }

@@ -57,6 +57,7 @@ public class CustomizedInteractorRepositoryImpl implements CustomizedInteractorR
         // facet
         FacetOptions facetOptions = new FacetOptions(SearchInteractorFields.SPECIES_NAME_STR, SearchInteractorFields.INTERACTOR_TYPE_STR);
         facetOptions.setFacetLimit(FACET_MIN_COUNT);
+        facetOptions.setFacetSort(FacetOptions.FacetSort.COUNT);
         search.setFacetOptions(facetOptions);
 
         // pagination
