@@ -4,7 +4,6 @@ import org.apache.solr.client.solrj.beans.Field;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.solr.core.mapping.Indexed;
 import org.springframework.data.solr.core.mapping.SolrDocument;
-import org.springframework.lang.Nullable;
 
 import java.util.Set;
 
@@ -53,32 +52,33 @@ public class SearchInteractor {
     @Field(INTERACTION_IDS)
     private Set<String> interactionIds;
 
+    @Field(INTERACTION_DETECTION_METHOD)
+    private Set<String> interactionDetectionMethod;
+
+    @Field(INTERACTION_TYPE)
+    private Set<String> interactionType;
+
+    @Field(INTERACTION_AC)
+    private Set<String> interactionAc;
+
+    @Field(INTERACTION_EXPANSION_METHOD)
+    private Set<String> interactionExpansionMethod;
+
+    @Field(INTERACTION_NEGATIVE)
+    private Set<Boolean> interactionNegative;
+
     @Field(FEATURE_SHORTLABEL)
-    @Nullable
     private Set<String> featureShortLabels;
 
     public SearchInteractor() {
     }
 
-    @Override
-    public String toString() {
-        return "SearchInteractor{" +
-                "interactorId='" + interactorId + '\'' +
-                ", interactorName='" + interactorName + '\'' +
-                ", description='" + description + '\'' +
-                ", interactorAlias=" + interactorAlias +
-                ", interactorAltIds=" + interactorAltIds +
-                ", interactorType='" + interactorType + '\'' +
-                ", species='" + species + '\'' +
-                ", taxId=" + taxId +
-                ", interactorXrefs=" + interactorXrefs +
-                ", interactionCount=" + interactionCount +
-                ", interactionIds=" + interactionIds +
-                ", featureShortLabels=" + featureShortLabels +
-                '}';
-    }
-
-    public SearchInteractor(String interactorId, String interactorName, String description, Set<String> interactorAlias, Set<String> interactorAltIds, String interactorType, String species, Integer taxId, Set<String> interactorXrefs, Integer interactionCount, Set<String> interactionIds, Set<String> featureShortLabels) {
+    public SearchInteractor(String interactorId, String interactorName, String description, Set<String> interactorAlias,
+                            Set<String> interactorAltIds, String interactorType, String species, Integer taxId,
+                            Set<String> interactorXrefs, Integer interactionCount, Set<String> interactionIds,
+                            Set<String> interactionDetectionMethod, Set<String> interactionType, Set<String> interactionAc,
+                            Set<String> interactionExpansionMethod, Set<Boolean> interactionNegative,
+                            Set<String> featureShortLabels) {
         this.interactorId = interactorId;
         this.interactorName = interactorName;
         this.description = description;
@@ -90,7 +90,13 @@ public class SearchInteractor {
         this.interactorXrefs = interactorXrefs;
         this.interactionCount = interactionCount;
         this.interactionIds = interactionIds;
+        this.interactionDetectionMethod = interactionDetectionMethod;
+        this.interactionType = interactionType;
+        this.interactionAc = interactionAc;
+        this.interactionExpansionMethod = interactionExpansionMethod;
+        this.interactionNegative = interactionNegative;
         this.featureShortLabels = featureShortLabels;
+
     }
 
     public String getInteractorId() {
@@ -181,11 +187,73 @@ public class SearchInteractor {
         this.interactionIds = interactionIds;
     }
 
+    public Set<String> getInteractionDetectionMethod() {
+        return interactionDetectionMethod;
+    }
+
+    public void setInteractionDetectionMethod(Set<String> interactionDetectionMethod) {
+        this.interactionDetectionMethod = interactionDetectionMethod;
+    }
+
+    public Set<String> getInteractionType() {
+        return interactionType;
+    }
+
+    public void setInteractionType(Set<String> interactionType) {
+        this.interactionType = interactionType;
+    }
+
+    public Set<String> getInteractionAc() {
+        return interactionAc;
+    }
+
+    public void setInteractionAc(Set<String> interactionAc) {
+        this.interactionAc = interactionAc;
+    }
+
+    public Set<String> getInteractionExpansionMethod() {
+        return interactionExpansionMethod;
+    }
+
+    public void setInteractionExpansionMethod(Set<String> interactionExpansionMethod) {
+        this.interactionExpansionMethod = interactionExpansionMethod;
+    }
+
+    public Set<Boolean> getInteractionNegative() {
+        return interactionNegative;
+    }
+
+    public void setInteractionNegative(Set<Boolean> interactionNegative) {
+        this.interactionNegative = interactionNegative;
+    }
+
     public Set<String> getFeatureShortLabels() {
         return featureShortLabels;
     }
 
     public void setFeatureShortLabels(Set<String> featureShortLabels) {
         this.featureShortLabels = featureShortLabels;
+    }
+
+    @Override
+    public String toString() {
+        return "SearchInteractor{" +
+                "interactorId='" + interactorId + '\'' +
+                ", interactorName='" + interactorName + '\'' +
+                ", description='" + description + '\'' +
+                ", interactorAlias=" + interactorAlias +
+                ", interactorAltIds=" + interactorAltIds +
+                ", interactorType='" + interactorType + '\'' +
+                ", species='" + species + '\'' +
+                ", taxId=" + taxId +
+                ", interactorXrefs=" + interactorXrefs +
+                ", interactionCount=" + interactionCount +
+                ", interactionIds=" + interactionIds +
+                ", interactionDetectionMethod=" + interactionDetectionMethod +
+                ", interactionType=" + interactionType +
+                ", interactionAc=" + interactionAc +
+                ", interactionExpansionMethod=" + interactionExpansionMethod +
+                ", interactionNegative=" + interactionNegative +
+                '}';
     }
 }

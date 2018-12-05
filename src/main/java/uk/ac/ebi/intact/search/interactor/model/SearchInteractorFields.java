@@ -27,6 +27,19 @@ public class SearchInteractorFields {
     public static final String INTERACTION_COUNT = "interaction_count";
     public static final String INTERACTION_IDS = "interaction_ids";
 
+    public static final String INTERACTION_DETECTION_METHOD = "interaction_detection_method";
+    public static final String INTERACTION_DETECTION_METHOD_STR = "interaction_detection_method_str";
+
+    public static final String INTERACTION_TYPE = "interaction_type";
+    public static final String INTERACTION_TYPE_STR = "interaction_type_str";
+
+    public static final String INTERACTION_AC = "interaction_ac";
+    public static final String INTERACTION_AC_STR = "interaction_ac_str";
+
+    public static final String INTERACTION_EXPANSION_METHOD = "interaction_expansion_method";
+
+    public static final String INTERACTION_NEGATIVE = "interaction_negative";
+
     public static final String DEFAULT = "default"; //Copy field for general search
 
     public static final String FEATURE_SHORTLABEL= "feature_shortlabel";

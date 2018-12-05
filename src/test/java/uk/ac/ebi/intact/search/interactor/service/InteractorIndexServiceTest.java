@@ -53,7 +53,13 @@ public class InteractorIndexServiceTest {
             new HashSet<>(Arrays.asList("interactor1_xref1", "interactor1_xref2")),
             2,
             new HashSet<>(Arrays.asList("interaction1", "interaction2")),
-            new HashSet<>(Arrays.asList("featureshortlabel1", "featureshortlabel2")) );
+            new HashSet<>(Arrays.asList("detectionMethod1", "detectionMethod2")),
+            new HashSet<>(Arrays.asList("interactionType1", "interactionType2")),
+            new HashSet<>(Arrays.asList("interactionAc1", "interactionAc2")),
+            new HashSet<>(Arrays.asList("expansionMethod1", "expansionMethod2")),
+            new HashSet<>(Arrays.asList(true, true, false)),
+            new HashSet<>(Arrays.asList("featureShortLabel1", "featureShortLabel2"))
+                );
 
         searchInteractor2 = new SearchInteractor("Q13541",
             "Eukaryotic translation initiation factor 4E-binding protein 1",
@@ -66,6 +72,11 @@ public class InteractorIndexServiceTest {
             new HashSet<>(Arrays.asList("interactor2_xref1", "interactor2_xref2")),
             2,
             new HashSet<>(Arrays.asList("interaction1", "interaction2")),
+            new HashSet<>(Arrays.asList("detectionMethod1", "detectionMethod2")),
+            new HashSet<>(Arrays.asList("interactionType1", "interactionType2")),
+            new HashSet<>(Arrays.asList("interactionAc1", "interactionAc2")),
+            new HashSet<>(Arrays.asList("expansionMethod1", "expansionMethod2")),
+            new HashSet<>(Arrays.asList(true, true, false)),
             new HashSet<>(Arrays.asList("featureshortlabel1", "featureshortlabel2")));
 
         searchInteractor3 = new SearchInteractor("P63165",
@@ -79,6 +90,11 @@ public class InteractorIndexServiceTest {
             new HashSet<>(Arrays.asList("interactor3_xref1", "interactor3_xref2", "interactor3_xref3", "interactor3_xref4")),
             5,
             new HashSet<>(Arrays.asList("interaction1", "interaction2", "interaction3", "interaction4", "interaction5")),
+            new HashSet<>(Arrays.asList("detectionMethod1", "detectionMethod2")),
+            new HashSet<>(Arrays.asList("interactionType1", "interactionType2")),
+            new HashSet<>(Arrays.asList("interactionAc1", "interactionAc2")),
+            new HashSet<>(Arrays.asList("expansionMethod1", "expansionMethod2")),
+            new HashSet<>(Arrays.asList(true, true, false)),
             new HashSet<>(Arrays.asList("featureshortlabel1", "featureshortlabel2")));
     }
 
@@ -110,7 +126,7 @@ public class InteractorIndexServiceTest {
     @Test
     public void deleteCollection() {
         // empty collection
-        interactorIndexService.deleteAll();
+//        interactorIndexService.deleteAll();
 
 
     }
