@@ -40,31 +40,33 @@ public class InteractorSearchService {
     }
 
     public FacetPage<SearchInteractor> getTaxIdFacets(int page, int pageSize) {
-        PageRequest pageRequest = new PageRequest(page, pageSize);
+        PageRequest pageRequest = PageRequest.of(page, pageSize);
         return interactorRepository.getTaxIdFacets(pageRequest);
     }
 
-    public FacetPage<SearchInteractor> getSpeciesAndInteractorTypeFacets(String query, Set<String> speciesFilter, Set<String> interactorTypeFilter, int page, int pageSize) {
-        PageRequest pageRequest = new PageRequest(page, pageSize);
+    public FacetPage<SearchInteractor> getSpeciesAndInteractorTypeFacets(String query, Set<String> speciesFilter,
+                                                                         Set<String> interactorTypeFilter, int page,
+                                                                         int pageSize) {
+        PageRequest pageRequest = PageRequest.of(page, pageSize);
         return interactorRepository.getSpeciesAndInteractorTypeFacets(query, speciesFilter, interactorTypeFilter, pageRequest);
     }
 
-    public SearchInteractorResult findInteractorWithFacet(String query, Set<String> speciesFilter, Set<String> interactorTypeFilter, int page, int pageSize) {
-        PageRequest pageRequest = new PageRequest(page, pageSize);
-        return interactorRepository.findInteractorWithFacet(query, speciesFilter, interactorTypeFilter, null, pageRequest);
+    public SearchInteractorResult findInteractorWithFacet(String query, Set<String> speciesFilter, Set<String> interactorTypeFilter,
+                                                          Set<String> detectionMethodFilter, Set<String> interactionTypeFilter,
+                                                          boolean isNegativeFilter, double minMiScore, double maxMiScore,
+                                                          int page, int pageSize) {
+        PageRequest pageRequest = PageRequest.of(page, pageSize);
+        return interactorRepository.findInteractorWithFacet(query, speciesFilter, interactorTypeFilter, detectionMethodFilter,
+                interactionTypeFilter, isNegativeFilter, minMiScore, maxMiScore,null, pageRequest);
     }
 
     public Page<SearchInteractor> findInteractor(String query) {
-        PageRequest pageRequest = new PageRequest(0, 10);
+        PageRequest pageRequest = PageRequest.of(0, 10);
         return interactorRepository.findInteractor(query, pageRequest);
     }
 
     public Optional<SearchInteractor> findById(String id) {
         return interactorRepository.findById(id);
     }
-
-//    public List<SearchInteractor> retrieveInteractors (String name) {
-//        return this.interactorRepository.findByName(name);
-//    }
 
 }

@@ -67,17 +67,17 @@ public class SearchInteractor {
     @Field(INTERACTION_NEGATIVE)
     private Set<Boolean> interactionNegative;
 
+    @Field(INTERACTION_MISCORE)
+    private Set<Double> interactionMiScore;
+
     @Field(FEATURE_SHORTLABEL)
     private Set<String> featureShortLabels;
-
-    public SearchInteractor() {
-    }
 
     public SearchInteractor(String interactorId, String interactorName, String description, Set<String> interactorAlias,
                             Set<String> interactorAltIds, String interactorType, String species, Integer taxId,
                             Set<String> interactorXrefs, Integer interactionCount, Set<String> interactionIds,
                             Set<String> interactionDetectionMethod, Set<String> interactionType, Set<String> interactionAc,
-                            Set<String> interactionExpansionMethod, Set<Boolean> interactionNegative,
+                            Set<String> interactionExpansionMethod, Set<Boolean> interactionNegative, Set<Double> interactionMiScore,
                             Set<String> featureShortLabels) {
         this.interactorId = interactorId;
         this.interactorName = interactorName;
@@ -95,6 +95,7 @@ public class SearchInteractor {
         this.interactionAc = interactionAc;
         this.interactionExpansionMethod = interactionExpansionMethod;
         this.interactionNegative = interactionNegative;
+        this.interactionMiScore = interactionMiScore;
         this.featureShortLabels = featureShortLabels;
 
     }
@@ -227,6 +228,14 @@ public class SearchInteractor {
         this.interactionNegative = interactionNegative;
     }
 
+    public Set<Double> getInteractionMiScore() {
+        return interactionMiScore;
+    }
+
+    public void setInteractionMiScore(Set<Double> interactionMiScore) {
+        this.interactionMiScore = interactionMiScore;
+    }
+
     public Set<String> getFeatureShortLabels() {
         return featureShortLabels;
     }
@@ -254,6 +263,8 @@ public class SearchInteractor {
                 ", interactionAc=" + interactionAc +
                 ", interactionExpansionMethod=" + interactionExpansionMethod +
                 ", interactionNegative=" + interactionNegative +
+                ", interactionMiScore=" + interactionMiScore +
+                ", featureShortLabels=" + featureShortLabels +
                 '}';
     }
 }

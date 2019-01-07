@@ -25,6 +25,11 @@ public interface CustomizedInteractorRepository {
             String query,
             Set<String> speciesFilter,
             Set<String> interactorTypeFilter,
+            Set<String> detectionMethodFilter,
+            Set<String> interactionTypeFilter,
+            boolean isNegativeFilter,
+            double minMiScore,
+            double maxMiScore,
             Sort sort,
             Pageable pageable);
 

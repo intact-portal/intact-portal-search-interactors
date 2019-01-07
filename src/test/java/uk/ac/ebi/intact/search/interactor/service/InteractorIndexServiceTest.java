@@ -58,6 +58,7 @@ public class InteractorIndexServiceTest {
             new HashSet<>(Arrays.asList("interactionAc1", "interactionAc2")),
             new HashSet<>(Arrays.asList("expansionMethod1", "expansionMethod2")),
             new HashSet<>(Arrays.asList(true, true, false)),
+            new HashSet<>(Arrays.asList(0.33, 0.52)),
             new HashSet<>(Arrays.asList("featureShortLabel1", "featureShortLabel2"))
                 );
 
@@ -77,6 +78,7 @@ public class InteractorIndexServiceTest {
             new HashSet<>(Arrays.asList("interactionAc1", "interactionAc2")),
             new HashSet<>(Arrays.asList("expansionMethod1", "expansionMethod2")),
             new HashSet<>(Arrays.asList(true, true, false)),
+            new HashSet<>(Arrays.asList(0.33, 0.52)),
             new HashSet<>(Arrays.asList("featureshortlabel1", "featureshortlabel2")));
 
         searchInteractor3 = new SearchInteractor("P63165",
@@ -95,6 +97,7 @@ public class InteractorIndexServiceTest {
             new HashSet<>(Arrays.asList("interactionAc1", "interactionAc2")),
             new HashSet<>(Arrays.asList("expansionMethod1", "expansionMethod2")),
             new HashSet<>(Arrays.asList(true, true, false)),
+            new HashSet<>(Arrays.asList(0.33, 0.52)),
             new HashSet<>(Arrays.asList("featureshortlabel1", "featureshortlabel2")));
     }
 

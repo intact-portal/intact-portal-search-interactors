@@ -19,6 +19,7 @@ import java.util.Set;
  */
 
 @RestController
+@RequestMapping("/interactor")
 public class SearchInteractorController {
 
     private InteractorIndexService interactorIndexService;
@@ -102,6 +103,11 @@ public class SearchInteractorController {
                     "query",
                     "speciesFilter",
                     "interactorTypeFilter",
+                    "detectionMethodFilter",
+                    "interactionTypeFilter",
+                    "isNegativeFilter",
+                    "minMiScore",
+                    "maxMiScore",
                     "page",
                     "pageSize"
             },
@@ -110,9 +116,15 @@ public class SearchInteractorController {
             @RequestParam(value = "query") String query,
             @RequestParam(value = "speciesFilter", required = false) Set<String> speciesFilter,
             @RequestParam(value = "interactorTypeFilter", required = false) Set<String> interactorTypeFilter,
+            @RequestParam(value = "detectionMethodFilter", required = false) Set<String> detectionMethodFilter,
+            @RequestParam(value = "interactionTypeFilter", required = false) Set<String> interactionTypeFilter,
+            @RequestParam(value = "isNegativeFilter", required = false) boolean isNegativeFilter,
+            @RequestParam(value = "minMiScore", defaultValue = "0", required = false) double minMiScore,
+            @RequestParam(value = "maxMiScore", defaultValue = "1", required = false) double maxMiScore,
             @RequestParam(value = "page", defaultValue = "0") int page,
             @RequestParam(value = "pageSize", defaultValue = "10") int pageSize) {
-        return this.interactorSearchService.findInteractorWithFacet(query, speciesFilter, interactorTypeFilter, page, pageSize);
+        return this.interactorSearchService.findInteractorWithFacet(query, speciesFilter, interactorTypeFilter,
+                detectionMethodFilter, interactionTypeFilter, isNegativeFilter, minMiScore, maxMiScore, page, pageSize);
     }
 
     @RequestMapping("/findInteractor/{query}")

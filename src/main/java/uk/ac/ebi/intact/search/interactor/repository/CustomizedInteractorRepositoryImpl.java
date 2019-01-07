@@ -1,5 +1,6 @@
 package uk.ac.ebi.intact.search.interactor.repository;
 
+import org.apache.solr.common.params.FacetParams;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
@@ -8,11 +9,13 @@ import org.springframework.data.solr.core.query.*;
 import org.springframework.stereotype.Repository;
 import uk.ac.ebi.intact.search.interactor.controller.SearchInteractorResult;
 import uk.ac.ebi.intact.search.interactor.model.SearchInteractor;
-import uk.ac.ebi.intact.search.interactor.model.SearchInteractorFields;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
+
+import static uk.ac.ebi.intact.search.interactor.model.SearchInteractor.*;
+import static uk.ac.ebi.intact.search.interactor.model.SearchInteractorFields.*;
 
 /**
  * @author Elisabet Barrera
@@ -36,7 +39,10 @@ public class CustomizedInteractorRepositoryImpl implements CustomizedInteractorR
     }
 
     @Override
-    public SearchInteractorResult findInteractorWithFacet(String query, Set<String> speciesFilter, Set<String> interactorTypeFilter, Sort sort, Pageable pageable) {
+    public SearchInteractorResult findInteractorWithFacet(String query, Set<String> speciesFilter, Set<String> interactorTypeFilter,
+                                                          Set<String> detectionMethodFilter, Set<String> interactionTypeFilter,
+                                                          boolean isNegativeFilter, double minMiScore, double maxMiScore,
+                                                          Sort sort, Pageable pageable) {
 
         // search query
         SimpleFacetQuery search = new SimpleFacetQuery();
@@ -46,7 +52,9 @@ public class CustomizedInteractorRepositoryImpl implements CustomizedInteractorR
         search.addCriteria(conditions);
 
         // filters
-        List<FilterQuery> filterQueries = createFilterQuery(speciesFilter, interactorTypeFilter);
+        List<FilterQuery> filterQueries = createFilterQuery(speciesFilter, interactorTypeFilter, detectionMethodFilter,
+                interactionTypeFilter, isNegativeFilter, minMiScore, maxMiScore);
+
         if (filterQueries != null && !filterQueries.isEmpty()) {
             for (FilterQuery filterQuery : filterQueries) {
                 search.addFilterQuery(filterQuery);
@@ -55,8 +63,16 @@ public class CustomizedInteractorRepositoryImpl implements CustomizedInteractorR
         }
 
         // facet
-        FacetOptions facetOptions = new FacetOptions(SearchInteractorFields.SPECIES_NAME_STR, SearchInteractorFields.INTERACTOR_TYPE_STR);
+        FacetOptions facetOptions = new FacetOptions(
+                SPECIES_NAME_STR, INTERACTOR_TYPE_STR,
+                INTERACTION_DETECTION_METHOD, INTERACTION_TYPE,
+                INTERACTION_NEGATIVE, INTERACTION_MISCORE);
         facetOptions.setFacetLimit(FACET_MIN_COUNT);
+        facetOptions.addFacetByRange(
+                new FacetOptions.FieldWithNumericRangeParameters(INTERACTION_MISCORE, 0d, 1d, 0.01d)
+                        .setHardEnd(true)
+                        .setInclude(FacetParams.FacetRangeInclude.ALL)
+        );
         /*facetOptions.setFacetSort(FacetOptions.FacetSort.COUNT);*/
         search.setFacetOptions(facetOptions);
 
@@ -66,11 +82,12 @@ public class CustomizedInteractorRepositoryImpl implements CustomizedInteractorR
         // sorting
         if (sort != null) {
             search.addSort(sort);
-        } else {
-//            search.addSort(DEFAULT_QUERY_SORT_WITH_QUERY);
         }
+//        else {
+//            search.addSort(DEFAULT_QUERY_SORT_WITH_QUERY);
+//        }
 
-        return  new SearchInteractorResult(solrOperations.queryForFacetPage(SearchInteractor.INTERACTORS, search, SearchInteractor.class));
+        return new SearchInteractorResult(solrOperations.queryForFacetPage(INTERACTORS, search, SearchInteractor.class));
     }
 
     private Criteria createSearchConditions(String searchTerms) {
@@ -83,11 +100,11 @@ public class CustomizedInteractorRepositoryImpl implements CustomizedInteractorR
 
             for (String word : words) {
                 if (conditions == null) {
-                    conditions = new Criteria(SearchInteractorFields.DEFAULT).contains(word)
-                    .or(SearchInteractorFields.INTERACTOR_ID_STR).is(word);
+                    conditions = new Criteria(DEFAULT).contains(word)
+                    .or(INTERACTOR_ID_STR).is(word);
                 } else {
-                    conditions = conditions.or(SearchInteractorFields.DEFAULT).contains(word)
-                    .or(SearchInteractorFields.INTERACTOR_ID_STR).is(word);
+                    conditions = conditions.or(DEFAULT).contains(word)
+                    .or(INTERACTOR_ID_STR).is(word);
                 }
             }
         } else {
@@ -99,14 +116,31 @@ public class CustomizedInteractorRepositoryImpl implements CustomizedInteractorR
     }
 
     private List<FilterQuery> createFilterQuery(Set<String> speciesFilter,
-                                                Set<String> interactorTypeFilter) {
-        List<FilterQuery> filterQueries = new ArrayList<FilterQuery>();
+                                                Set<String> interactorTypeFilter,
+                                                Set<String> detectionMethodFilter,
+                                                Set<String> interactionTypeFilter,
+                                                boolean isNegativeFilter,
+                                                double minMiScore,
+                                                double maxMiScore) {
+        List<FilterQuery> filterQueries = new ArrayList<>();
 
         //Interactor type filter
-        createFilterCriteria(speciesFilter, SearchInteractorFields.SPECIES_NAME, filterQueries);
+        createFilterCriteria(speciesFilter, SPECIES_NAME, filterQueries);
 
         //Species filter
-        createFilterCriteria(interactorTypeFilter, SearchInteractorFields.INTERACTOR_TYPE, filterQueries);
+        createFilterCriteria(interactorTypeFilter, INTERACTOR_TYPE, filterQueries);
+
+        //Interaction Detection Method filter
+        createFilterCriteria(detectionMethodFilter, INTERACTION_DETECTION_METHOD, filterQueries);
+
+        //Interaction Type filter
+        createFilterCriteria(interactionTypeFilter, INTERACTION_TYPE, filterQueries);
+
+        //Interaction Negative filter
+        createNegativeFilterCriteria(isNegativeFilter, filterQueries);
+
+        //Interaction MiScore filter
+        createMiScoreFilterCriteria(minMiScore, maxMiScore, filterQueries);
 
         return filterQueries;
     }
@@ -128,5 +162,19 @@ public class CustomizedInteractorRepositoryImpl implements CustomizedInteractorR
                 filterQueries.add(new SimpleFilterQuery(conditions));
             }
         }
+    }
+
+    private void createNegativeFilterCriteria(boolean value, List<FilterQuery> filterQueries) {
+
+        Criteria conditions = new Criteria(INTERACTION_NEGATIVE).is(value);
+
+        filterQueries.add(new SimpleFilterQuery(conditions));
+    }
+
+    private void createMiScoreFilterCriteria(double minMiScore, double maxMiScore, List<FilterQuery> filterQueries) {
+
+        Criteria conditions = new Criteria(INTERACTION_MISCORE).between(minMiScore, maxMiScore);
+
+        filterQueries.add(new SimpleFilterQuery(conditions));
     }
 }
