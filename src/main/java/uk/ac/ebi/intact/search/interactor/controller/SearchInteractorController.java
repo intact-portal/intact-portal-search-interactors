@@ -101,13 +101,6 @@ public class SearchInteractorController {
     @RequestMapping(value = "/findInteractorWithFacet",
             params = {
                     "query",
-                    "speciesFilter",
-                    "interactorTypeFilter",
-                    "detectionMethodFilter",
-                    "interactionTypeFilter",
-                    "isNegativeFilter",
-                    "minMiScore",
-                    "maxMiScore",
                     "page",
                     "pageSize"
             },

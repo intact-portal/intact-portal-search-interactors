@@ -4,6 +4,7 @@ import org.apache.solr.client.solrj.beans.Field;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.solr.core.mapping.Indexed;
 import org.springframework.data.solr.core.mapping.SolrDocument;
+import org.springframework.lang.Nullable;
 
 import java.util.Set;
 
@@ -72,6 +73,9 @@ public class SearchInteractor {
 
     @Field(FEATURE_SHORTLABEL)
     private Set<String> featureShortLabels;
+
+    public SearchInteractor() {
+    }
 
     public SearchInteractor(String interactorId, String interactorName, String description, Set<String> interactorAlias,
                             Set<String> interactorAltIds, String interactorType, String species, Integer taxId,
