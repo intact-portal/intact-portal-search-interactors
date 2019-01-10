@@ -41,8 +41,8 @@ public class CustomizedInteractorRepositoryImpl implements CustomizedInteractorR
     @Override
     public SearchInteractorResult findInteractorWithFacet(String query, Set<String> speciesFilter, Set<String> interactorTypeFilter,
                                                           Set<String> detectionMethodFilter, Set<String> interactionTypeFilter,
-                                                          boolean isNegativeFilter, double minMiScore, double maxMiScore,
-                                                          Sort sort, Pageable pageable) {
+                                                          Set<String> interactionHostOrganismFilter, boolean isNegativeFilter,
+                                                          double minMiScore, double maxMiScore, Sort sort, Pageable pageable) {
 
         // search query
         SimpleFacetQuery search = new SimpleFacetQuery();
@@ -53,7 +53,7 @@ public class CustomizedInteractorRepositoryImpl implements CustomizedInteractorR
 
         // filters
         List<FilterQuery> filterQueries = createFilterQuery(speciesFilter, interactorTypeFilter, detectionMethodFilter,
-                interactionTypeFilter, isNegativeFilter, minMiScore, maxMiScore);
+                interactionTypeFilter, interactionHostOrganismFilter, isNegativeFilter, minMiScore, maxMiScore);
 
         if (filterQueries != null && !filterQueries.isEmpty()) {
             for (FilterQuery filterQuery : filterQueries) {
@@ -66,7 +66,7 @@ public class CustomizedInteractorRepositoryImpl implements CustomizedInteractorR
         FacetOptions facetOptions = new FacetOptions(
                 SPECIES_NAME_STR, INTERACTOR_TYPE_STR,
                 INTERACTION_DETECTION_METHOD, INTERACTION_TYPE,
-                INTERACTION_NEGATIVE, INTERACTION_MISCORE);
+                INTERACTION_NEGATIVE, INTERACTION_MISCORE, INTERACTION_HOST_ORGANISM);
         facetOptions.setFacetLimit(FACET_MIN_COUNT);
         facetOptions.addFacetByRange(
                 new FacetOptions.FieldWithNumericRangeParameters(INTERACTION_MISCORE, 0d, 1d, 0.01d)
@@ -119,9 +119,11 @@ public class CustomizedInteractorRepositoryImpl implements CustomizedInteractorR
                                                 Set<String> interactorTypeFilter,
                                                 Set<String> detectionMethodFilter,
                                                 Set<String> interactionTypeFilter,
+                                                Set<String> interactionHostOrganismFilter,
                                                 boolean isNegativeFilter,
                                                 double minMiScore,
                                                 double maxMiScore) {
+
         List<FilterQuery> filterQueries = new ArrayList<>();
 
         //Interactor type filter
@@ -141,6 +143,9 @@ public class CustomizedInteractorRepositoryImpl implements CustomizedInteractorR
 
         //Interaction MiScore filter
         createMiScoreFilterCriteria(minMiScore, maxMiScore, filterQueries);
+
+        //Interaction Host Organism
+        createFilterCriteria(interactionHostOrganismFilter, INTERACTION_HOST_ORGANISM, filterQueries);
 
         return filterQueries;
     }

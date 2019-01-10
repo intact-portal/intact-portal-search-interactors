@@ -21,12 +21,14 @@ public interface CustomizedInteractorRepository {
      * @param speciesFilter (species names to filter by) optional
      * @return a facet page with the names and the number of hits per name
      */
+
     SearchInteractorResult findInteractorWithFacet(
             String query,
             Set<String> speciesFilter,
             Set<String> interactorTypeFilter,
             Set<String> detectionMethodFilter,
             Set<String> interactionTypeFilter,
+            Set<String> interactionHostOrganismFilter,
             boolean isNegativeFilter,
             double minMiScore,
             double maxMiScore,

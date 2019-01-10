@@ -39,6 +39,8 @@ public class SearchInteractorFields {
 
     public static final String INTERACTION_MISCORE = "interaction_miscore";
 
+    public static final String INTERACTION_HOST_ORGANISM = "interaction_host_organism_str";
+
     public static final String DEFAULT = "default"; //Copy field for general search
 
     public static final String FEATURE_SHORTLABEL= "feature_shortlabel";

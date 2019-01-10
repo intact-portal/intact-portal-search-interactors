@@ -111,13 +111,15 @@ public class SearchInteractorController {
             @RequestParam(value = "interactorTypeFilter", required = false) Set<String> interactorTypeFilter,
             @RequestParam(value = "detectionMethodFilter", required = false) Set<String> detectionMethodFilter,
             @RequestParam(value = "interactionTypeFilter", required = false) Set<String> interactionTypeFilter,
+            @RequestParam(value = "interactionHostOrganismFilter", required = false) Set<String> interactionHostOrganismFilter,
             @RequestParam(value = "isNegativeFilter", required = false) boolean isNegativeFilter,
             @RequestParam(value = "minMiScore", defaultValue = "0", required = false) double minMiScore,
             @RequestParam(value = "maxMiScore", defaultValue = "1", required = false) double maxMiScore,
             @RequestParam(value = "page", defaultValue = "0") int page,
             @RequestParam(value = "pageSize", defaultValue = "10") int pageSize) {
         return this.interactorSearchService.findInteractorWithFacet(query, speciesFilter, interactorTypeFilter,
-                detectionMethodFilter, interactionTypeFilter, isNegativeFilter, minMiScore, maxMiScore, page, pageSize);
+                detectionMethodFilter, interactionTypeFilter, interactionHostOrganismFilter,
+                isNegativeFilter, minMiScore, maxMiScore, page, pageSize);
     }
 
     @RequestMapping("/findInteractor/{query}")

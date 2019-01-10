@@ -53,11 +53,11 @@ public class InteractorSearchService {
 
     public SearchInteractorResult findInteractorWithFacet(String query, Set<String> speciesFilter, Set<String> interactorTypeFilter,
                                                           Set<String> detectionMethodFilter, Set<String> interactionTypeFilter,
-                                                          boolean isNegativeFilter, double minMiScore, double maxMiScore,
-                                                          int page, int pageSize) {
+                                                          Set<String> interactionHostOrganism, boolean isNegativeFilter,
+                                                          double minMiScore, double maxMiScore, int page, int pageSize) {
         PageRequest pageRequest = PageRequest.of(page, pageSize);
         return interactorRepository.findInteractorWithFacet(query, speciesFilter, interactorTypeFilter, detectionMethodFilter,
-                interactionTypeFilter, isNegativeFilter, minMiScore, maxMiScore,null, pageRequest);
+                interactionTypeFilter, interactionHostOrganism, isNegativeFilter, minMiScore, maxMiScore, null, pageRequest);
     }
 
     public Page<SearchInteractor> findInteractor(String query) {

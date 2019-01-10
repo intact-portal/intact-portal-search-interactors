@@ -71,6 +71,9 @@ public class SearchInteractor {
     @Field(INTERACTION_MISCORE)
     private Set<Double> interactionMiScore;
 
+    @Field(INTERACTION_HOST_ORGANISM)
+    private Set<String> interactionHostOrganism;
+
     @Field(FEATURE_SHORTLABEL)
     private Set<String> featureShortLabels;
 
@@ -81,7 +84,8 @@ public class SearchInteractor {
                             Set<String> interactorAltIds, String interactorType, String species, Integer taxId,
                             Set<String> interactorXrefs, Integer interactionCount, Set<String> interactionIds,
                             Set<String> interactionDetectionMethod, Set<String> interactionType, Set<String> interactionAc,
-                            Set<String> interactionExpansionMethod, Set<Boolean> interactionNegative, Set<Double> interactionMiScore,
+                            Set<String> interactionExpansionMethod, Set<Boolean> interactionNegative,
+                            Set<Double> interactionMiScore, Set<String> interactionHostOrganism,
                             Set<String> featureShortLabels) {
         this.interactorId = interactorId;
         this.interactorName = interactorName;
@@ -100,8 +104,8 @@ public class SearchInteractor {
         this.interactionExpansionMethod = interactionExpansionMethod;
         this.interactionNegative = interactionNegative;
         this.interactionMiScore = interactionMiScore;
+        this.interactionHostOrganism = interactionHostOrganism;
         this.featureShortLabels = featureShortLabels;
-
     }
 
     public String getInteractorId() {
@@ -240,6 +244,14 @@ public class SearchInteractor {
         this.interactionMiScore = interactionMiScore;
     }
 
+    public Set<String> getInteractionHostOrganism() {
+        return interactionHostOrganism;
+    }
+
+    public void setInteractionHostOrganism(Set<String> interactionHostOrganism) {
+        this.interactionHostOrganism = interactionHostOrganism;
+    }
+
     public Set<String> getFeatureShortLabels() {
         return featureShortLabels;
     }
@@ -268,6 +280,7 @@ public class SearchInteractor {
                 ", interactionExpansionMethod=" + interactionExpansionMethod +
                 ", interactionNegative=" + interactionNegative +
                 ", interactionMiScore=" + interactionMiScore +
+                ", interactionHostOrganism=" + interactionHostOrganism +
                 ", featureShortLabels=" + featureShortLabels +
                 '}';
     }
