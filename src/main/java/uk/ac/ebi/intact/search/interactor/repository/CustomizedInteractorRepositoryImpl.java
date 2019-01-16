@@ -101,10 +101,12 @@ public class CustomizedInteractorRepositoryImpl implements CustomizedInteractorR
             for (String word : words) {
                 if (conditions == null) {
                     conditions = new Criteria(DEFAULT).contains(word)
-                    .or(INTERACTOR_ID_STR).is(word);
+                            .or("interaction_ids_str").is(word)
+                            .or(INTERACTOR_ID_STR).is(word);
                 } else {
                     conditions = conditions.or(DEFAULT).contains(word)
-                    .or(INTERACTOR_ID_STR).is(word);
+                            .or("interaction_ids_str").is(word)
+                            .or(INTERACTOR_ID_STR).is(word);
                 }
             }
         } else {
