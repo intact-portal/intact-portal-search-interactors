@@ -5,14 +5,14 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.solr.core.query.result.FacetPage;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.client.RestTemplate;
+import org.springframework.web.util.UriComponents;
+import org.springframework.web.util.UriComponentsBuilder;
 import uk.ac.ebi.intact.search.interactor.model.SearchInteractor;
 import uk.ac.ebi.intact.search.interactor.service.InteractorIndexService;
 import uk.ac.ebi.intact.search.interactor.service.InteractorSearchService;
 
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
 
 /**
  * @author Elisabet Barrera
@@ -117,9 +117,32 @@ public class SearchInteractorController {
             @RequestParam(value = "maxMiScore", defaultValue = "1", required = false) double maxMiScore,
             @RequestParam(value = "page", defaultValue = "0") int page,
             @RequestParam(value = "pageSize", defaultValue = "10") int pageSize) {
-        return this.interactorSearchService.findInteractorWithFacet(query, speciesFilter, interactorTypeFilter,
+
+        SearchInteractorResult interactorResult = this.interactorSearchService.findInteractorWithFacet(query, speciesFilter, interactorTypeFilter,
                 detectionMethodFilter, interactionTypeFilter, interactionHostOrganismFilter,
                 isNegativeFilter, minMiScore, maxMiScore, page, pageSize);
+
+        for (SearchInteractor searchInteractor : interactorResult.getContent()) {
+
+            // TODO: Please change the URI FROM THE URL for the interaction web service in production
+            String URL = "http://localhost:8090/interaction/countInteractionResult?query={query}&interactorAc={interactorAc}&detectionMethodFilter={detectionMethodFilter}" +
+                    "&interactionTypeFilter={interactionTypeFilter}&hostOrganismFilter={hostOrganismFilter}&isNegativeFilter={isNegativeFilter}" +
+                    "&minMiscore={minMiscore}&maxMiscore={maxMiscore}";
+
+            String term = searchInteractor.getInteractorId();
+
+
+            RestTemplate restTemplate = new RestTemplate();
+            Long interactionCount = restTemplate.getForObject(URL, Long.class, query, term,
+                    detectionMethodFilter != null ? String.join(",", detectionMethodFilter): "",
+                    interactionTypeFilter != null ? String.join(",", interactionTypeFilter): "",
+                    interactionHostOrganismFilter != null ? String.join(",", interactionHostOrganismFilter) : "",
+                    isNegativeFilter, minMiScore, maxMiScore);
+
+            searchInteractor.setInteractionSearchCount(interactionCount);
+        }
+
+        return interactorResult;
     }
 
     @RequestMapping("/findInteractor/{query}")

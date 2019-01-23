@@ -2,6 +2,7 @@ package uk.ac.ebi.intact.search.interactor.model;
 
 import org.apache.solr.client.solrj.beans.Field;
 import org.springframework.data.annotation.Id;
+import org.springframework.data.annotation.Transient;
 import org.springframework.data.solr.core.mapping.Indexed;
 import org.springframework.data.solr.core.mapping.SolrDocument;
 import org.springframework.lang.Nullable;
@@ -50,6 +51,12 @@ public class SearchInteractor {
     @Field(INTERACTION_COUNT)
     private Integer interactionCount;
 
+    /** This field is not part of the solr doc.
+    it is being added after a second call to interactions search service
+    to know in how many interactions the interactor appear **/
+    @Transient
+    private Long interactionSearchCount;
+
     @Field(INTERACTION_IDS)
     private Set<String> interactionIds;
 
@@ -82,9 +89,9 @@ public class SearchInteractor {
 
     public SearchInteractor(String interactorId, String interactorName, String description, Set<String> interactorAlias,
                             Set<String> interactorAltIds, String interactorType, String species, Integer taxId,
-                            Set<String> interactorXrefs, Integer interactionCount, Set<String> interactionIds,
-                            Set<String> interactionDetectionMethod, Set<String> interactionType, Set<String> interactionAc,
-                            Set<String> interactionExpansionMethod, Set<Boolean> interactionNegative,
+                            Set<String> interactorXrefs, Integer interactionCount, Long interactionSearchCount,
+                            Set<String> interactionIds, Set<String> interactionDetectionMethod, Set<String> interactionType,
+                            Set<String> interactionAc, Set<String> interactionExpansionMethod, Set<Boolean> interactionNegative,
                             Set<Double> interactionMiScore, Set<String> interactionHostOrganism,
                             Set<String> featureShortLabels) {
         this.interactorId = interactorId;
@@ -97,6 +104,7 @@ public class SearchInteractor {
         this.taxId = taxId;
         this.interactorXrefs = interactorXrefs;
         this.interactionCount = interactionCount;
+        this.interactionSearchCount = interactionSearchCount;
         this.interactionIds = interactionIds;
         this.interactionDetectionMethod = interactionDetectionMethod;
         this.interactionType = interactionType;
@@ -188,6 +196,14 @@ public class SearchInteractor {
         this.interactionCount = interactionCount;
     }
 
+    public Long getInteractionSearchCount() {
+        return interactionSearchCount;
+    }
+
+    public void setInteractionSearchCount(Long interactionSearchCount) {
+        this.interactionSearchCount = interactionSearchCount;
+    }
+
     public Set<String> getInteractionIds() {
         return interactionIds;
     }
@@ -273,6 +289,7 @@ public class SearchInteractor {
                 ", taxId=" + taxId +
                 ", interactorXrefs=" + interactorXrefs +
                 ", interactionCount=" + interactionCount +
+                ", interactionSearchCount=" + interactionSearchCount +
                 ", interactionIds=" + interactionIds +
                 ", interactionDetectionMethod=" + interactionDetectionMethod +
                 ", interactionType=" + interactionType +
