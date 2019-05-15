@@ -15,7 +15,6 @@ import java.util.Optional;
 import java.util.Set;
 
 /**
- *
  * Custom and generic CRUD operations for searching purposes.
  *
  * @author Elisabet Barrera
@@ -57,6 +56,15 @@ public class InteractorSearchService {
                                                           double minMiScore, double maxMiScore, int page, int pageSize) {
         PageRequest pageRequest = PageRequest.of(page, pageSize);
         return interactorRepository.findInteractorWithFacet(query, speciesFilter, interactorTypeFilter, detectionMethodFilter,
+                interactionTypeFilter, interactionHostOrganism, isNegativeFilter, minMiScore, maxMiScore, null, pageRequest);
+    }
+
+    public Page<SearchInteractor> findInteractorWithFields(String query, Set<String> speciesFilter, Set<String> interactorTypeFilter,
+                                                           Set<String> detectionMethodFilter, Set<String> interactionTypeFilter,
+                                                           Set<String> interactionHostOrganism, boolean isNegativeFilter,
+                                                           double minMiScore, double maxMiScore, int page, int pageSize) {
+        PageRequest pageRequest = PageRequest.of(page, pageSize);
+        return interactorRepository.findInteractorWithFields(query, speciesFilter, interactorTypeFilter, detectionMethodFilter,
                 interactionTypeFilter, interactionHostOrganism, isNegativeFilter, minMiScore, maxMiScore, null, pageRequest);
     }
 

@@ -2,6 +2,7 @@ package uk.ac.ebi.intact.search.interactor.repository;
 
 import org.apache.solr.common.params.FacetParams;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.solr.core.SolrOperations;
@@ -14,7 +15,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
 
-import static uk.ac.ebi.intact.search.interactor.model.SearchInteractor.*;
+import static uk.ac.ebi.intact.search.interactor.model.SearchInteractor.INTERACTORS;
 import static uk.ac.ebi.intact.search.interactor.model.SearchInteractorFields.*;
 
 /**
@@ -24,10 +25,9 @@ import static uk.ac.ebi.intact.search.interactor.model.SearchInteractorFields.*;
 @Repository
 public class CustomizedInteractorRepositoryImpl implements CustomizedInteractorRepository {
 
-    private SolrOperations solrOperations;
-
     // default minimum counts for faceting
     private static final int FACET_MIN_COUNT = 10000;
+    private SolrOperations solrOperations;
 
     // default sorting for the query results
     //TODO Solve problems with multivalue fields that are not allow to be sorted. Schema-less create all the fields as multivalues
@@ -88,6 +88,44 @@ public class CustomizedInteractorRepositoryImpl implements CustomizedInteractorR
 //        }
 
         return new SearchInteractorResult(solrOperations.queryForFacetPage(INTERACTORS, search, SearchInteractor.class));
+    }
+
+    @Override
+    public Page<SearchInteractor> findInteractorWithFields(String query, Set<String> speciesFilter, Set<String> interactorTypeFilter,
+                                                           Set<String> detectionMethodFilter, Set<String> interactionTypeFilter,
+                                                           Set<String> interactionHostOrganismFilter, boolean isNegativeFilter,
+                                                           double minMiScore, double maxMiScore, Sort sort, Pageable pageable) {
+
+        // search query
+        SimpleQuery search = new SimpleQuery();
+
+        // search criterias
+        Criteria conditions = createSearchConditions(query);
+        search.addCriteria(conditions);
+
+        // filters
+        List<FilterQuery> filterQueries = createFilterQuery(speciesFilter, interactorTypeFilter, detectionMethodFilter,
+                interactionTypeFilter, interactionHostOrganismFilter, isNegativeFilter, minMiScore, maxMiScore);
+
+        if (filterQueries != null && !filterQueries.isEmpty()) {
+            for (FilterQuery filterQuery : filterQueries) {
+                search.addFilterQuery(filterQuery);
+            }
+
+        }
+
+        // pagination
+        search.setPageRequest(pageable);
+
+        // sorting
+        if (sort != null) {
+            search.addSort(sort);
+        }
+
+        //projection
+        search.addProjectionOnField(new SimpleField(INTERACTOR_ID));
+
+        return solrOperations.queryForPage(INTERACTORS, search, SearchInteractor.class);
     }
 
     private Criteria createSearchConditions(String searchTerms) {
