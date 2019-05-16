@@ -38,7 +38,7 @@ public interface CustomizedInteractorRepository {
             Sort sort,
             Pageable pageable);
 
-    Page<SearchInteractor> findInteractorWithFields(
+    Page<SearchInteractor> findInteractorForGraphJson(
             String query,
             Set<String> speciesFilter,
             Set<String> interactorTypeFilter,

@@ -59,12 +59,12 @@ public class InteractorSearchService {
                 interactionTypeFilter, interactionHostOrganism, isNegativeFilter, minMiScore, maxMiScore, null, pageRequest);
     }
 
-    public Page<SearchInteractor> findInteractorWithFields(String query, Set<String> speciesFilter, Set<String> interactorTypeFilter,
+    public Page<SearchInteractor> findInteractorForGraphJson(String query, Set<String> speciesFilter, Set<String> interactorTypeFilter,
                                                            Set<String> detectionMethodFilter, Set<String> interactionTypeFilter,
                                                            Set<String> interactionHostOrganism, boolean isNegativeFilter,
                                                            double minMiScore, double maxMiScore, int page, int pageSize) {
         PageRequest pageRequest = PageRequest.of(page, pageSize);
-        return interactorRepository.findInteractorWithFields(query, speciesFilter, interactorTypeFilter, detectionMethodFilter,
+        return interactorRepository.findInteractorForGraphJson(query, speciesFilter, interactorTypeFilter, detectionMethodFilter,
                 interactionTypeFilter, interactionHostOrganism, isNegativeFilter, minMiScore, maxMiScore, null, pageRequest);
     }
 
