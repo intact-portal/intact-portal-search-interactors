@@ -2,18 +2,18 @@ package uk.ac.ebi.intact.search.interactor.service;
 
 import org.junit.After;
 import org.junit.Before;
-import org.junit.ClassRule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
 import uk.ac.ebi.intact.search.interactor.model.SearchInteractor;
-import uk.ac.ebi.intact.search.interactor.service.util.RequiresSolrServer;
 
 import javax.annotation.Resource;
 import java.util.Arrays;
 import java.util.HashSet;
 import java.util.Optional;
+
+import static org.junit.Assert.assertEquals;
 
 /**
  * @author Elisabet Barrera
@@ -32,14 +32,11 @@ public class InteractorIndexServiceTest {
     @Resource
     private InteractorSearchService interactorSearchService;
 
-    public static @ClassRule
-    RequiresSolrServer requiresRunningServer = RequiresSolrServer.onLocalhost();
-
     @Before
-    public void setUp() throws Exception {
+    public void setUp() {
 
-        //Delete all documents from solr core
         interactorIndexService.deleteAll();
+
 
         //Create new interactors documents
         searchInteractor1 = new SearchInteractor("P06730",
@@ -108,9 +105,8 @@ public class InteractorIndexServiceTest {
     }
 
     @After
-    public void tearDown() throws Exception {
-//        solrOperations.delete(new SimpleQuery(new SimpleStringCriteria("*:*")));
-//        solrOperations.commit();
+    public void tearDown() {
+        interactorIndexService.deleteAll();
     }
 
     @Test
@@ -119,7 +115,8 @@ public class InteractorIndexServiceTest {
         interactorIndexService.save(searchInteractor1);
 
         Optional<SearchInteractor> interactor = interactorSearchService.findById("P06730");
-
+        assertEquals(interactor.get().getInteractorId(), "P06730");
+        assertEquals(interactorSearchService.countTotal(), 1);
     }
 
     @Test
@@ -128,16 +125,15 @@ public class InteractorIndexServiceTest {
         interactorIndexService.deleteAll();
 
         interactorIndexService.saveAll(Arrays.asList(searchInteractor1, searchInteractor2, searchInteractor3));
-
+        assertEquals(interactorSearchService.countTotal(), 3);
     }
 
 
     @Test
     public void deleteCollection() {
         // empty collection
-//        interactorIndexService.deleteAll();
-
-
+       interactorIndexService.deleteAll();
+        assertEquals(interactorSearchService.countTotal(), 0);
     }
 
 }
