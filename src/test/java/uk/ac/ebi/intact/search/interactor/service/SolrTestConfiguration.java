@@ -1,14 +1,13 @@
 package uk.ac.ebi.intact.search.interactor.service;
 
 import org.apache.solr.client.solrj.SolrClient;
-import org.apache.solr.client.solrj.impl.HttpSolrClient;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
-import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.data.solr.core.SolrTemplate;
 import org.springframework.data.solr.repository.config.EnableSolrRepositories;
-
+import org.springframework.data.solr.server.support.EmbeddedSolrServerFactory;
 
 /**
  * @author Elisabet Barrera
@@ -17,38 +16,20 @@ import org.springframework.data.solr.repository.config.EnableSolrRepositories;
 @Configuration
 @EnableSolrRepositories(basePackages = "uk.ac.ebi.intact.search.interactor.repository",
         schemaCreationSupport = true)
-@ComponentScan(basePackages = {"uk.ac.ebi.intact.search.interactor.service"})
 @SpringBootApplication
 public class SolrTestConfiguration {
 
     @Bean
-    public SolrClient solrClient() {
-        return new HttpSolrClient("http://localhost:8983/solr");
+    @Qualifier("embeddedServer")
+    public SolrClient solrClient() throws Exception {
+        EmbeddedSolrServerFactory factory = new EmbeddedSolrServerFactory("src/test/resources/solr.home.7.3.1");
+        return factory.getSolrClient();
+        //return new HttpSolrClient.Builder("http://localhost:8983/solr").build();
+
     }
 
     @Bean
-    public SolrTemplate solrTemplate(SolrClient client) throws Exception {
+    public SolrTemplate solrTemplate( @Qualifier("embeddedServer") SolrClient client)  {
         return new SolrTemplate(client);
     }
-
-//    /**
-//     * Remove test data when context is shut down.
-//     */
-//    public @PreDestroy
-//    void deleteDocumentsOnShutdown() {
-//        service.deleteAll();
-//    }
-
-
-//   //TODO Try this configuration for embeddedSolr (testing)
-//    @Bean
-//    public SolrClient solrClient() {
-//        EmbeddedSolrServerFactory factory = new EmbeddedSolrServerFactory("classpath:com/acme/solr");
-//        return factory.getSolrServer();
-//    }
-//
-//    @Bean
-//    public SolrOperations solrTemplate() {
-//        return new SolrTemplate(solrClient());
-//    }
 }
