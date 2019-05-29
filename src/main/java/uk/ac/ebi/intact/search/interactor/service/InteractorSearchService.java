@@ -77,4 +77,8 @@ public class InteractorSearchService {
         return interactorRepository.findById(id);
     }
 
+    public long countTotal() {
+        return this.interactorRepository.count();
+    }
+
 }
