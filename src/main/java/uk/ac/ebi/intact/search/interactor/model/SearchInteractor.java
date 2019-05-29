@@ -5,7 +5,6 @@ import org.springframework.data.annotation.Id;
 import org.springframework.data.annotation.Transient;
 import org.springframework.data.solr.core.mapping.Indexed;
 import org.springframework.data.solr.core.mapping.SolrDocument;
-import org.springframework.lang.Nullable;
 
 import java.util.Set;
 
@@ -14,7 +13,7 @@ import static uk.ac.ebi.intact.search.interactor.model.SearchInteractorFields.*;
 /**
  * @author Elisabet Barrera
  */
-@SolrDocument(solrCoreName = SearchInteractor.INTERACTORS)
+@SolrDocument(collection = SearchInteractor.INTERACTORS)
 public class SearchInteractor {
 
     public static final String INTERACTORS = "interactors";
@@ -51,12 +50,6 @@ public class SearchInteractor {
     @Field(INTERACTION_COUNT)
     private Integer interactionCount;
 
-    /** This field is not part of the solr doc.
-    it is being added after a second call to interactions search service
-    to know in how many interactions the interactor appear **/
-    @Transient
-    private Long interactionSearchCount;
-
     @Field(INTERACTION_IDS)
     private Set<String> interactionIds;
 
@@ -83,6 +76,12 @@ public class SearchInteractor {
 
     @Field(FEATURE_SHORTLABEL)
     private Set<String> featureShortLabels;
+
+    /** This field is not part of the solr doc.
+     it is being added after a second call to interactions search service
+     to know in how many interactions the interactor appear **/
+    @Transient
+    private Long interactionSearchCount;
 
     public SearchInteractor() {
     }
