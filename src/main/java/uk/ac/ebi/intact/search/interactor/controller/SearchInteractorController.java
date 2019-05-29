@@ -2,24 +2,24 @@ package uk.ac.ebi.intact.search.interactor.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageRequest;
 import org.springframework.data.solr.core.query.result.FacetPage;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.client.RestTemplate;
-import org.springframework.web.util.UriComponents;
-import org.springframework.web.util.UriComponentsBuilder;
 import uk.ac.ebi.intact.search.interactor.model.SearchInteractor;
 import uk.ac.ebi.intact.search.interactor.service.InteractorIndexService;
 import uk.ac.ebi.intact.search.interactor.service.InteractorSearchService;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Set;
+
+import static org.springframework.http.MediaType.APPLICATION_JSON_VALUE;
 
 /**
  * @author Elisabet Barrera
  */
 
 @RestController
-@RequestMapping("/interactor")
 public class SearchInteractorController {
 
     private InteractorIndexService interactorIndexService;
@@ -32,33 +32,8 @@ public class SearchInteractorController {
         this.interactorSearchService = interactorSearchService;
     }
 
-    @RequestMapping("/")
-    public String SpringBootSolrExample() {
-        return "Welcome to Spring Boot solr Example";
-    }
-
-    @RequestMapping("/deleteAll")
-    public String deleteAllDocuments() {
-        try { //delete all documents from solr core
-            this.interactorIndexService.deleteAll();
-            return "documents deleted succesfully!";
-        }catch (Exception e){
-            return "Failed to delete documents";
-        }
-    }
-
-    @RequestMapping("/delete/{interactorId}")
-    public void delete(@PathVariable String interactorId) {
-        this.interactorIndexService.deleteById(interactorId);
-    }
-
-    @RequestMapping("/save")
-    public void saveAllDocuments(Collection<SearchInteractor> searchInteractors) {
-        //Store Documents
-        this.interactorIndexService.saveAll(searchInteractors);
-    }
-
-    @RequestMapping("/getAll")
+    @GetMapping(value = "/interactor/getAll",
+            produces = {APPLICATION_JSON_VALUE})
     public List<SearchInteractor> getAllDocs() {
         List<SearchInteractor> documents = new ArrayList<>();
         // iterate all documents and add it to list
@@ -68,19 +43,15 @@ public class SearchInteractorController {
         return documents;
     }
 
-    @RequestMapping("/getAllTaxIdFacets")
-    public FacetPage<SearchInteractor> getAllDocsTaxIdFacets() {
-        return this.interactorSearchService.getTaxIdFacets(new PageRequest(0,20));
-    }
-
-    @RequestMapping(value = "/getAllTaxIdFacets", params = {"page", "size"}, method = RequestMethod.GET)
+    @GetMapping(value = "/interactor/getAllTaxIdFacets", params = {"page", "size"},
+            produces = {APPLICATION_JSON_VALUE} )
     public FacetPage<SearchInteractor> getAllDocsTaxIdFacets(
             @RequestParam(value = "page", defaultValue = "0") int page,
-            @RequestParam(value = "size", defaultValue = "1") int size) {
+            @RequestParam(value = "size", defaultValue = "20") int size) {
         return this.interactorSearchService.getTaxIdFacets(page, size);
     }
 
-    @RequestMapping(value = "/getSpeciesAndInteractorTypeFacets",
+    @RequestMapping(value = "/interactor/getSpeciesAndInteractorTypeFacets",
             params = {
                 "query",
                 "speciesFilter",
@@ -88,7 +59,8 @@ public class SearchInteractorController {
                 "page",
                 "pageSize"
             },
-            method = RequestMethod.GET)
+            method = RequestMethod.GET,
+            produces = {APPLICATION_JSON_VALUE})
     public FacetPage<SearchInteractor> getSpeciesAndInteractorTypeFacets(
             @RequestParam(value = "query") String query,
             @RequestParam(value = "speciesFilter", required = false) Set<String> speciesFilter,
@@ -98,13 +70,14 @@ public class SearchInteractorController {
         return this.interactorSearchService.getSpeciesAndInteractorTypeFacets(query, speciesFilter, interactorTypeFilter, page, pageSize);
     }
 
-    @RequestMapping(value = "/findInteractorWithFacet",
+    @RequestMapping(value = "/interactor/findInteractorWithFacet",
             params = {
                     "query",
                     "page",
                     "pageSize"
             },
-            method = RequestMethod.GET)
+            method = RequestMethod.GET,
+            produces = {APPLICATION_JSON_VALUE})
     public SearchInteractorResult findInteractorWithFacet(
             @RequestParam(value = "query") String query,
             @RequestParam(value = "speciesFilter", required = false) Set<String> speciesFilter,
@@ -125,7 +98,7 @@ public class SearchInteractorController {
         for (SearchInteractor searchInteractor : interactorResult.getContent()) {
 
             // TODO: Please change the URI FROM THE URL for the interaction web service in production
-            String URL = "http://localhost:8090/interaction/countInteractionResult?query={query}&interactorAc={interactorAc}&detectionMethodFilter={detectionMethodFilter}" +
+            String URL = "http://localhost:8082/intact/ws/interaction/countInteractionResult?query={query}&interactorAc={interactorAc}&detectionMethodFilter={detectionMethodFilter}" +
                     "&interactionTypeFilter={interactionTypeFilter}&hostOrganismFilter={hostOrganismFilter}&isNegativeFilter={isNegativeFilter}" +
                     "&minMiscore={minMiscore}&maxMiscore={maxMiscore}";
 
@@ -145,9 +118,16 @@ public class SearchInteractorController {
         return interactorResult;
     }
 
-    @RequestMapping("/findInteractor/{query}")
-    public Page<SearchInteractor> findInteractor(
-            @PathVariable String query) {
+    @GetMapping(value = "/interactor/findInteractor/{query}",
+            produces = {APPLICATION_JSON_VALUE})
+    public Page<SearchInteractor> findInteractor(@PathVariable String query) {
         return this.interactorSearchService.findInteractor(query);
     }
+
+    @GetMapping(value = "/interactor/countTotal",
+            produces = {APPLICATION_JSON_VALUE})
+    public long countTotal() {
+        return this.interactorSearchService.countTotal();
+    }
+
 }
