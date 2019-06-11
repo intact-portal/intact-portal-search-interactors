@@ -7,6 +7,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.solr.core.SolrOperations;
 import org.springframework.data.solr.core.query.*;
+import org.springframework.data.solr.core.query.result.FacetPage;
 import org.springframework.stereotype.Repository;
 import uk.ac.ebi.intact.search.interactor.controller.SearchInteractorResult;
 import uk.ac.ebi.intact.search.interactor.model.SearchInteractor;
@@ -39,10 +40,10 @@ public class CustomizedInteractorRepositoryImpl implements CustomizedInteractorR
     }
 
     @Override
-    public SearchInteractorResult findInteractorWithFacet(String query, Set<String> speciesFilter, Set<String> interactorTypeFilter,
-                                                          Set<String> detectionMethodFilter, Set<String> interactionTypeFilter,
-                                                          Set<String> interactionHostOrganismFilter, boolean isNegativeFilter,
-                                                          double minMiScore, double maxMiScore, Sort sort, Pageable pageable) {
+    public FacetPage<SearchInteractor> findInteractorWithFacet(String query, Set<String> speciesFilter, Set<String> interactorTypeFilter,
+                                             Set<String> detectionMethodFilter, Set<String> interactionTypeFilter,
+                                             Set<String> interactionHostOrganismFilter, boolean isNegativeFilter,
+                                             double minMiScore, double maxMiScore, Sort sort, Pageable pageable) {
 
         // search query
         SimpleFacetQuery search = new SimpleFacetQuery();
@@ -87,7 +88,7 @@ public class CustomizedInteractorRepositoryImpl implements CustomizedInteractorR
 //            search.addSort(DEFAULT_QUERY_SORT_WITH_QUERY);
 //        }
 
-        return new SearchInteractorResult(solrOperations.queryForFacetPage(INTERACTORS, search, SearchInteractor.class));
+        return solrOperations.queryForFacetPage(INTERACTORS, search, SearchInteractor.class);
     }
 
     @Override

@@ -3,6 +3,8 @@ package uk.ac.ebi.intact.search.interactor.repository;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
+import org.springframework.data.solr.core.query.result.FacetPage;
+import org.springframework.data.solr.repository.Facet;
 import org.springframework.stereotype.Repository;
 import uk.ac.ebi.intact.search.interactor.controller.SearchInteractorResult;
 import uk.ac.ebi.intact.search.interactor.model.SearchInteractor;
@@ -25,7 +27,7 @@ public interface CustomizedInteractorRepository {
      * @return a facet page with the names and the number of hits per name
      */
 
-    SearchInteractorResult findInteractorWithFacet(
+    FacetPage<SearchInteractor> findInteractorWithFacet(
             String query,
             Set<String> speciesFilter,
             Set<String> interactorTypeFilter,

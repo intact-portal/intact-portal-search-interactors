@@ -1,17 +1,24 @@
 package uk.ac.ebi.intact.search.interactor.controller;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
+import org.json.simple.JSONArray;
+import org.json.simple.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.solr.core.query.result.FacetPage;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.client.RestTemplate;
 import uk.ac.ebi.intact.search.interactor.model.SearchInteractor;
 import uk.ac.ebi.intact.search.interactor.service.InteractorIndexService;
 import uk.ac.ebi.intact.search.interactor.service.InteractorSearchService;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Set;
+import javax.servlet.http.HttpServletRequest;
+import java.io.IOException;
+import java.io.StringWriter;
+import java.util.*;
 
 import static org.springframework.http.MediaType.APPLICATION_JSON_VALUE;
 
@@ -70,13 +77,12 @@ public class SearchInteractorController {
         return this.interactorSearchService.getSpeciesAndInteractorTypeFacets(query, speciesFilter, interactorTypeFilter, page, pageSize);
     }
 
-    @RequestMapping(value = "/interactor/findInteractorWithFacet",
+    @GetMapping(value = "/interactor/findInteractorWithFacet",
             params = {
                     "query",
                     "page",
                     "pageSize"
             },
-            method = RequestMethod.GET,
             produces = {APPLICATION_JSON_VALUE})
     public SearchInteractorResult findInteractorWithFacet(
             @RequestParam(value = "query") String query,
@@ -91,14 +97,14 @@ public class SearchInteractorController {
             @RequestParam(value = "page", defaultValue = "0") int page,
             @RequestParam(value = "pageSize", defaultValue = "10") int pageSize) {
 
-        SearchInteractorResult interactorResult = this.interactorSearchService.findInteractorWithFacet(query, speciesFilter, interactorTypeFilter,
+        FacetPage<SearchInteractor> interactorResult = interactorSearchService.findInteractorWithFacet(query, speciesFilter, interactorTypeFilter,
                 detectionMethodFilter, interactionTypeFilter, interactionHostOrganismFilter,
                 isNegativeFilter, minMiScore, maxMiScore, page, pageSize);
 
         for (SearchInteractor searchInteractor : interactorResult.getContent()) {
 
             // TODO: Please change the URI FROM THE URL for the interaction web service in production
-            String URL = "http://localhost:8082/intact/ws/interaction/countInteractionResult?query={query}&interactorAc={interactorAc}&detectionMethodFilter={detectionMethodFilter}" +
+            String URL = "http://ves-hx-47:8082/intact/ws/interaction/countInteractionResult?query={query}&interactorAc={interactorAc}&detectionMethodFilter={detectionMethodFilter}" +
                     "&interactionTypeFilter={interactionTypeFilter}&hostOrganismFilter={hostOrganismFilter}&isNegativeFilter={isNegativeFilter}" +
                     "&minMiscore={minMiscore}&maxMiscore={maxMiscore}";
 
@@ -115,7 +121,90 @@ public class SearchInteractorController {
             searchInteractor.setInteractionSearchCount(interactionCount);
         }
 
-        return interactorResult;
+        return new SearchInteractorResult(interactorResult);
+    }
+
+    @PostMapping(value = "/interactor/datatables/{query}",
+            produces = {APPLICATION_JSON_VALUE})
+    public ResponseEntity<String> getInteractorsDatatablesHandler(@PathVariable String query,
+                                                                   HttpServletRequest request) throws IOException {
+        Set<String> interactorTypeFilter = new HashSet<>();
+        Set<String> speciesFilter = new HashSet<>();
+        Set<String> interactionTypeFilter = new HashSet<>();
+        Set<String> detectionMethodFilter = new HashSet<>();
+        Set<String> hostOrganismFilter = new HashSet<>();
+
+        int page = Integer.parseInt(request.getParameter("page"));
+        int pageSize = Integer.parseInt(request.getParameter("pageSize"));
+
+        if (request.getParameterValues("interactorType[]") != null) {
+            interactorTypeFilter = new HashSet<>(Arrays.asList(request.getParameterValues("interactorType[]")));
+        }
+        if (request.getParameterValues("species[]") != null) {
+            speciesFilter = new HashSet<>(Arrays.asList(request.getParameterValues("species[]")));
+        }
+        if (request.getParameterValues("interactionType[]") != null) {
+            interactionTypeFilter = new HashSet<>(Arrays.asList(request.getParameterValues("interactionType[]")));
+        }
+        if (request.getParameterValues("detectionMethod[]") != null) {
+            detectionMethodFilter = new HashSet<>(Arrays.asList(request.getParameterValues("detectionMethod[]")));
+        }
+        if (request.getParameterValues("hostOrganism[]") != null) {
+            hostOrganismFilter = new HashSet<>(Arrays.asList(request.getParameterValues("hostOrganism[]")));
+        }
+
+        boolean negativeFilter = Boolean.parseBoolean(request.getParameter("negativeInteraction"));
+        double minMiScoreFilter = Double.parseDouble(request.getParameter("miScoreMin"));
+        double maxMiScoreFilter = Double.parseDouble(request.getParameter("miScoreMax"));
+
+        FacetPage<SearchInteractor> searchInteractors = interactorSearchService.findInteractorWithFacet(query, speciesFilter,
+                interactorTypeFilter, detectionMethodFilter, interactionTypeFilter, hostOrganismFilter, negativeFilter,
+                minMiScoreFilter, maxMiScoreFilter, page, pageSize);
+
+        for (SearchInteractor searchInteractor : searchInteractors.getContent()) {
+
+            // TODO: Please change the URI FROM THE URL for the interaction web service in production
+            String URL = "http://ves-hx-47:8082/intact/ws/interaction/countInteractionResult?query={query}&interactorAc={interactorAc}&detectionMethodFilter={detectionMethodFilter}" +
+                    "&interactionTypeFilter={interactionTypeFilter}&hostOrganismFilter={hostOrganismFilter}&isNegativeFilter={isNegativeFilter}" +
+                    "&minMiscore={minMiscore}&maxMiscore={maxMiscore}";
+
+            String term = searchInteractor.getInteractorId();
+
+
+            RestTemplate restTemplate = new RestTemplate();
+            Long interactionCount = restTemplate.getForObject(URL, Long.class, query, term,
+                    detectionMethodFilter != null ? String.join(",", detectionMethodFilter): "",
+                    interactionTypeFilter != null ? String.join(",", interactionTypeFilter): "",
+                    hostOrganismFilter != null ? String.join(",", hostOrganismFilter) : "",
+                    negativeFilter, minMiScoreFilter, maxMiScoreFilter);
+
+            searchInteractor.setInteractionSearchCount(interactionCount);
+        }
+
+        SearchInteractorResult searchInteractorResult = new SearchInteractorResult(searchInteractors);
+
+
+        JSONObject result = new JSONObject();
+        result.put("draw", request.getParameter("draw"));
+        result.put("recordsTotal", searchInteractorResult.getTotalElements());
+        result.put("recordsFiltered", searchInteractorResult.getTotalElements());
+
+        JSONArray data = new JSONArray();
+
+        for (SearchInteractor interactor : searchInteractorResult.getContent()) {
+            StringWriter writer = new StringWriter();
+            ObjectMapper mapper = new ObjectMapper();
+            mapper.writeValue(writer, interactor);
+            data.add(writer);
+        }
+
+        result.put("data", data);
+
+        HttpHeaders headers = new HttpHeaders();
+        headers.add("Content-Type", APPLICATION_JSON_VALUE);
+        headers.add("X-Clacks-Overhead", "headers");
+
+        return new ResponseEntity<>(result.toString(), headers, HttpStatus.OK);
     }
 
     @GetMapping(value = "/interactor/findInteractor/{query}",
