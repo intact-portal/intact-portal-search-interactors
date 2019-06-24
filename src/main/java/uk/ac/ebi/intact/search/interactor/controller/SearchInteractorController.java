@@ -39,7 +39,8 @@ public class SearchInteractorController {
         this.interactorSearchService = interactorSearchService;
     }
 
-    @GetMapping(value = "/interactor/getAll",
+    @CrossOrigin(origins = "*")
+    @GetMapping(value = "/getAll",
             produces = {APPLICATION_JSON_VALUE})
     public List<SearchInteractor> getAllDocs() {
         List<SearchInteractor> documents = new ArrayList<>();
@@ -50,7 +51,8 @@ public class SearchInteractorController {
         return documents;
     }
 
-    @GetMapping(value = "/interactor/getAllTaxIdFacets", params = {"page", "size"},
+    @CrossOrigin(origins = "*")
+    @GetMapping(value = "/getAllTaxIdFacets", params = {"page", "size"},
             produces = {APPLICATION_JSON_VALUE} )
     public FacetPage<SearchInteractor> getAllDocsTaxIdFacets(
             @RequestParam(value = "page", defaultValue = "0") int page,
@@ -58,7 +60,8 @@ public class SearchInteractorController {
         return this.interactorSearchService.getTaxIdFacets(page, size);
     }
 
-    @RequestMapping(value = "/interactor/getSpeciesAndInteractorTypeFacets",
+    @CrossOrigin(origins = "*")
+    @GetMapping(value = "/getSpeciesAndInteractorTypeFacets",
             params = {
                 "query",
                 "speciesFilter",
@@ -66,7 +69,6 @@ public class SearchInteractorController {
                 "page",
                 "pageSize"
             },
-            method = RequestMethod.GET,
             produces = {APPLICATION_JSON_VALUE})
     public FacetPage<SearchInteractor> getSpeciesAndInteractorTypeFacets(
             @RequestParam(value = "query") String query,
@@ -77,7 +79,8 @@ public class SearchInteractorController {
         return this.interactorSearchService.getSpeciesAndInteractorTypeFacets(query, speciesFilter, interactorTypeFilter, page, pageSize);
     }
 
-    @GetMapping(value = "/interactor/findInteractorWithFacet",
+    @CrossOrigin(origins = "*")
+    @GetMapping(value = "/findInteractorWithFacet",
             params = {
                     "query",
                     "page",
@@ -124,7 +127,8 @@ public class SearchInteractorController {
         return new SearchInteractorResult(interactorResult);
     }
 
-    @PostMapping(value = "/interactor/datatables/{query}",
+    @CrossOrigin(origins = "*")
+    @PostMapping(value = "/datatables/{query}",
             produces = {APPLICATION_JSON_VALUE})
     public ResponseEntity<String> getInteractorsDatatablesHandler(@PathVariable String query,
                                                                    HttpServletRequest request) throws IOException {
@@ -207,16 +211,42 @@ public class SearchInteractorController {
         return new ResponseEntity<>(result.toString(), headers, HttpStatus.OK);
     }
 
-    @GetMapping(value = "/interactor/findInteractor/{query}",
+    @CrossOrigin(origins = "*")
+    @GetMapping(value = "/findInteractor/{query}",
             produces = {APPLICATION_JSON_VALUE})
     public Page<SearchInteractor> findInteractor(@PathVariable String query) {
         return this.interactorSearchService.findInteractor(query);
     }
 
-    @GetMapping(value = "/interactor/countTotal",
+    @CrossOrigin(origins = "*")
+    @GetMapping(value = "/countTotal",
             produces = {APPLICATION_JSON_VALUE})
     public long countTotal() {
         return this.interactorSearchService.countTotal();
     }
 
+    @CrossOrigin(origins = "*")
+    @GetMapping(value = "/graph/findInteractorForGraphJson",
+            params = {
+                    "query",
+                    "page",
+                    "pageSize"
+            })
+    public Page<SearchInteractor> findInteractorForGraphJson(
+            @RequestParam(value = "query") String query,
+            @RequestParam(value = "speciesFilter", required = false) Set<String> speciesFilter,
+            @RequestParam(value = "interactorTypeFilter", required = false) Set<String> interactorTypeFilter,
+            @RequestParam(value = "detectionMethodFilter", required = false) Set<String> detectionMethodFilter,
+            @RequestParam(value = "interactionTypeFilter", required = false) Set<String> interactionTypeFilter,
+            @RequestParam(value = "interactionHostOrganismFilter", required = false) Set<String> interactionHostOrganismFilter,
+            @RequestParam(value = "isNegativeFilter", required = false) boolean isNegativeFilter,
+            @RequestParam(value = "minMiScore", defaultValue = "0", required = false) double minMiScore,
+            @RequestParam(value = "maxMiScore", defaultValue = "1", required = false) double maxMiScore,
+            @RequestParam(value = "page", defaultValue = "0") int page,
+            @RequestParam(value = "pageSize", defaultValue = Integer.MAX_VALUE + "") int pageSize) {
+
+        return this.interactorSearchService.findInteractorForGraphJson(query, speciesFilter, interactorTypeFilter,
+                detectionMethodFilter, interactionTypeFilter, interactionHostOrganismFilter,
+                isNegativeFilter, minMiScore, maxMiScore, page, pageSize);
+    }
 }

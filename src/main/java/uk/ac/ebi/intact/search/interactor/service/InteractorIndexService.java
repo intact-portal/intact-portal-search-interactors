@@ -7,6 +7,8 @@ import org.springframework.transaction.annotation.Transactional;
 import uk.ac.ebi.intact.search.interactor.model.SearchInteractor;
 import uk.ac.ebi.intact.search.interactor.repository.InteractorRepository;
 
+import java.time.Duration;
+
 /**
  * Custom and generic CRUD operations for indexing purposes.
  *
@@ -39,8 +41,17 @@ public class InteractorIndexService {
     }
 
     @Transactional
+    public void saveAll(Iterable<SearchInteractor> searchInteractors, Duration commitWithin) {
+        this.interactorRepository.saveAll(searchInteractors, commitWithin);
+    }
+
+    @Transactional
     public void deleteById(String id) {
         this.interactorRepository.deleteById(id);
     }
 
+    @Transactional
+    public void save(SearchInteractor searchInteractor, Duration commitWithin) {
+        this.interactorRepository.save(searchInteractor, commitWithin);
+    }
 }

@@ -3,9 +3,9 @@ package uk.ac.ebi.intact.search.interactor.model;
 import org.apache.solr.client.solrj.beans.Field;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.annotation.Transient;
-import org.springframework.data.solr.core.mapping.Indexed;
 import org.springframework.data.solr.core.mapping.SolrDocument;
 
+import java.util.HashSet;
 import java.util.Set;
 
 import static uk.ac.ebi.intact.search.interactor.model.SearchInteractorFields.*;
@@ -18,10 +18,13 @@ public class SearchInteractor {
 
     public static final String INTERACTORS = "interactors";
 
-    @Id
     @Field(INTERACTOR_ID)
-    @Indexed
     private String interactorId;
+
+    @Id
+    @Field(INTERACTOR_AC)
+    private String interactorAc;
+
 
     @Field(INTERACTOR_NAME)
     private String interactorName;
@@ -123,6 +126,14 @@ public class SearchInteractor {
         this.interactorId = interactorId;
     }
 
+    public String getInteractorAc() {
+        return interactorAc;
+    }
+
+    public void setInteractorAc(String interactorAc) {
+        this.interactorAc = interactorAc;
+    }
+
     public String getDescription() {
         return description;
     }
@@ -140,6 +151,9 @@ public class SearchInteractor {
     }
 
     public Set<String> getInteractorAlias() {
+        if (this.interactorAlias == null) {
+            this.interactorAlias = new HashSet<>();
+        }
         return interactorAlias;
     }
 
@@ -148,6 +162,9 @@ public class SearchInteractor {
     }
 
     public Set<String> getInteractorAltIds() {
+        if (this.interactorAltIds == null) {
+            this.interactorAltIds = new HashSet<>();
+        }
         return interactorAltIds;
     }
 
@@ -180,6 +197,9 @@ public class SearchInteractor {
     }
 
     public Set<String> getInteractorXrefs() {
+        if (this.interactorXrefs == null) {
+            this.interactorXrefs = new HashSet<>();
+        }
         return interactorXrefs;
     }
 
@@ -204,7 +224,10 @@ public class SearchInteractor {
     }
 
     public Set<String> getInteractionIds() {
-        return interactionIds;
+        if (this.interactorXrefs == null) {
+            this.interactorXrefs = new HashSet<>();
+        }
+        return interactorXrefs;
     }
 
     public void setInteractionIds(Set<String> interactionIds) {
@@ -212,6 +235,9 @@ public class SearchInteractor {
     }
 
     public Set<String> getInteractionDetectionMethod() {
+        if (this.interactionDetectionMethod == null) {
+            this.interactionDetectionMethod = new HashSet<>();
+        }
         return interactionDetectionMethod;
     }
 
@@ -220,6 +246,9 @@ public class SearchInteractor {
     }
 
     public Set<String> getInteractionType() {
+        if (this.interactionType == null) {
+            this.interactionType = new HashSet<>();
+        }
         return interactionType;
     }
 
@@ -228,6 +257,9 @@ public class SearchInteractor {
     }
 
     public Set<String> getInteractionAc() {
+        if (this.interactionAc == null) {
+            this.interactionAc = new HashSet<>();
+        }
         return interactionAc;
     }
 
@@ -236,6 +268,9 @@ public class SearchInteractor {
     }
 
     public Set<String> getInteractionExpansionMethod() {
+        if (this.interactionExpansionMethod == null) {
+            this.interactionExpansionMethod = new HashSet<>();
+        }
         return interactionExpansionMethod;
     }
 
@@ -244,6 +279,9 @@ public class SearchInteractor {
     }
 
     public Set<Boolean> getInteractionNegative() {
+        if (this.interactionNegative == null) {
+            this.interactionNegative = new HashSet<>();
+        }
         return interactionNegative;
     }
 
@@ -252,6 +290,9 @@ public class SearchInteractor {
     }
 
     public Set<Double> getInteractionMiScore() {
+        if (this.interactionMiScore == null) {
+            this.interactionMiScore = new HashSet<>();
+        }
         return interactionMiScore;
     }
 
@@ -260,6 +301,9 @@ public class SearchInteractor {
     }
 
     public Set<String> getInteractionHostOrganism() {
+        if (this.interactionHostOrganism == null) {
+            this.interactionHostOrganism = new HashSet<>();
+        }
         return interactionHostOrganism;
     }
 
@@ -268,6 +312,9 @@ public class SearchInteractor {
     }
 
     public Set<String> getFeatureShortLabels() {
+        if (this.featureShortLabels == null) {
+            this.featureShortLabels = new HashSet<>();
+        }
         return featureShortLabels;
     }
 

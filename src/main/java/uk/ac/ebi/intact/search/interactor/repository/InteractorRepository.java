@@ -9,6 +9,7 @@ import org.springframework.data.solr.repository.SolrCrudRepository;
 import org.springframework.stereotype.Repository;
 import uk.ac.ebi.intact.search.interactor.model.SearchInteractor;
 
+import java.util.Optional;
 import java.util.Set;
 
 import static org.springframework.data.solr.core.query.Query.Operator.AND;
@@ -36,6 +37,8 @@ public interface InteractorRepository extends SolrCrudRepository<SearchInteracto
     @Query(value = "default:?0")
 //    @Query(value = DEFAULT + ":?0")
     Page<SearchInteractor> findInteractor(String query, Pageable pageable);
+
+    Optional<SearchInteractor> findByInteractorAc(String interactorAc);
 
 
 }

@@ -7,7 +7,6 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.solr.core.query.result.FacetPage;
 import org.springframework.stereotype.Service;
-import uk.ac.ebi.intact.search.interactor.controller.SearchInteractorResult;
 import uk.ac.ebi.intact.search.interactor.model.SearchInteractor;
 import uk.ac.ebi.intact.search.interactor.repository.InteractorRepository;
 
@@ -82,6 +81,10 @@ public class InteractorSearchService {
 
     public Optional<SearchInteractor> findById(String id) {
         return interactorRepository.findById(id);
+    }
+
+    public Optional<SearchInteractor> findByInteractorAc(String interactorAc){
+        return interactorRepository.findByInteractorAc(interactorAc);
     }
 
     public long countTotal() {

@@ -2,6 +2,7 @@ package uk.ac.ebi.intact.search.interactor.model;
 
 public class SearchInteractorFields {
 
+    public static final String INTERACTOR_AC = "interactor_ac";
     public static final String INTERACTOR_ID = "interactor_id";
     public static final String INTERACTOR_ID_STR = "interactor_id_str";
 
