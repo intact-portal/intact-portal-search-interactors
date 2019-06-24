@@ -107,7 +107,8 @@ public class SearchInteractorController {
         for (SearchInteractor searchInteractor : interactorResult.getContent()) {
 
             // TODO: Please change the URI FROM THE URL for the interaction web service in production
-            String URL = "http://ves-hx-47:8082/intact/ws/interaction/countInteractionResult?query={query}&interactorAc={interactorAc}&detectionMethodFilter={detectionMethodFilter}" +
+            String URL = "http://ves-hx-47:8082/intact/ws/interaction/countInteractionResult?query={query}&interactorAc={interactorAc}" +
+                    "&speciesFilter={speciesFilter}&interactorTypeFilter={interactorTypeFilter}&detectionMethodFilter={detectionMethodFilter}" +
                     "&interactionTypeFilter={interactionTypeFilter}&hostOrganismFilter={hostOrganismFilter}&isNegativeFilter={isNegativeFilter}" +
                     "&minMiscore={minMiscore}&maxMiscore={maxMiscore}";
 
@@ -116,6 +117,8 @@ public class SearchInteractorController {
 
             RestTemplate restTemplate = new RestTemplate();
             Long interactionCount = restTemplate.getForObject(URL, Long.class, query, term,
+                    speciesFilter != null ? String.join(",", speciesFilter): "",
+                    interactorTypeFilter != null ? String.join(",", interactorTypeFilter): "",
                     detectionMethodFilter != null ? String.join(",", detectionMethodFilter): "",
                     interactionTypeFilter != null ? String.join(",", interactionTypeFilter): "",
                     interactionHostOrganismFilter != null ? String.join(",", interactionHostOrganismFilter) : "",
@@ -168,7 +171,8 @@ public class SearchInteractorController {
         for (SearchInteractor searchInteractor : searchInteractors.getContent()) {
 
             // TODO: Please change the URI FROM THE URL for the interaction web service in production
-            String URL = "http://ves-hx-47:8082/intact/ws/interaction/countInteractionResult?query={query}&interactorAc={interactorAc}&detectionMethodFilter={detectionMethodFilter}" +
+            String URL = "http://ves-hx-47:8082/intact/ws/interaction/countInteractionResult?query={query}&interactorAc={interactorAc}" +
+                    "&speciesFilter={speciesFilter}&interactorTypeFilter={interactorTypeFilter}&detectionMethodFilter={detectionMethodFilter}" +
                     "&interactionTypeFilter={interactionTypeFilter}&hostOrganismFilter={hostOrganismFilter}&isNegativeFilter={isNegativeFilter}" +
                     "&minMiscore={minMiscore}&maxMiscore={maxMiscore}";
 
@@ -177,6 +181,8 @@ public class SearchInteractorController {
 
             RestTemplate restTemplate = new RestTemplate();
             Long interactionCount = restTemplate.getForObject(URL, Long.class, query, term,
+                    speciesFilter != null ? String.join(",", speciesFilter): "",
+                    interactorTypeFilter != null ? String.join(",", interactorTypeFilter): "",
                     detectionMethodFilter != null ? String.join(",", detectionMethodFilter): "",
                     interactionTypeFilter != null ? String.join(",", interactionTypeFilter): "",
                     hostOrganismFilter != null ? String.join(",", hostOrganismFilter) : "",
