@@ -65,7 +65,7 @@ public class CustomizedInteractorRepositoryImpl implements CustomizedInteractorR
 
         // facet
         FacetOptions facetOptions = new FacetOptions(
-                SPECIES_NAME_STR, INTERACTOR_TYPE_STR,
+                INTERACTOR_SPECIES_NAME_STR, INTERACTOR_TYPE_STR,
                 INTERACTION_DETECTION_METHOD, INTERACTION_TYPE,
                 INTERACTION_NEGATIVE, INTERACTION_MISCORE, INTERACTION_HOST_ORGANISM);
         facetOptions.setFacetLimit(FACET_MIN_COUNT);
@@ -125,8 +125,8 @@ public class CustomizedInteractorRepositoryImpl implements CustomizedInteractorR
 
         //projection
         search.addProjectionOnField(new SimpleField(INTERACTOR_ID));
-        search.addProjectionOnField(new SimpleField(SPECIES_NAME));
-        search.addProjectionOnField(new SimpleField(TAX_ID));
+        search.addProjectionOnField(new SimpleField(INTERACTOR_SPECIES_NAME));
+        search.addProjectionOnField(new SimpleField(INTERACTOR_TAX_ID));
 
         return solrOperations.queryForPage(INTERACTORS, search, SearchInteractor.class);
     }
@@ -170,7 +170,7 @@ public class CustomizedInteractorRepositoryImpl implements CustomizedInteractorR
         List<FilterQuery> filterQueries = new ArrayList<>();
 
         //Interactor type filter
-        createFilterCriteria(speciesFilter, SPECIES_NAME, filterQueries);
+        createFilterCriteria(speciesFilter, INTERACTOR_SPECIES_NAME, filterQueries);
 
         //Species filter
         createFilterCriteria(interactorTypeFilter, INTERACTOR_TYPE, filterQueries);

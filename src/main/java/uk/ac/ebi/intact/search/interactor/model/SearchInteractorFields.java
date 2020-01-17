@@ -15,15 +15,15 @@ public class SearchInteractorFields {
 
     public static final String INTERACTOR_ALT_IDS = "interactor_alt_ids";
 
-    public static final String TAX_ID = "tax_id";
+    public static final String INTERACTOR_TAX_ID = "interactor_tax_id";
 
     public static final String INTERACTOR_XREFS = "interactor_xrefs";
 
     public static final String INTERACTOR_TYPE = "interactor_type";
     public static final String INTERACTOR_TYPE_STR = "interactor_type_str";
 
-    public static final String SPECIES_NAME = "species_name";
-    public static final String SPECIES_NAME_STR = "species_name_str";
+    public static final String INTERACTOR_SPECIES_NAME = "interactor_species_name";
+    public static final String INTERACTOR_SPECIES_NAME_STR = "interactor_species_name_str";
 
     public static final String INTERACTION_COUNT = "interaction_count";
     public static final String INTERACTION_IDS = "interaction_ids";
@@ -44,7 +44,7 @@ public class SearchInteractorFields {
 
     public static final String DEFAULT = "default"; //Copy field for general search
 
-    public static final String FEATURE_SHORTLABEL= "feature_shortlabel";
+    public static final String INTERACTOR_FEATURE_SHORTLABEL= "interactor_feature_shortlabel";
 
 
 }

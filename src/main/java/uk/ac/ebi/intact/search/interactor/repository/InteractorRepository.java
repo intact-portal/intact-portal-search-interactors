@@ -24,13 +24,13 @@ public interface InteractorRepository extends SolrCrudRepository<SearchInteracto
 
 //    List<SearchInteractor> findByName(String name);
 
-    @Facet(fields = {SPECIES_NAME_STR, INTERACTOR_TYPE_STR}, limit = 100)
+    @Facet(fields = {INTERACTOR_SPECIES_NAME_STR, INTERACTOR_TYPE_STR}, limit = 100)
     @Query(value = "*:*")
         //TODO: taxId and interactor_type
     FacetPage<SearchInteractor> getTaxIdFacets(Pageable pageable);
 
-    @Facet(fields = {SPECIES_NAME_STR, INTERACTOR_TYPE_STR}, limit = 100)
-    @Query(value = DEFAULT + ":?0", filters = {SPECIES_NAME + ":?1", INTERACTOR_TYPE + ":?2"}, defaultOperator = AND)
+    @Facet(fields = {INTERACTOR_SPECIES_NAME_STR, INTERACTOR_TYPE_STR}, limit = 100)
+    @Query(value = DEFAULT + ":?0", filters = {INTERACTOR_SPECIES_NAME + ":?1", INTERACTOR_TYPE + ":?2"}, defaultOperator = AND)
     FacetPage<SearchInteractor> getSpeciesAndInteractorTypeFacets(String query, Set<String> speciesFilter, Set<String> interactorTypeFilter, Pageable pageable);
 
     //TODO Add this field as default. It has text_en as FieldType in solr and copy all the values for now

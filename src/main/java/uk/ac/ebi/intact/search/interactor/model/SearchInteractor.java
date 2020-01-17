@@ -25,7 +25,6 @@ public class SearchInteractor {
     @Field(INTERACTOR_AC)
     private String interactorAc;
 
-
     @Field(INTERACTOR_NAME)
     private String interactorName;
 
@@ -41,11 +40,11 @@ public class SearchInteractor {
     @Field(INTERACTOR_TYPE)
     private String interactorType;
 
-    @Field(SPECIES_NAME)
-    private String species;
+    @Field(INTERACTOR_SPECIES_NAME)
+    private String interactorSpecies;
 
-    @Field(TAX_ID)
-    private Integer taxId;
+    @Field(INTERACTOR_TAX_ID)
+    private Integer interactorTaxId;
 
     @Field(INTERACTOR_XREFS)
     private Set<String> interactorXrefs;
@@ -77,8 +76,8 @@ public class SearchInteractor {
     @Field(INTERACTION_HOST_ORGANISM)
     private Set<String> interactionHostOrganism;
 
-    @Field(FEATURE_SHORTLABEL)
-    private Set<String> featureShortLabels;
+    @Field(INTERACTOR_FEATURE_SHORTLABEL)
+    private Set<String> interactorFeatureShortLabels;
 
     /** This field is not part of the solr doc.
      it is being added after a second call to interactions search service
@@ -95,15 +94,15 @@ public class SearchInteractor {
                             Set<String> interactionIds, Set<String> interactionDetectionMethod, Set<String> interactionType,
                             Set<String> interactionAc, Set<String> interactionExpansionMethod, Set<Boolean> interactionNegative,
                             Set<Double> interactionMiScore, Set<String> interactionHostOrganism,
-                            Set<String> featureShortLabels) {
+                            Set<String> interactorFeatureShortLabels) {
         this.interactorId = interactorId;
         this.interactorName = interactorName;
         this.description = description;
         this.interactorAlias = interactorAlias;
         this.interactorAltIds = interactorAltIds;
         this.interactorType = interactorType;
-        this.species = species;
-        this.taxId = taxId;
+        this.setInteractorSpecies(species);
+        this.setInteractorTaxId(taxId);
         this.interactorXrefs = interactorXrefs;
         this.interactionCount = interactionCount;
         this.interactionSearchCount = interactionSearchCount;
@@ -115,7 +114,7 @@ public class SearchInteractor {
         this.interactionNegative = interactionNegative;
         this.interactionMiScore = interactionMiScore;
         this.interactionHostOrganism = interactionHostOrganism;
-        this.featureShortLabels = featureShortLabels;
+        this.setInteractorFeatureShortLabels(interactorFeatureShortLabels);
     }
 
     public String getInteractorId() {
@@ -178,22 +177,6 @@ public class SearchInteractor {
 
     public void setInteractorType(String interactorType) {
         this.interactorType = interactorType;
-    }
-
-    public String getSpecies() {
-        return species;
-    }
-
-    public void setSpecies(String species) {
-        this.species = species;
-    }
-
-    public Integer getTaxId() {
-        return taxId;
-    }
-
-    public void setTaxId(Integer taxId) {
-        this.taxId = taxId;
     }
 
     public Set<String> getInteractorXrefs() {
@@ -311,17 +294,6 @@ public class SearchInteractor {
         this.interactionHostOrganism = interactionHostOrganism;
     }
 
-    public Set<String> getFeatureShortLabels() {
-        if (this.featureShortLabels == null) {
-            this.featureShortLabels = new HashSet<>();
-        }
-        return featureShortLabels;
-    }
-
-    public void setFeatureShortLabels(Set<String> featureShortLabels) {
-        this.featureShortLabels = featureShortLabels;
-    }
-
     @Override
     public String toString() {
         return "SearchInteractor{" +
@@ -331,8 +303,8 @@ public class SearchInteractor {
                 ", interactorAlias=" + interactorAlias +
                 ", interactorAltIds=" + interactorAltIds +
                 ", interactorType='" + interactorType + '\'' +
-                ", species='" + species + '\'' +
-                ", taxId=" + taxId +
+                ", species='" + getInteractorSpecies() + '\'' +
+                ", taxId=" + getInteractorTaxId() +
                 ", interactorXrefs=" + interactorXrefs +
                 ", interactionCount=" + interactionCount +
                 ", interactionSearchCount=" + interactionSearchCount +
@@ -344,7 +316,34 @@ public class SearchInteractor {
                 ", interactionNegative=" + interactionNegative +
                 ", interactionMiScore=" + interactionMiScore +
                 ", interactionHostOrganism=" + interactionHostOrganism +
-                ", featureShortLabels=" + featureShortLabels +
+                ", featureShortLabels=" + getInteractorFeatureShortLabels() +
                 '}';
+    }
+
+    public String getInteractorSpecies() {
+        return interactorSpecies;
+    }
+
+    public void setInteractorSpecies(String interactorSpecies) {
+        this.interactorSpecies = interactorSpecies;
+    }
+
+    public Integer getInteractorTaxId() {
+        return interactorTaxId;
+    }
+
+    public void setInteractorTaxId(Integer interactorTaxId) {
+        this.interactorTaxId = interactorTaxId;
+    }
+
+    public Set<String> getInteractorFeatureShortLabels() {
+        if (this.interactorFeatureShortLabels == null) {
+            this.interactorFeatureShortLabels = new HashSet<>();
+        }
+        return interactorFeatureShortLabels;
+    }
+
+    public void setInteractorFeatureShortLabels(Set<String> interactorFeatureShortLabels) {
+        this.interactorFeatureShortLabels = interactorFeatureShortLabels;
     }
 }
