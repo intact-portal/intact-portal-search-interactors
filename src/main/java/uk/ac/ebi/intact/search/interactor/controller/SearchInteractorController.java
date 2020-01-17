@@ -171,7 +171,7 @@ public class SearchInteractorController {
         for (SearchInteractor searchInteractor : searchInteractors.getContent()) {
 
             // TODO: Please change the URI FROM THE URL for the interaction web service in production
-            String URL = "http://localhost:8082/intact/ws/interaction/countInteractionResult?query={query}&interactorAc={interactorAc}" +
+            String URL = "http://ves-hx-47:8082/intact/ws/interaction/countInteractionResult?query={query}&interactorAc={interactorAc}" +
                     "&speciesFilter={speciesFilter}&interactorTypeFilter={interactorTypeFilter}&detectionMethodFilter={detectionMethodFilter}" +
                     "&interactionTypeFilter={interactionTypeFilter}&hostOrganismFilter={hostOrganismFilter}&isNegativeFilter={isNegativeFilter}" +
                     "&minMiscore={minMiscore}&maxMiscore={maxMiscore}";
