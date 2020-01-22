@@ -1,4 +1,4 @@
-package uk.ac.ebi.intact.search.interactors.controller;
+package uk.ac.ebi.intact.search.interactors.ws.controller;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.json.simple.JSONArray;
@@ -11,7 +11,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.client.RestTemplate;
-import uk.ac.ebi.intact.search.interactors.controller.model.InteractorSearchResult;
+import uk.ac.ebi.intact.search.interactors.ws.controller.model.InteractorSearchResult;
 import uk.ac.ebi.intact.search.interactors.model.SearchInteractor;
 import uk.ac.ebi.intact.search.interactors.service.InteractorIndexService;
 import uk.ac.ebi.intact.search.interactors.service.InteractorSearchService;

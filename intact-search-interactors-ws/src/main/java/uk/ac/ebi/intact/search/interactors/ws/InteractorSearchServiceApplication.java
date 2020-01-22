@@ -1,4 +1,4 @@
-package uk.ac.ebi.intact.search.interactors;
+package uk.ac.ebi.intact.search.interactors.ws;
 
 import org.apache.solr.client.solrj.SolrClient;
 import org.apache.solr.client.solrj.impl.HttpSolrClient;
