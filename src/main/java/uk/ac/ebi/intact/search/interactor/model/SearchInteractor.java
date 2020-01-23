@@ -18,9 +18,6 @@ public class SearchInteractor {
 
     public static final String INTERACTORS = "interactors";
 
-    @Field(INTERACTOR_ID)
-    private String interactorId;
-
     @Id
     @Field(INTERACTOR_AC)
     private String interactorAc;
@@ -55,47 +52,46 @@ public class SearchInteractor {
     @Field(INTERACTION_IDS)
     private Set<String> interactionIds;
 
-    @Field(INTERACTION_DETECTION_METHOD)
-    private Set<String> interactionDetectionMethod;
+    @Field(INTERACTION_DETECTION_METHODS)
+    private Set<String> interactionDetectionMethods;
 
-    @Field(INTERACTION_TYPE)
-    private Set<String> interactionType;
+    @Field(INTERACTION_TYPES)
+    private Set<String> interactionTypes;
 
-    @Field(INTERACTION_AC)
-    private Set<String> interactionAc;
+    @Field(INTERACTION_EXPANSION_METHODS)
+    private Set<String> interactionExpansionMethods;
 
-    @Field(INTERACTION_EXPANSION_METHOD)
-    private Set<String> interactionExpansionMethod;
+    @Field(INTERACTION_NEGATIVES)
+    private Set<Boolean> interactionNegatives;
 
-    @Field(INTERACTION_NEGATIVE)
-    private Set<Boolean> interactionNegative;
+    @Field(INTERACTION_MISCORES)
+    private Set<Double> interactionMiScores;
 
-    @Field(INTERACTION_MISCORE)
-    private Set<Double> interactionMiScore;
+    @Field(INTERACTION_HOST_ORGANISMS)
+    private Set<String> interactionHostOrganisms;
 
-    @Field(INTERACTION_HOST_ORGANISM)
-    private Set<String> interactionHostOrganism;
-
-    @Field(INTERACTOR_FEATURE_SHORTLABEL)
+    @Field(INTERACTOR_FEATURE_SHORTLABELS)
     private Set<String> interactorFeatureShortLabels;
 
-    /** This field is not part of the solr doc.
-     it is being added after a second call to interactions search service
-     to know in how many interactions the interactor appear **/
+    /**
+     * This field is not part of the solr doc.
+     * it is being added after a second call to interactions search service
+     * to know in how many interactions the interactor appear
+     **/
     @Transient
     private Long interactionSearchCount;
 
     public SearchInteractor() {
     }
 
-    public SearchInteractor(String interactorId, String interactorName, String description, Set<String> interactorAlias,
+    public SearchInteractor(String interactorAc, String interactorName, String description, Set<String> interactorAlias,
                             Set<String> interactorAltIds, String interactorType, String species, Integer taxId,
                             Set<String> interactorXrefs, Integer interactionCount, Long interactionSearchCount,
-                            Set<String> interactionIds, Set<String> interactionDetectionMethod, Set<String> interactionType,
-                            Set<String> interactionAc, Set<String> interactionExpansionMethod, Set<Boolean> interactionNegative,
-                            Set<Double> interactionMiScore, Set<String> interactionHostOrganism,
+                            Set<String> interactionIds, Set<String> interactionDetectionMethods, Set<String> interactionTypes,
+                            Set<String> interactionExpansionMethods, Set<Boolean> interactionNegatives,
+                            Set<Double> interactionMiScores, Set<String> interactionHostOrganisms,
                             Set<String> interactorFeatureShortLabels) {
-        this.interactorId = interactorId;
+        this.interactorAc = interactorAc;
         this.interactorName = interactorName;
         this.description = description;
         this.interactorAlias = interactorAlias;
@@ -107,22 +103,13 @@ public class SearchInteractor {
         this.interactionCount = interactionCount;
         this.interactionSearchCount = interactionSearchCount;
         this.interactionIds = interactionIds;
-        this.interactionDetectionMethod = interactionDetectionMethod;
-        this.interactionType = interactionType;
-        this.interactionAc = interactionAc;
-        this.interactionExpansionMethod = interactionExpansionMethod;
-        this.interactionNegative = interactionNegative;
-        this.interactionMiScore = interactionMiScore;
-        this.interactionHostOrganism = interactionHostOrganism;
+        this.interactionDetectionMethods = interactionDetectionMethods;
+        this.interactionTypes = interactionTypes;
+        this.interactionExpansionMethods = interactionExpansionMethods;
+        this.interactionNegatives = interactionNegatives;
+        this.interactionMiScores = interactionMiScores;
+        this.interactionHostOrganisms = interactionHostOrganisms;
         this.setInteractorFeatureShortLabels(interactorFeatureShortLabels);
-    }
-
-    public String getInteractorId() {
-        return interactorId;
-    }
-
-    public void setInteractorId(String interactorId) {
-        this.interactorId = interactorId;
     }
 
     public String getInteractorAc() {
@@ -217,107 +204,52 @@ public class SearchInteractor {
         this.interactionIds = interactionIds;
     }
 
-    public Set<String> getInteractionDetectionMethod() {
-        if (this.interactionDetectionMethod == null) {
-            this.interactionDetectionMethod = new HashSet<>();
-        }
-        return interactionDetectionMethod;
+    public Set<String> getInteractionDetectionMethods() {
+        return interactionDetectionMethods;
     }
 
-    public void setInteractionDetectionMethod(Set<String> interactionDetectionMethod) {
-        this.interactionDetectionMethod = interactionDetectionMethod;
+    public void setInteractionDetectionMethods(Set<String> interactionDetectionMethods) {
+        this.interactionDetectionMethods = interactionDetectionMethods;
     }
 
-    public Set<String> getInteractionType() {
-        if (this.interactionType == null) {
-            this.interactionType = new HashSet<>();
-        }
-        return interactionType;
+    public Set<String> getInteractionTypes() {
+        return interactionTypes;
     }
 
-    public void setInteractionType(Set<String> interactionType) {
-        this.interactionType = interactionType;
+    public void setInteractionTypes(Set<String> interactionTypes) {
+        this.interactionTypes = interactionTypes;
     }
 
-    public Set<String> getInteractionAc() {
-        if (this.interactionAc == null) {
-            this.interactionAc = new HashSet<>();
-        }
-        return interactionAc;
+    public Set<String> getInteractionExpansionMethods() {
+        return interactionExpansionMethods;
     }
 
-    public void setInteractionAc(Set<String> interactionAc) {
-        this.interactionAc = interactionAc;
+    public void setInteractionExpansionMethods(Set<String> interactionExpansionMethods) {
+        this.interactionExpansionMethods = interactionExpansionMethods;
     }
 
-    public Set<String> getInteractionExpansionMethod() {
-        if (this.interactionExpansionMethod == null) {
-            this.interactionExpansionMethod = new HashSet<>();
-        }
-        return interactionExpansionMethod;
+    public Set<Boolean> getInteractionNegatives() {
+        return interactionNegatives;
     }
 
-    public void setInteractionExpansionMethod(Set<String> interactionExpansionMethod) {
-        this.interactionExpansionMethod = interactionExpansionMethod;
+    public void setInteractionNegatives(Set<Boolean> interactionNegatives) {
+        this.interactionNegatives = interactionNegatives;
     }
 
-    public Set<Boolean> getInteractionNegative() {
-        if (this.interactionNegative == null) {
-            this.interactionNegative = new HashSet<>();
-        }
-        return interactionNegative;
+    public Set<Double> getInteractionMiScores() {
+        return interactionMiScores;
     }
 
-    public void setInteractionNegative(Set<Boolean> interactionNegative) {
-        this.interactionNegative = interactionNegative;
+    public void setInteractionMiScores(Set<Double> interactionMiScores) {
+        this.interactionMiScores = interactionMiScores;
     }
 
-    public Set<Double> getInteractionMiScore() {
-        if (this.interactionMiScore == null) {
-            this.interactionMiScore = new HashSet<>();
-        }
-        return interactionMiScore;
+    public Set<String> getInteractionHostOrganisms() {
+        return interactionHostOrganisms;
     }
 
-    public void setInteractionMiScore(Set<Double> interactionMiScore) {
-        this.interactionMiScore = interactionMiScore;
-    }
-
-    public Set<String> getInteractionHostOrganism() {
-        if (this.interactionHostOrganism == null) {
-            this.interactionHostOrganism = new HashSet<>();
-        }
-        return interactionHostOrganism;
-    }
-
-    public void setInteractionHostOrganism(Set<String> interactionHostOrganism) {
-        this.interactionHostOrganism = interactionHostOrganism;
-    }
-
-    @Override
-    public String toString() {
-        return "SearchInteractor{" +
-                "interactorId='" + interactorId + '\'' +
-                ", interactorName='" + interactorName + '\'' +
-                ", description='" + description + '\'' +
-                ", interactorAlias=" + interactorAlias +
-                ", interactorAltIds=" + interactorAltIds +
-                ", interactorType='" + interactorType + '\'' +
-                ", species='" + getInteractorSpecies() + '\'' +
-                ", taxId=" + getInteractorTaxId() +
-                ", interactorXrefs=" + interactorXrefs +
-                ", interactionCount=" + interactionCount +
-                ", interactionSearchCount=" + interactionSearchCount +
-                ", interactionIds=" + interactionIds +
-                ", interactionDetectionMethod=" + interactionDetectionMethod +
-                ", interactionType=" + interactionType +
-                ", interactionAc=" + interactionAc +
-                ", interactionExpansionMethod=" + interactionExpansionMethod +
-                ", interactionNegative=" + interactionNegative +
-                ", interactionMiScore=" + interactionMiScore +
-                ", interactionHostOrganism=" + interactionHostOrganism +
-                ", featureShortLabels=" + getInteractorFeatureShortLabels() +
-                '}';
+    public void setInteractionHostOrganisms(Set<String> interactionHostOrganisms) {
+        this.interactionHostOrganisms = interactionHostOrganisms;
     }
 
     public String getInteractorSpecies() {
@@ -345,5 +277,30 @@ public class SearchInteractor {
 
     public void setInteractorFeatureShortLabels(Set<String> interactorFeatureShortLabels) {
         this.interactorFeatureShortLabels = interactorFeatureShortLabels;
+    }
+
+    @Override
+    public String toString() {
+        return "SearchInteractor{" +
+                "interactorAc='" + interactorAc + '\'' +
+                ", interactorName='" + interactorName + '\'' +
+                ", description='" + description + '\'' +
+                ", interactorAlias=" + interactorAlias +
+                ", interactorAltIds=" + interactorAltIds +
+                ", interactorType='" + interactorType + '\'' +
+                ", interactorSpecies='" + interactorSpecies + '\'' +
+                ", interactorTaxId=" + interactorTaxId +
+                ", interactorXrefs=" + interactorXrefs +
+                ", interactionCount=" + interactionCount +
+                ", interactionIds=" + interactionIds +
+                ", interactionDetectionMethods=" + interactionDetectionMethods +
+                ", interactionTypes=" + interactionTypes +
+                ", interactionExpansionMethods=" + interactionExpansionMethods +
+                ", interactionNegatives=" + interactionNegatives +
+                ", interactionMiScores=" + interactionMiScores +
+                ", interactionHostOrganisms=" + interactionHostOrganisms +
+                ", interactorFeatureShortLabels=" + interactorFeatureShortLabels +
+                ", interactionSearchCount=" + interactionSearchCount +
+                '}';
     }
 }

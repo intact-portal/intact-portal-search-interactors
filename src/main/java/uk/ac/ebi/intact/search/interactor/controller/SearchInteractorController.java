@@ -53,7 +53,7 @@ public class SearchInteractorController {
 
     @CrossOrigin(origins = "*")
     @GetMapping(value = "/getAllTaxIdFacets", params = {"page", "size"},
-            produces = {APPLICATION_JSON_VALUE} )
+            produces = {APPLICATION_JSON_VALUE})
     public FacetPage<SearchInteractor> getAllDocsTaxIdFacets(
             @RequestParam(value = "page", defaultValue = "0") int page,
             @RequestParam(value = "size", defaultValue = "20") int size) {
@@ -63,11 +63,11 @@ public class SearchInteractorController {
     @CrossOrigin(origins = "*")
     @GetMapping(value = "/getSpeciesAndInteractorTypeFacets",
             params = {
-                "query",
-                "speciesFilter",
-                "interactorTypeFilter",
-                "page",
-                "pageSize"
+                    "query",
+                    "speciesFilter",
+                    "interactorTypeFilter",
+                    "page",
+                    "pageSize"
             },
             produces = {APPLICATION_JSON_VALUE})
     public FacetPage<SearchInteractor> getSpeciesAndInteractorTypeFacets(
@@ -112,15 +112,15 @@ public class SearchInteractorController {
                     "&interactionTypeFilter={interactionTypeFilter}&hostOrganismFilter={hostOrganismFilter}&isNegativeFilter={isNegativeFilter}" +
                     "&minMiscore={minMiscore}&maxMiscore={maxMiscore}";
 
-            String term = searchInteractor.getInteractorId();
+            String term = searchInteractor.getInteractorAc();
 
 
             RestTemplate restTemplate = new RestTemplate();
             Long interactionCount = restTemplate.getForObject(URL, Long.class, query, term,
-                    speciesFilter != null ? String.join(",", speciesFilter): "",
-                    interactorTypeFilter != null ? String.join(",", interactorTypeFilter): "",
-                    detectionMethodFilter != null ? String.join(",", detectionMethodFilter): "",
-                    interactionTypeFilter != null ? String.join(",", interactionTypeFilter): "",
+                    speciesFilter != null ? String.join(",", speciesFilter) : "",
+                    interactorTypeFilter != null ? String.join(",", interactorTypeFilter) : "",
+                    detectionMethodFilter != null ? String.join(",", detectionMethodFilter) : "",
+                    interactionTypeFilter != null ? String.join(",", interactionTypeFilter) : "",
                     interactionHostOrganismFilter != null ? String.join(",", interactionHostOrganismFilter) : "",
                     isNegativeFilter, minMiScore, maxMiScore);
 
@@ -134,7 +134,7 @@ public class SearchInteractorController {
     @PostMapping(value = "/datatables/{query}",
             produces = {APPLICATION_JSON_VALUE})
     public ResponseEntity<String> getInteractorsDatatablesHandler(@PathVariable String query,
-                                                                   HttpServletRequest request) throws IOException {
+                                                                  HttpServletRequest request) throws IOException {
         Set<String> interactorTypeFilter = new HashSet<>();
         Set<String> speciesFilter = new HashSet<>();
         Set<String> interactionTypeFilter = new HashSet<>();
@@ -176,15 +176,15 @@ public class SearchInteractorController {
                     "&interactionTypeFilter={interactionTypeFilter}&hostOrganismFilter={hostOrganismFilter}&isNegativeFilter={isNegativeFilter}" +
                     "&minMiscore={minMiscore}&maxMiscore={maxMiscore}";
 
-            String term = searchInteractor.getInteractorId();
+            String term = searchInteractor.getInteractorAc();
 
 
             RestTemplate restTemplate = new RestTemplate();
             Long interactionCount = restTemplate.getForObject(URL, Long.class, query, term,
-                    speciesFilter != null ? String.join(",", speciesFilter): "",
-                    interactorTypeFilter != null ? String.join(",", interactorTypeFilter): "",
-                    detectionMethodFilter != null ? String.join(",", detectionMethodFilter): "",
-                    interactionTypeFilter != null ? String.join(",", interactionTypeFilter): "",
+                    speciesFilter != null ? String.join(",", speciesFilter) : "",
+                    interactorTypeFilter != null ? String.join(",", interactorTypeFilter) : "",
+                    detectionMethodFilter != null ? String.join(",", detectionMethodFilter) : "",
+                    interactionTypeFilter != null ? String.join(",", interactionTypeFilter) : "",
                     hostOrganismFilter != null ? String.join(",", hostOrganismFilter) : "",
                     negativeFilter, minMiScoreFilter, maxMiScoreFilter);
 

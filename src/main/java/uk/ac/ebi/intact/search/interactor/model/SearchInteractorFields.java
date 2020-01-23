@@ -3,9 +3,7 @@ package uk.ac.ebi.intact.search.interactor.model;
 public class SearchInteractorFields {
 
     public static final String INTERACTOR_AC = "interactor_ac";
-    public static final String INTERACTOR_ID = "interactor_id";
-    public static final String INTERACTOR_ID_STR = "interactor_id_str";
-
+    public static final String INTERACTOR_AC_STR = "interactor_ac_str";
 
     public static final String INTERACTOR_NAME = "interactor_name";
 
@@ -28,23 +26,21 @@ public class SearchInteractorFields {
     public static final String INTERACTION_COUNT = "interaction_count";
     public static final String INTERACTION_IDS = "interaction_ids";
 
-    public static final String INTERACTION_DETECTION_METHOD = "interaction_detection_method";
+    public static final String INTERACTION_DETECTION_METHODS = "interaction_detection_methods";
 
-    public static final String INTERACTION_TYPE = "interaction_type";
+    public static final String INTERACTION_TYPES = "interaction_types";
 
-    public static final String INTERACTION_AC = "interaction_ac";
+    public static final String INTERACTION_EXPANSION_METHODS = "interaction_expansion_methods";
 
-    public static final String INTERACTION_EXPANSION_METHOD = "interaction_expansion_method";
+    public static final String INTERACTION_NEGATIVES = "interaction_negatives";
 
-    public static final String INTERACTION_NEGATIVE = "interaction_negative";
+    public static final String INTERACTION_MISCORES = "interaction_miscores";
 
-    public static final String INTERACTION_MISCORE = "interaction_miscore";
-
-    public static final String INTERACTION_HOST_ORGANISM = "interaction_host_organism_str";
+    public static final String INTERACTION_HOST_ORGANISMS = "interaction_host_organisms";
 
     public static final String DEFAULT = "default"; //Copy field for general search
 
-    public static final String INTERACTOR_FEATURE_SHORTLABEL= "interactor_feature_shortlabel";
+    public static final String INTERACTOR_FEATURE_SHORTLABELS = "interactor_feature_shortlabels";
 
 
 }

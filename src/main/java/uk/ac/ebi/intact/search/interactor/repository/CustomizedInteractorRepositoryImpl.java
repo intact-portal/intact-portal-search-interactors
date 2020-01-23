@@ -9,7 +9,6 @@ import org.springframework.data.solr.core.SolrOperations;
 import org.springframework.data.solr.core.query.*;
 import org.springframework.data.solr.core.query.result.FacetPage;
 import org.springframework.stereotype.Repository;
-import uk.ac.ebi.intact.search.interactor.controller.SearchInteractorResult;
 import uk.ac.ebi.intact.search.interactor.model.SearchInteractor;
 
 import java.util.ArrayList;
@@ -41,9 +40,9 @@ public class CustomizedInteractorRepositoryImpl implements CustomizedInteractorR
 
     @Override
     public FacetPage<SearchInteractor> findInteractorWithFacet(String query, Set<String> speciesFilter, Set<String> interactorTypeFilter,
-                                             Set<String> detectionMethodFilter, Set<String> interactionTypeFilter,
-                                             Set<String> interactionHostOrganismFilter, boolean isNegativeFilter,
-                                             double minMiScore, double maxMiScore, Sort sort, Pageable pageable) {
+                                                               Set<String> detectionMethodFilter, Set<String> interactionTypeFilter,
+                                                               Set<String> interactionHostOrganismFilter, boolean isNegativeFilter,
+                                                               double minMiScore, double maxMiScore, Sort sort, Pageable pageable) {
 
         // search query
         SimpleFacetQuery search = new SimpleFacetQuery();
@@ -66,11 +65,11 @@ public class CustomizedInteractorRepositoryImpl implements CustomizedInteractorR
         // facet
         FacetOptions facetOptions = new FacetOptions(
                 INTERACTOR_SPECIES_NAME_STR, INTERACTOR_TYPE_STR,
-                INTERACTION_DETECTION_METHOD, INTERACTION_TYPE,
-                INTERACTION_NEGATIVE, INTERACTION_MISCORE, INTERACTION_HOST_ORGANISM);
+                INTERACTION_DETECTION_METHODS, INTERACTION_TYPES,
+                INTERACTION_NEGATIVES, INTERACTION_MISCORES, INTERACTION_HOST_ORGANISMS);
         facetOptions.setFacetLimit(FACET_MIN_COUNT);
         facetOptions.addFacetByRange(
-                new FacetOptions.FieldWithNumericRangeParameters(INTERACTION_MISCORE, 0d, 1d, 0.01d)
+                new FacetOptions.FieldWithNumericRangeParameters(INTERACTION_MISCORES, 0d, 1d, 0.01d)
                         .setHardEnd(true)
                         .setInclude(FacetParams.FacetRangeInclude.ALL)
         );
@@ -93,9 +92,9 @@ public class CustomizedInteractorRepositoryImpl implements CustomizedInteractorR
 
     @Override
     public Page<SearchInteractor> findInteractorForGraphJson(String query, Set<String> speciesFilter, Set<String> interactorTypeFilter,
-                                                           Set<String> detectionMethodFilter, Set<String> interactionTypeFilter,
-                                                           Set<String> interactionHostOrganismFilter, boolean isNegativeFilter,
-                                                           double minMiScore, double maxMiScore, Sort sort, Pageable pageable) {
+                                                             Set<String> detectionMethodFilter, Set<String> interactionTypeFilter,
+                                                             Set<String> interactionHostOrganismFilter, boolean isNegativeFilter,
+                                                             double minMiScore, double maxMiScore, Sort sort, Pageable pageable) {
 
         // search query
         SimpleQuery search = new SimpleQuery();
@@ -124,7 +123,7 @@ public class CustomizedInteractorRepositoryImpl implements CustomizedInteractorR
         }
 
         //projection
-        search.addProjectionOnField(new SimpleField(INTERACTOR_ID));
+        search.addProjectionOnField(new SimpleField(INTERACTOR_AC));
         search.addProjectionOnField(new SimpleField(INTERACTOR_SPECIES_NAME));
         search.addProjectionOnField(new SimpleField(INTERACTOR_TAX_ID));
 
@@ -143,11 +142,11 @@ public class CustomizedInteractorRepositoryImpl implements CustomizedInteractorR
                 if (conditions == null) {
                     conditions = new Criteria(DEFAULT).contains(word)
                             .or("interaction_ids_str").is(word)
-                            .or(INTERACTOR_ID_STR).is(word);
+                            .or(INTERACTOR_AC_STR).is(word);
                 } else {
                     conditions = conditions.or(DEFAULT).contains(word)
                             .or("interaction_ids_str").is(word)
-                            .or(INTERACTOR_ID_STR).is(word);
+                            .or(INTERACTOR_AC_STR).is(word);
                 }
             }
         } else {
@@ -176,10 +175,10 @@ public class CustomizedInteractorRepositoryImpl implements CustomizedInteractorR
         createFilterCriteria(interactorTypeFilter, INTERACTOR_TYPE, filterQueries);
 
         //Interaction Detection Method filter
-        createFilterCriteria(detectionMethodFilter, INTERACTION_DETECTION_METHOD, filterQueries);
+        createFilterCriteria(detectionMethodFilter, INTERACTION_DETECTION_METHODS, filterQueries);
 
         //Interaction Type filter
-        createFilterCriteria(interactionTypeFilter, INTERACTION_TYPE, filterQueries);
+        createFilterCriteria(interactionTypeFilter, INTERACTION_TYPES, filterQueries);
 
         //Interaction Negative filter
         createNegativeFilterCriteria(isNegativeFilter, filterQueries);
@@ -188,7 +187,7 @@ public class CustomizedInteractorRepositoryImpl implements CustomizedInteractorR
         createMiScoreFilterCriteria(minMiScore, maxMiScore, filterQueries);
 
         //Interaction Host Organism
-        createFilterCriteria(interactionHostOrganismFilter, INTERACTION_HOST_ORGANISM, filterQueries);
+        createFilterCriteria(interactionHostOrganismFilter, INTERACTION_HOST_ORGANISMS, filterQueries);
 
         return filterQueries;
     }
@@ -214,14 +213,14 @@ public class CustomizedInteractorRepositoryImpl implements CustomizedInteractorR
 
     private void createNegativeFilterCriteria(boolean value, List<FilterQuery> filterQueries) {
 
-        Criteria conditions = new Criteria(INTERACTION_NEGATIVE).is(value);
+        Criteria conditions = new Criteria(INTERACTION_NEGATIVES).is(value);
 
         filterQueries.add(new SimpleFilterQuery(conditions));
     }
 
     private void createMiScoreFilterCriteria(double minMiScore, double maxMiScore, List<FilterQuery> filterQueries) {
 
-        Criteria conditions = new Criteria(INTERACTION_MISCORE).between(minMiScore, maxMiScore);
+        Criteria conditions = new Criteria(INTERACTION_MISCORES).between(minMiScore, maxMiScore);
 
         filterQueries.add(new SimpleFilterQuery(conditions));
     }
