@@ -432,19 +432,18 @@
   <field name="_version_" type="plong" indexed="false" stored="false"/>
   <field name="default" type="text_general" multiValued="true" indexed="true" stored="true"/>
   <field name="description" type="text_general"/>
-  <field name="interaction_ac" type="text_general"/>
   <field name="interaction_count" type="plongs"/>
-  <field name="interaction_detection_method" type="text_general"/>
-  <field name="interaction_expansion_method" type="text_general"/>
+  <field name="interaction_detection_methods" type="text_general"/>
+  <field name="interaction_expansion_methods" type="text_general"/>
+  <field name="interaction_host_organisms" type="text_general"/>
   <field name="interaction_ids" type="text_general"/>
-  <field name="interaction_miscore" type="pdoubles"/>
-  <field name="interaction_negative" type="booleans"/>
-  <field name="interaction_type" type="text_general"/>
+  <field name="interaction_miscores" type="pdoubles"/>
+  <field name="interaction_negatives" type="booleans"/>
+  <field name="interaction_types" type="text_general"/>
   <field name="interactor_ac" type="string" indexed="true" required="true" stored="true"/>
   <field name="interactor_alias" type="text_general"/>
   <field name="interactor_alt_ids" type="text_general"/>
-  <field name="interactor_feature_shortlabel" type="text_general"/>
-  <field name="interactor_id" type="text_general"/>
+  <field name="interactor_feature_shortlabels" type="text_general"/>
   <field name="interactor_name" type="text_general"/>
   <field name="interactor_species_name" type="text_general"/>
   <field name="interactor_tax_id" type="plongs"/>
@@ -517,7 +516,6 @@
   <dynamicField name="*_f" type="pfloat" indexed="true" stored="true"/>
   <dynamicField name="*_d" type="pdouble" indexed="true" stored="true"/>
   <dynamicField name="*_p" type="location" indexed="true" stored="true"/>
-  <copyField source="interactor_id" dest="interactor_id_str" maxChars="256"/>
   <copyField source="interactor_name" dest="interactor_name_str" maxChars="256"/>
   <copyField source="interaction_ids" dest="interaction_ids_str" maxChars="256"/>
   <copyField source="interactor_type" dest="interactor_type_str" maxChars="256"/>
@@ -527,11 +525,11 @@
   <copyField source="interactor_alt_ids" dest="interactor_alt_ids_str" maxChars="256"/>
   <copyField source="*" dest="text"/>
   <copyField source="*" dest="text2"/>
-  <copyField source="interaction_expansion_method" dest="interaction_expansion_method_str" maxChars="256"/>
-  <copyField source="interaction_detection_method" dest="interaction_detection_method_str" maxChars="256"/>
-  <copyField source="interaction_type" dest="interaction_type_str" maxChars="256"/>
-  <copyField source="interaction_ac" dest="interaction_ac_str" maxChars="256"/>
   <copyField source="*" dest="default"/>
   <copyField source="interactor_species_name" dest="interactor_species_name_str" maxChars="256"/>
-  <copyField source="interactor_feature_shortlabel" dest="interactor_feature_shortlabel_str" maxChars="256"/>
+  <copyField source="interaction_host_organisms" dest="interaction_host_organisms_str" maxChars="256"/>
+  <copyField source="interaction_detection_methods" dest="interaction_detection_methods_str" maxChars="256"/>
+  <copyField source="interaction_types" dest="interaction_types_str" maxChars="256"/>
+  <copyField source="interactor_feature_shortlabels" dest="interactor_feature_shortlabels_str" maxChars="256"/>
+  <copyField source="interaction_expansion_methods" dest="interaction_expansion_methods_str" maxChars="256"/>
 </schema>
