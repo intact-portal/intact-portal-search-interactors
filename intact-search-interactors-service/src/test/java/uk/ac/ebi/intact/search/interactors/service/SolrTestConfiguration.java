@@ -1,10 +1,9 @@
 package uk.ac.ebi.intact.search.interactors.service;
 
 import org.apache.solr.client.solrj.SolrClient;
-import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.boot.test.context.TestConfiguration;
 import org.springframework.context.annotation.Bean;
-import org.springframework.context.annotation.Configuration;
 import org.springframework.data.solr.core.SolrTemplate;
 import org.springframework.data.solr.repository.config.EnableSolrRepositories;
 import org.springframework.data.solr.server.support.EmbeddedSolrServerFactory;
@@ -12,15 +11,13 @@ import org.springframework.data.solr.server.support.EmbeddedSolrServerFactory;
 /**
  * @author Elisabet Barrera
  */
-
-@Configuration
+@TestConfiguration
 @EnableSolrRepositories(basePackages = "uk.ac.ebi.intact.search.interactors.repository",
         schemaCreationSupport = true)
 @SpringBootApplication
 public class SolrTestConfiguration {
 
     @Bean
-    @Qualifier("embeddedServer")
     public SolrClient solrClient() throws Exception {
         EmbeddedSolrServerFactory factory = new EmbeddedSolrServerFactory("src/test/resources/solr.home.7.3.1");
         return factory.getSolrClient();
@@ -29,7 +26,7 @@ public class SolrTestConfiguration {
     }
 
     @Bean
-    public SolrTemplate solrTemplate( @Qualifier("embeddedServer") SolrClient client)  {
+    public SolrTemplate solrTemplate(SolrClient client)  {
         return new SolrTemplate(client);
     }
 }

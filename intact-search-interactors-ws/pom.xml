@@ -25,8 +25,8 @@
             <groupId>uk.ac.ebi.intact.search.interactors</groupId>
             <artifactId>intact-search-interactors-service</artifactId>
             <version>${project.parent.version}</version>
-
         </dependency>
+
         <!-- Simple java library to work with json -->
         <dependency>
             <groupId>com.googlecode.json-simple</groupId>
