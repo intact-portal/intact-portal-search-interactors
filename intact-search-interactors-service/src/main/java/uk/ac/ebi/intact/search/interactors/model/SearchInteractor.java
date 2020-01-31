@@ -26,7 +26,7 @@ public class SearchInteractor {
     private String interactorName;
 
     @Field(INTERACTOR_DESCRIPTION)
-    private String description;
+    private String interactorDescription;
 
     @Field(INTERACTOR_ALIAS)
     private Set<String> interactorAlias;
@@ -84,7 +84,7 @@ public class SearchInteractor {
     public SearchInteractor() {
     }
 
-    public SearchInteractor(String interactorAc, String interactorName, String description, Set<String> interactorAlias,
+    public SearchInteractor(String interactorAc, String interactorName, String interactorDescription, Set<String> interactorAlias,
                             Set<String> interactorAltIds, String interactorType, String interactorSpecies, Integer interactorTaxId,
                             Set<String> interactorXrefs, Integer interactionCount, Long interactionSearchCount,
                             Set<String> interactionIds, Set<String> interactionDetectionMethods, Set<String> interactionTypes,
@@ -93,7 +93,7 @@ public class SearchInteractor {
                             Set<String> interactorFeatureShortLabels) {
         this.interactorAc = interactorAc;
         this.interactorName = interactorName;
-        this.description = description;
+        this.interactorDescription = interactorDescription;
         this.interactorAlias = interactorAlias;
         this.interactorAltIds = interactorAltIds;
         this.interactorType = interactorType;
@@ -109,7 +109,7 @@ public class SearchInteractor {
         this.interactionNegatives = interactionNegatives;
         this.interactionMiScores = interactionMiScores;
         this.interactionHostOrganisms = interactionHostOrganisms;
-        this.setInteractorFeatureShortLabels(interactorFeatureShortLabels);
+        this.interactorFeatureShortLabels = interactorFeatureShortLabels;
     }
 
     public String getInteractorAc() {
@@ -120,12 +120,12 @@ public class SearchInteractor {
         this.interactorAc = interactorAc;
     }
 
-    public String getDescription() {
-        return description;
+    public String getInteractorDescription() {
+        return interactorDescription;
     }
 
-    public void setDescription(String description) {
-        this.description = description;
+    public void setInteractorDescription(String interactorDescription) {
+        this.interactorDescription = interactorDescription;
     }
 
     public String getInteractorName() {
@@ -194,10 +194,10 @@ public class SearchInteractor {
     }
 
     public Set<String> getInteractionIds() {
-        if (this.interactorXrefs == null) {
-            this.interactorXrefs = new HashSet<>();
+        if (this.interactionIds == null) {
+            this.interactionIds = new HashSet<>();
         }
-        return interactorXrefs;
+        return interactionIds;
     }
 
     public void setInteractionIds(Set<String> interactionIds) {
@@ -205,6 +205,9 @@ public class SearchInteractor {
     }
 
     public Set<String> getInteractionDetectionMethods() {
+        if (this.interactionDetectionMethods == null) {
+            this.interactionDetectionMethods = new HashSet<>();
+        }
         return interactionDetectionMethods;
     }
 
@@ -213,6 +216,9 @@ public class SearchInteractor {
     }
 
     public Set<String> getInteractionTypes() {
+        if (this.interactionTypes == null) {
+            this.interactionTypes = new HashSet<>();
+        }
         return interactionTypes;
     }
 
@@ -221,6 +227,9 @@ public class SearchInteractor {
     }
 
     public Set<String> getInteractionExpansionMethods() {
+        if (this.interactionExpansionMethods == null) {
+            this.interactionExpansionMethods = new HashSet<>();
+        }
         return interactionExpansionMethods;
     }
 
@@ -229,6 +238,9 @@ public class SearchInteractor {
     }
 
     public Set<Boolean> getInteractionNegatives() {
+        if (this.interactionNegatives == null) {
+            this.interactionNegatives = new HashSet<>();
+        }
         return interactionNegatives;
     }
 
@@ -237,6 +249,9 @@ public class SearchInteractor {
     }
 
     public Set<Double> getInteractionMiScores() {
+        if (this.interactionMiScores == null) {
+            this.interactionMiScores = new HashSet<>();
+        }
         return interactionMiScores;
     }
 
@@ -245,6 +260,9 @@ public class SearchInteractor {
     }
 
     public Set<String> getInteractionHostOrganisms() {
+        if (this.interactionHostOrganisms == null) {
+            this.interactionHostOrganisms = new HashSet<>();
+        }
         return interactionHostOrganisms;
     }
 
@@ -284,7 +302,7 @@ public class SearchInteractor {
         return "SearchInteractor{" +
                 "interactorAc='" + interactorAc + '\'' +
                 ", interactorName='" + interactorName + '\'' +
-                ", description='" + description + '\'' +
+                ", interactorDescription='" + interactorDescription + '\'' +
                 ", interactorAlias=" + interactorAlias +
                 ", interactorAltIds=" + interactorAltIds +
                 ", interactorType='" + interactorType + '\'' +

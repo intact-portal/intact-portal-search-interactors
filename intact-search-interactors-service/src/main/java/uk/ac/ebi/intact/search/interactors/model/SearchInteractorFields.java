@@ -7,7 +7,7 @@ public class SearchInteractorFields {
 
     public static final String INTERACTOR_NAME = "interactor_name";
 
-    public static final String INTERACTOR_DESCRIPTION = "description";
+    public static final String INTERACTOR_DESCRIPTION = "interactor_description";
 
     public static final String INTERACTOR_ALIAS = "interactor_alias";
 
