@@ -42,36 +42,36 @@ public class InteractorSearchService {
         return interactorRepository.getTaxIdFacets(pageRequest);
     }
 
-    public FacetPage<SearchInteractor> getSpeciesAndInteractorTypeFacets(String query, Set<String> speciesFilter,
+    public FacetPage<SearchInteractor> getSpeciesAndInteractorTypeFacets(String query, Set<String> interactorSpeciesFilter,
                                                                          Set<String> interactorTypeFilter, int page,
                                                                          int pageSize) {
         PageRequest pageRequest = PageRequest.of(page, pageSize);
-        return interactorRepository.getSpeciesAndInteractorTypeFacets(query, speciesFilter, interactorTypeFilter, pageRequest);
+        return interactorRepository.getInteractorSpeciesAndInteractorTypeFacets(query, interactorSpeciesFilter, interactorTypeFilter, pageRequest);
     }
 
     public FacetPage<SearchInteractor> findInteractorWithFacet(String query,
-                                                               Set<String> speciesFilter,
+                                                               Set<String> interactorSpeciesFilter,
                                                                Set<String> interactorTypeFilter,
-                                                               Set<String> detectionMethodFilter,
+                                                               Set<String> interactionDetectionMethodFilter,
                                                                Set<String> interactionTypeFilter,
-                                                               Set<String> interactionHostOrganism,
+                                                               Set<String> interactionHostOrganismFilter,
                                                                boolean isNegativeFilter,
                                                                double minMiScore,
                                                                double maxMiScore,
                                                                int page,
                                                                int pageSize) {
-        return interactorRepository.findInteractorWithFacet(query, speciesFilter, interactorTypeFilter, detectionMethodFilter,
-                interactionTypeFilter, interactionHostOrganism, isNegativeFilter, minMiScore, maxMiScore, null,
+        return interactorRepository.findInteractorWithFacet(query, interactorSpeciesFilter, interactorTypeFilter, interactionDetectionMethodFilter,
+                interactionTypeFilter, interactionHostOrganismFilter, isNegativeFilter, minMiScore, maxMiScore, null,
                 PageRequest.of(page, pageSize));
     }
 
-    public Page<SearchInteractor> findInteractorForGraphJson(String query, Set<String> speciesFilter, Set<String> interactorTypeFilter,
-                                                           Set<String> detectionMethodFilter, Set<String> interactionTypeFilter,
-                                                           Set<String> interactionHostOrganism, boolean isNegativeFilter,
+    public Page<SearchInteractor> findInteractorForGraphJson(String query, Set<String> interactorSpeciesFilter, Set<String> interactorTypeFilter,
+                                                           Set<String> interactionDetectionMethodFilter, Set<String> interactionTypeFilter,
+                                                           Set<String> interactionHostOrganismFilter, boolean isNegativeFilter,
                                                            double minMiScore, double maxMiScore, int page, int pageSize) {
         PageRequest pageRequest = PageRequest.of(page, pageSize);
-        return interactorRepository.findInteractorForGraphJson(query, speciesFilter, interactorTypeFilter, detectionMethodFilter,
-                interactionTypeFilter, interactionHostOrganism, isNegativeFilter, minMiScore, maxMiScore, null, pageRequest);
+        return interactorRepository.findInteractorForGraphJson(query, interactorSpeciesFilter, interactorTypeFilter, interactionDetectionMethodFilter,
+                interactionTypeFilter, interactionHostOrganismFilter, isNegativeFilter, minMiScore, maxMiScore, null, pageRequest);
     }
 
     public Page<SearchInteractor> findInteractor(String query) {
