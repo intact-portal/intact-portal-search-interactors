@@ -206,7 +206,7 @@
       <filter class="solr.EnglishMinimalStemFilterFactory"/>
       <filter class="solr.RemoveDuplicatesTokenFilterFactory"/>
       <filter class="solr.FlattenGraphFilterFactory"/>
-      <filter class="solr.NGramFilterFactory" minGramSize="3" maxGramSize="7"/>
+      <filter class="solr.NGramFilterFactory" minGramSize="3" maxGramSize="50"/>
     </analyzer>
     <analyzer type="query">
       <tokenizer class="solr.WhitespaceTokenizerFactory"/>
