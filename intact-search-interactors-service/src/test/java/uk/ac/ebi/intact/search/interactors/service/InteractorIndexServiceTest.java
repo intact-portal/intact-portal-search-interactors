@@ -39,9 +39,10 @@ public class InteractorIndexServiceTest {
 
 
         //Create new interactors documents
-        searchInteractor1 = new SearchInteractor("P06730",
-                "Eukaryotic translation initiation factor 4E",
+        searchInteractor1 = new SearchInteractor("EBI-TEST1",
                 "EIF4E",
+                "P06730",
+                "Eukaryotic translation initiation factor 4E",
                 new HashSet<>(Arrays.asList("interactor1_alias1", "interactor1_alias2", "interactor1_alias3")),
                 new HashSet<>(Arrays.asList("interactor1_alt1", "interactor1_alt2", "interactor1_alt3")),
                 "protein",
@@ -60,9 +61,10 @@ public class InteractorIndexServiceTest {
                 new HashSet<>(Arrays.asList("featureShortLabel1", "featureShortLabel2"))
         );
 
-        searchInteractor2 = new SearchInteractor("Q13541",
-                "Eukaryotic translation initiation factor 4E-binding protein 1",
+        searchInteractor2 = new SearchInteractor("EBI-TEST2",
                 "4EBP1",
+                "Q13541",
+                "Eukaryotic translation initiation factor 4E-binding protein 1",
                 new HashSet<>(Arrays.asList("interactor2_alias1", "interactor2_alias1", "interactor2_alias3")),
                 new HashSet<>(Arrays.asList("interactor2_alt1", "interactor2_alt1")),
                 "protein",
@@ -80,9 +82,10 @@ public class InteractorIndexServiceTest {
                 new HashSet<>(Arrays.asList("in vitro", "Saccharomyces cerevisiae")),
                 new HashSet<>(Arrays.asList("featureshortlabel1", "featureshortlabel2")));
 
-        searchInteractor3 = new SearchInteractor("P63165",
-                "Small ubiquitin-related modifier 1",
+        searchInteractor3 = new SearchInteractor("EBI-TEST3",
                 "SUMO1",
+                "P63165",
+                "Small ubiquitin-related modifier 1",
                 new HashSet<>(Arrays.asList("interactor3_alias1", "interactor3_alias1", "interactor3_alias3")),
                 new HashSet<>(Arrays.asList("interactor3_alt1", "interactor3_alt1")),
                 "protein",
@@ -111,8 +114,8 @@ public class InteractorIndexServiceTest {
 
         interactorIndexService.save(searchInteractor1);
 
-        Optional<SearchInteractor> interactor = interactorSearchService.findById("P06730");
-        assertEquals(interactor.get().getInteractorAc(), "P06730");
+        Optional<SearchInteractor> interactor = interactorSearchService.findById("EBI-TEST1");
+        assertEquals(interactor.get().getInteractorAc(), "EBI-TEST1");
         assertEquals(interactorSearchService.countTotal(), 1);
     }
 

@@ -23,7 +23,12 @@ public class SearchInteractor {
     private String interactorAc;
 
     @Field(INTERACTOR_NAME)
+    /* Prefer name of the interactor */
     private String interactorName;
+
+    @Field(INTERACTOR_PREFERRED_ID)
+    /* Prefer identifier of the interactor */
+    private String interactorPreferredIdentifier;
 
     @Field(INTERACTOR_DESCRIPTION)
     private String interactorDescription;
@@ -84,7 +89,7 @@ public class SearchInteractor {
     public SearchInteractor() {
     }
 
-    public SearchInteractor(String interactorAc, String interactorName, String interactorDescription, Set<String> interactorAlias,
+    public SearchInteractor(String interactorAc, String interactorName, String interactorPreferredIdentifier, String interactorDescription, Set<String> interactorAlias,
                             Set<String> interactorAltIds, String interactorType, String interactorSpecies, Integer interactorTaxId,
                             Set<String> interactorXrefs, Integer interactionCount, Long interactionSearchCount,
                             Set<String> interactionIds, Set<String> interactionDetectionMethods, Set<String> interactionTypes,
@@ -93,6 +98,7 @@ public class SearchInteractor {
                             Set<String> interactorFeatureShortLabels) {
         this.interactorAc = interactorAc;
         this.interactorName = interactorName;
+        this.interactorPreferredIdentifier = interactorPreferredIdentifier;
         this.interactorDescription = interactorDescription;
         this.interactorAlias = interactorAlias;
         this.interactorAltIds = interactorAltIds;
@@ -134,6 +140,14 @@ public class SearchInteractor {
 
     public void setInteractorName(String interactorName) {
         this.interactorName = interactorName;
+    }
+
+    public String getInteractorPreferredIdentifier() {
+        return interactorPreferredIdentifier;
+    }
+
+    public void setInteractorPreferredIdentifier(String interactorPreferredIdentifier) {
+        this.interactorPreferredIdentifier = interactorPreferredIdentifier;
     }
 
     public Set<String> getInteractorAlias() {
