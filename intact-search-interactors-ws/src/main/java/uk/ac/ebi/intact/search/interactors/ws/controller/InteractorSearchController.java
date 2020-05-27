@@ -1,23 +1,19 @@
 package uk.ac.ebi.intact.search.interactors.ws.controller;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
-import org.json.simple.JSONArray;
-import org.json.simple.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.domain.Page;
 import org.springframework.data.solr.core.query.result.FacetPage;
-import org.springframework.http.HttpHeaders;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import uk.ac.ebi.intact.search.interactions.service.InteractionSearchService;
 import uk.ac.ebi.intact.search.interactors.model.SearchInteractor;
 import uk.ac.ebi.intact.search.interactors.service.InteractorSearchService;
 import uk.ac.ebi.intact.search.interactors.ws.controller.model.InteractorSearchResult;
 
-import javax.servlet.http.HttpServletRequest;
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileReader;
 import java.io.IOException;
-import java.io.StringWriter;
 import java.util.*;
 
 import static org.springframework.http.MediaType.APPLICATION_JSON_VALUE;
@@ -28,6 +24,13 @@ import static org.springframework.http.MediaType.APPLICATION_JSON_VALUE;
 
 @RestController
 public class InteractorSearchController {
+
+    //TODO temporary
+    @Value("${server.upload.batch.file.path}")
+    private String uploadBatchFilePath;
+
+    public static final String UPLOADED_BATCH_FILE_PREFIX = "file_";
+
 
     private InteractorSearchService interactorSearchService;
     private InteractionSearchService interactionSearchService;
@@ -100,95 +103,39 @@ public class InteractorSearchController {
             @RequestParam(value = "page", defaultValue = "0") int page,
             @RequestParam(value = "pageSize", defaultValue = "10") int pageSize) {
 
-        FacetPage<SearchInteractor> interactorResult = interactorSearchService.findInteractorWithFacet(query, interactorSpeciesFilter, interactorTypeFilter,
-                interactionDetectionMethodFilter, interactionTypeFilter, interactionHostOrganismFilter,
-                isNegativeFilter, minMiScore, maxMiScore, page, pageSize);
+        FacetPage<SearchInteractor> interactorResult = interactorSearchService.findInteractorWithFacet(
+                query,
+                interactorSpeciesFilter,
+                interactorTypeFilter,
+                interactionDetectionMethodFilter,
+                interactionTypeFilter,
+                interactionHostOrganismFilter,
+                isNegativeFilter,
+                minMiScore,
+                maxMiScore,
+                page,
+                pageSize);
 
         for (SearchInteractor searchInteractor : interactorResult.getContent()) {
 
             /* TODO: Pass the interSpecies from the top, it can change the result of the query */
-            Long interactionCount = interactionSearchService.countInteractionResult(query,searchInteractor.getInteractorAc(), interactorSpeciesFilter,
-                    interactorTypeFilter, interactionDetectionMethodFilter, interactionTypeFilter, interactionHostOrganismFilter,
-                    isNegativeFilter, minMiScore, maxMiScore, false);
+            Long interactionCount = interactionSearchService.countInteractionResult(
+                    query,
+                    searchInteractor.getInteractorAc(),
+                    interactorSpeciesFilter,
+                    interactorTypeFilter,
+                    interactionDetectionMethodFilter,
+                    interactionTypeFilter,
+                    interactionHostOrganismFilter,
+                    isNegativeFilter,
+                    minMiScore,
+                    maxMiScore,
+                    false);
 
             searchInteractor.setInteractionSearchCount(interactionCount);
         }
 
         return new InteractorSearchResult(interactorResult);
-    }
-
-    @CrossOrigin(origins = "*")
-    @PostMapping(value = "/datatables/{query}",
-            produces = {APPLICATION_JSON_VALUE})
-    public ResponseEntity<String> getInteractorsDatatablesHandler(@PathVariable String query,
-                                                                  HttpServletRequest request) throws IOException {
-        Set<String> interactorTypeFilter = new HashSet<>();
-        Set<String> interactorSpeciesFilter = new HashSet<>();
-        Set<String> interactionTypeFilter = new HashSet<>();
-        Set<String> interactionDetectionMethodFilter = new HashSet<>();
-        Set<String> interactionHostOrganismFilter = new HashSet<>();
-
-        int page = Integer.parseInt(request.getParameter("page"));
-        int pageSize = Integer.parseInt(request.getParameter("pageSize"));
-
-        if (request.getParameterValues("interactorType[]") != null) {
-            interactorTypeFilter = new HashSet<>(Arrays.asList(request.getParameterValues("interactorType[]")));
-        }
-        if (request.getParameterValues("interactorSpecies[]") != null) {
-            interactorSpeciesFilter = new HashSet<>(Arrays.asList(request.getParameterValues("interactorSpecies[]")));
-        }
-        if (request.getParameterValues("interactionType[]") != null) {
-            interactionTypeFilter = new HashSet<>(Arrays.asList(request.getParameterValues("interactionType[]")));
-        }
-        if (request.getParameterValues("interactionDetectionMethod[]") != null) {
-            interactionDetectionMethodFilter = new HashSet<>(Arrays.asList(request.getParameterValues("interactionDetectionMethod[]")));
-        }
-        if (request.getParameterValues("interactionHostOrganism[]") != null) {
-            interactionHostOrganismFilter = new HashSet<>(Arrays.asList(request.getParameterValues("interactionHostOrganism[]")));
-        }
-
-        boolean negativeFilter = Boolean.parseBoolean(request.getParameter("negativeInteraction"));
-        double minMiScoreFilter = Double.parseDouble(request.getParameter("miScoreMin"));
-        double maxMiScoreFilter = Double.parseDouble(request.getParameter("miScoreMax"));
-
-        FacetPage<SearchInteractor> searchInteractors = interactorSearchService.findInteractorWithFacet(query, interactorSpeciesFilter,
-                interactorTypeFilter, interactionDetectionMethodFilter, interactionTypeFilter, interactionHostOrganismFilter, negativeFilter,
-                minMiScoreFilter, maxMiScoreFilter, page, pageSize);
-
-        for (SearchInteractor searchInteractor : searchInteractors.getContent()) {
-
-            /* TODO: Pass the interSpecies from the top, it can change the result of the query */
-            Long interactionCount = interactionSearchService.countInteractionResult(query,searchInteractor.getInteractorAc(), interactorSpeciesFilter,
-                    interactorTypeFilter, interactionDetectionMethodFilter, interactionTypeFilter, interactionHostOrganismFilter,
-                    negativeFilter, minMiScoreFilter, maxMiScoreFilter, false);
-
-            searchInteractor.setInteractionSearchCount(interactionCount);
-        }
-
-        InteractorSearchResult interactorSearchResult = new InteractorSearchResult(searchInteractors);
-
-
-        JSONObject result = new JSONObject();
-        result.put("draw", request.getParameter("draw"));
-        result.put("recordsTotal", interactorSearchResult.getTotalElements());
-        result.put("recordsFiltered", interactorSearchResult.getTotalElements());
-
-        JSONArray data = new JSONArray();
-
-        for (SearchInteractor interactor : interactorSearchResult.getContent()) {
-            StringWriter writer = new StringWriter();
-            ObjectMapper mapper = new ObjectMapper();
-            mapper.writeValue(writer, interactor);
-            data.add(writer);
-        }
-
-        result.put("data", data);
-
-        HttpHeaders headers = new HttpHeaders();
-        headers.add("Content-Type", APPLICATION_JSON_VALUE);
-        headers.add("X-Clacks-Overhead", "headers");
-
-        return new ResponseEntity<>(result.toString(), headers, HttpStatus.OK);
     }
 
     @CrossOrigin(origins = "*")
@@ -199,10 +146,55 @@ public class InteractorSearchController {
     }
 
     @CrossOrigin(origins = "*")
+    @PostMapping(value = "/list/resolve",
+            produces = {APPLICATION_JSON_VALUE})
+    public Map<String, Page<SearchInteractor>> resolveInteractorList(@RequestParam(value = "query") String query) {
+
+        String searchTerms = extractSearchTerms(query);
+        List<String> words = new ArrayList<>();
+
+        if (!searchTerms.isEmpty()) {
+            words = Arrays.asList(searchTerms.split("[\\s,\\n]"));
+        }
+
+        return this.interactorSearchService.resolveInteractorList(words);
+    }
+
+    @CrossOrigin(origins = "*")
     @GetMapping(value = "/countTotal",
             produces = {APPLICATION_JSON_VALUE})
     public long countTotal() {
         return this.interactorSearchService.countTotal();
     }
 
+    //TODO temporary
+    private String extractSearchTerms(String query) {
+
+        StringBuilder searchTerms = new StringBuilder();
+
+        if (query.startsWith(UPLOADED_BATCH_FILE_PREFIX)) {
+            File uploadedBatchFile = new File(uploadBatchFilePath + query);
+            if (uploadedBatchFile.exists()) {
+                try {
+                    BufferedReader bufferedReader = new BufferedReader(new FileReader(uploadedBatchFile));
+                    String line;
+                    int count = 0;
+                    while ((line = bufferedReader.readLine()) != null) {
+                        if (count > 0) {
+                            searchTerms.append(",").append(line);
+                        } else {
+                            searchTerms = new StringBuilder(line);
+                        }
+                        count++;
+                    }
+                } catch (IOException exception) {
+                    exception.printStackTrace();
+                }
+            }
+        } else {
+            searchTerms = new StringBuilder(query);
+        }
+
+        return searchTerms.toString();
+    }
 }
