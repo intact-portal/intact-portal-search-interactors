@@ -475,7 +475,7 @@
   <!--  <field name="interaction_detection_methods" type="text_general"/>-->
   <!--  <field name="interaction_expansion_methods" type="text_general"/>-->
   <!--  <field name="interaction_host_organisms" type="text_general"/>-->
-  <!--  <field name="interaction_ids" type="text_general"/>-->
+  <field name="interaction_ids" type="text_general"/>
   <!--  <field name="interaction_miscores" type="pdoubles"/>-->
   <!--  <field name="interaction_negatives" type="booleans"/>-->
   <!--  <field name="interaction_types" type="text_general"/>-->
@@ -568,6 +568,7 @@
   <copyField source="interactor_alt_ids" dest="interactor_identifiers" maxChars="256"/>
   <!--    <copyField source="interactor_species_name" dest="interactor_species_name_str" maxChars="256"/>-->
   <!--    <copyField source="interaction_host_organisms" dest="interaction_host_organisms_str" maxChars="256"/>-->
+  <!--    <copyField source="interaction_detection_methods" dest="interaction_detection_methods_str" maxChars="256"/>-->
   <!--    <copyField source="interaction_detection_methods" dest="interaction_detection_methods_str" maxChars="256"/>-->
   <!--    <copyField source="interaction_types" dest="interaction_types_str" maxChars="256"/>-->
   <!--    <copyField source="interactor_feature_shortlabels" dest="interactor_feature_shortlabels_str" maxChars="256"/>-->
