@@ -21,7 +21,7 @@ import static uk.ac.ebi.intact.search.interactors.model.SearchInteractorFields.*
  */
 
 @Repository
-public interface InteractorRepository extends SolrCrudRepository<SearchInteractor, String>, CustomizedInteractorRepository {
+public interface InteractorRepository extends SolrCrudRepository<SearchInteractor, String> {
 
 //    List<SearchInteractor> findByName(String name);
 

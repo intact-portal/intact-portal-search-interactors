@@ -57,26 +57,9 @@ public class SearchInteractor {
     @Field(INTERACTION_IDS)
     private Set<String> interactionIds;
 
-    @Field(INTERACTION_DETECTION_METHODS)
-    private Set<String> interactionDetectionMethods;
-
-    @Field(INTERACTION_TYPES)
-    private Set<String> interactionTypes;
-
-    @Field(INTERACTION_EXPANSION_METHODS)
-    private Set<String> interactionExpansionMethods;
-
-    @Field(INTERACTION_NEGATIVES)
-    private Set<Boolean> interactionNegatives;
-
-    @Field(INTERACTION_MISCORES)
-    private Set<Double> interactionMiScores;
-
-    @Field(INTERACTION_HOST_ORGANISMS)
-    private Set<String> interactionHostOrganisms;
-
     @Field(INTERACTOR_FEATURE_SHORTLABELS)
     private Set<String> interactorFeatureShortLabels;
+
 
     /**
      * This field is not part of the solr doc.
@@ -92,10 +75,7 @@ public class SearchInteractor {
     public SearchInteractor(String interactorAc, String interactorName, String interactorPreferredIdentifier, String interactorDescription, Set<String> interactorAlias,
                             Set<String> interactorAltIds, String interactorType, String interactorSpecies, Integer interactorTaxId,
                             Set<String> interactorXrefs, Integer interactionCount, Long interactionSearchCount,
-                            Set<String> interactionIds, Set<String> interactionDetectionMethods, Set<String> interactionTypes,
-                            Set<String> interactionExpansionMethods, Set<Boolean> interactionNegatives,
-                            Set<Double> interactionMiScores, Set<String> interactionHostOrganisms,
-                            Set<String> interactorFeatureShortLabels) {
+                            Set<String> interactionIds, Set<String> interactorFeatureShortLabels) {
         this.interactorAc = interactorAc;
         this.interactorName = interactorName;
         this.interactorPreferredIdentifier = interactorPreferredIdentifier;
@@ -109,13 +89,6 @@ public class SearchInteractor {
         this.interactionCount = interactionCount;
         this.interactionSearchCount = interactionSearchCount;
         this.interactionIds = interactionIds;
-        this.interactionDetectionMethods = interactionDetectionMethods;
-        this.interactionTypes = interactionTypes;
-        this.interactionExpansionMethods = interactionExpansionMethods;
-        this.interactionNegatives = interactionNegatives;
-        this.interactionMiScores = interactionMiScores;
-        this.interactionHostOrganisms = interactionHostOrganisms;
-        this.interactorFeatureShortLabels = interactorFeatureShortLabels;
     }
 
     public String getInteractorAc() {
@@ -218,71 +191,6 @@ public class SearchInteractor {
         this.interactionIds = interactionIds;
     }
 
-    public Set<String> getInteractionDetectionMethods() {
-        if (this.interactionDetectionMethods == null) {
-            this.interactionDetectionMethods = new HashSet<>();
-        }
-        return interactionDetectionMethods;
-    }
-
-    public void setInteractionDetectionMethods(Set<String> interactionDetectionMethods) {
-        this.interactionDetectionMethods = interactionDetectionMethods;
-    }
-
-    public Set<String> getInteractionTypes() {
-        if (this.interactionTypes == null) {
-            this.interactionTypes = new HashSet<>();
-        }
-        return interactionTypes;
-    }
-
-    public void setInteractionTypes(Set<String> interactionTypes) {
-        this.interactionTypes = interactionTypes;
-    }
-
-    public Set<String> getInteractionExpansionMethods() {
-        if (this.interactionExpansionMethods == null) {
-            this.interactionExpansionMethods = new HashSet<>();
-        }
-        return interactionExpansionMethods;
-    }
-
-    public void setInteractionExpansionMethods(Set<String> interactionExpansionMethods) {
-        this.interactionExpansionMethods = interactionExpansionMethods;
-    }
-
-    public Set<Boolean> getInteractionNegatives() {
-        if (this.interactionNegatives == null) {
-            this.interactionNegatives = new HashSet<>();
-        }
-        return interactionNegatives;
-    }
-
-    public void setInteractionNegatives(Set<Boolean> interactionNegatives) {
-        this.interactionNegatives = interactionNegatives;
-    }
-
-    public Set<Double> getInteractionMiScores() {
-        if (this.interactionMiScores == null) {
-            this.interactionMiScores = new HashSet<>();
-        }
-        return interactionMiScores;
-    }
-
-    public void setInteractionMiScores(Set<Double> interactionMiScores) {
-        this.interactionMiScores = interactionMiScores;
-    }
-
-    public Set<String> getInteractionHostOrganisms() {
-        if (this.interactionHostOrganisms == null) {
-            this.interactionHostOrganisms = new HashSet<>();
-        }
-        return interactionHostOrganisms;
-    }
-
-    public void setInteractionHostOrganisms(Set<String> interactionHostOrganisms) {
-        this.interactionHostOrganisms = interactionHostOrganisms;
-    }
 
     public String getInteractorSpecies() {
         return interactorSpecies;
@@ -323,15 +231,9 @@ public class SearchInteractor {
                 ", interactorSpecies='" + interactorSpecies + '\'' +
                 ", interactorTaxId=" + interactorTaxId +
                 ", interactorXrefs=" + interactorXrefs +
+                ", interactorFeatureShortLabels=" + interactorFeatureShortLabels +
                 ", interactionCount=" + interactionCount +
                 ", interactionIds=" + interactionIds +
-                ", interactionDetectionMethods=" + interactionDetectionMethods +
-                ", interactionTypes=" + interactionTypes +
-                ", interactionExpansionMethods=" + interactionExpansionMethods +
-                ", interactionNegatives=" + interactionNegatives +
-                ", interactionMiScores=" + interactionMiScores +
-                ", interactionHostOrganisms=" + interactionHostOrganisms +
-                ", interactorFeatureShortLabels=" + interactorFeatureShortLabels +
                 ", interactionSearchCount=" + interactionSearchCount +
                 '}';
     }

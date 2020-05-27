@@ -52,12 +52,6 @@ public class InteractorIndexServiceTest {
                 2,
                 2L,
                 new HashSet<>(Arrays.asList("interaction1", "interaction2")),
-                new HashSet<>(Arrays.asList("detectionMethod1", "detectionMethod2")),
-                new HashSet<>(Arrays.asList("interactionType1", "interactionType2")),
-                new HashSet<>(Arrays.asList("expansionMethod1", "expansionMethod2")),
-                new HashSet<>(Arrays.asList(true, true, false)),
-                new HashSet<>(Arrays.asList(0.33, 0.52)),
-                new HashSet<>(Arrays.asList("in vitro", "Saccharomyces cerevisiae")),
                 new HashSet<>(Arrays.asList("featureShortLabel1", "featureShortLabel2"))
         );
 
@@ -74,13 +68,8 @@ public class InteractorIndexServiceTest {
                 2,
                 1L,
                 new HashSet<>(Arrays.asList("interaction1", "interaction2")),
-                new HashSet<>(Arrays.asList("detectionMethod1", "detectionMethod2")),
-                new HashSet<>(Arrays.asList("interactionType1", "interactionType2")),
-                new HashSet<>(Arrays.asList("expansionMethod1", "expansionMethod2")),
-                new HashSet<>(Arrays.asList(true, true, false)),
-                new HashSet<>(Arrays.asList(0.33, 0.52)),
-                new HashSet<>(Arrays.asList("in vitro", "Saccharomyces cerevisiae")),
-                new HashSet<>(Arrays.asList("featureshortlabel1", "featureshortlabel2")));
+                new HashSet<>(Arrays.asList("featureshortlabel1", "featureshortlabel2"))
+        );
 
         searchInteractor3 = new SearchInteractor("EBI-TEST3",
                 "SUMO1",
@@ -95,13 +84,8 @@ public class InteractorIndexServiceTest {
                 5,
                 3L,
                 new HashSet<>(Arrays.asList("interaction1", "interaction2", "interaction3", "interaction4", "interaction5")),
-                new HashSet<>(Arrays.asList("detectionMethod1", "detectionMethod2")),
-                new HashSet<>(Arrays.asList("interactionType1", "interactionType2")),
-                new HashSet<>(Arrays.asList("expansionMethod1", "expansionMethod2")),
-                new HashSet<>(Arrays.asList(true, true, false)),
-                new HashSet<>(Arrays.asList(0.33, 0.52)),
-                new HashSet<>(Arrays.asList("Saccharomyces cerevisiae", "Homo sapiens")),
-                new HashSet<>(Arrays.asList("featureshortlabel1", "featureshortlabel2")));
+                new HashSet<>(Arrays.asList("featureshortlabel1", "featureshortlabel2"))
+        );
     }
 
     @After

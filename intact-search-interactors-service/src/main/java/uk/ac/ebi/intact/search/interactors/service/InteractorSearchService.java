@@ -50,22 +50,6 @@ public class InteractorSearchService {
         return interactorRepository.getInteractorSpeciesAndInteractorTypeFacets(query, interactorSpeciesFilter, interactorTypeFilter, pageRequest);
     }
 
-    public FacetPage<SearchInteractor> findInteractorWithFacet(String query,
-                                                               Set<String> interactorSpeciesFilter,
-                                                               Set<String> interactorTypeFilter,
-                                                               Set<String> interactionDetectionMethodFilter,
-                                                               Set<String> interactionTypeFilter,
-                                                               Set<String> interactionHostOrganismFilter,
-                                                               boolean isNegativeFilter,
-                                                               double minMiScore,
-                                                               double maxMiScore,
-                                                               int page,
-                                                               int pageSize) {
-        return interactorRepository.findInteractorWithFacet(query, interactorSpeciesFilter, interactorTypeFilter, interactionDetectionMethodFilter,
-                interactionTypeFilter, interactionHostOrganismFilter, isNegativeFilter, minMiScore, maxMiScore, null,
-                PageRequest.of(page, pageSize));
-    }
-
     public Map<String, Page<SearchInteractor>> resolveInteractorList(List<String> terms) {
 
         Map<String, Page<SearchInteractor>> results = new TreeMap<>();

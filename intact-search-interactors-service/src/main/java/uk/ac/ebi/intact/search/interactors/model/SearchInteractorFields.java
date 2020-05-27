@@ -11,12 +11,10 @@ public class SearchInteractorFields {
 
     public static final String INTERACTOR_DESCRIPTION = "interactor_description";
     public static final String INTERACTOR_PREFERRED_ID = "interactor_preferred_id";
-    public static final String INTERACTOR_PREFERRED_ID_STR = "interactor_preferred_id_str";
 
     public static final String INTERACTOR_ALIAS = "interactor_alias";
 
     public static final String INTERACTOR_ALT_IDS = "interactor_alt_ids";
-    public static final String INTERACTOR_ALT_IDS_STR = "interactor_alt_ids_str";
 
     public static final String INTERACTOR_TAX_ID = "interactor_tax_id";
 
@@ -32,18 +30,6 @@ public class SearchInteractorFields {
 
     public static final String INTERACTION_COUNT = "interaction_count";
     public static final String INTERACTION_IDS = "interaction_ids";
-
-    public static final String INTERACTION_DETECTION_METHODS = "interaction_detection_methods";
-
-    public static final String INTERACTION_TYPES = "interaction_types";
-
-    public static final String INTERACTION_EXPANSION_METHODS = "interaction_expansion_methods";
-
-    public static final String INTERACTION_NEGATIVES = "interaction_negatives";
-
-    public static final String INTERACTION_MISCORES = "interaction_miscores";
-
-    public static final String INTERACTION_HOST_ORGANISMS = "interaction_host_organisms";
 
     public static final String DEFAULT = "default"; //Copy field for general search
 }
