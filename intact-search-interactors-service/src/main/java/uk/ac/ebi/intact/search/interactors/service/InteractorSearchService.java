@@ -4,8 +4,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
-import org.springframework.data.domain.Pageable;
-import org.springframework.data.solr.core.query.result.FacetPage;
 import org.springframework.stereotype.Service;
 import uk.ac.ebi.intact.search.interactors.model.SearchInteractor;
 import uk.ac.ebi.intact.search.interactors.repository.InteractorRepository;
@@ -28,26 +26,6 @@ public class InteractorSearchService {
     @Autowired
     public InteractorSearchService(@Qualifier("interactorRepository") InteractorRepository interactorRepository) {
         this.interactorRepository = interactorRepository;
-    }
-
-    public Iterable<SearchInteractor> findAll() {
-        return interactorRepository.findAll();
-    }
-
-    public FacetPage<SearchInteractor> getTaxIdFacets(Pageable pageable) {
-        return this.interactorRepository.getTaxIdFacets(pageable);
-    }
-
-    public FacetPage<SearchInteractor> getTaxIdFacets(int page, int pageSize) {
-        PageRequest pageRequest = PageRequest.of(page, pageSize);
-        return interactorRepository.getTaxIdFacets(pageRequest);
-    }
-
-    public FacetPage<SearchInteractor> getSpeciesAndInteractorTypeFacets(String query, Set<String> interactorSpeciesFilter,
-                                                                         Set<String> interactorTypeFilter, int page,
-                                                                         int pageSize) {
-        PageRequest pageRequest = PageRequest.of(page, pageSize);
-        return interactorRepository.getInteractorSpeciesAndInteractorTypeFacets(query, interactorSpeciesFilter, interactorTypeFilter, pageRequest);
     }
 
     public Map<String, Page<SearchInteractor>> resolveInteractorList(List<String> terms) {
@@ -78,16 +56,11 @@ public class InteractorSearchService {
         return interactorRepository.findById(id);
     }
 
-    public Optional<SearchInteractor> findByInteractorAc(String interactorAc){
-        return interactorRepository.findByInteractorAc(interactorAc);
-    }
-
     public long countTotal() {
         return this.interactorRepository.count();
     }
 
-    private static Map<String, Page<SearchInteractor>> sortByTotalElements(Map<String, Page<SearchInteractor>> unsortMap, final boolean order)
-    {
+    private static Map<String, Page<SearchInteractor>> sortByTotalElements(Map<String, Page<SearchInteractor>> unsortMap, final boolean order) {
 
         List<Map.Entry<String, Page<SearchInteractor>>> list = new LinkedList<>(unsortMap.entrySet());
 
@@ -99,7 +72,6 @@ public class InteractorSearchService {
                 return Long.compare(o2.getValue().getTotalElements(), o1.getValue().getTotalElements());
             }
         });
-
 
         // Maintaining insertion order with the help of LinkedList
         Map<String, Page<SearchInteractor>> sortedMap = new LinkedHashMap<>();
