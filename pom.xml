@@ -31,9 +31,9 @@
     </modules>
 
     <scm>
-        <connection>scm:git:https://github.com/EBI-IntAct/intact-search-interactors.git</connection>
-        <developerConnection>scm:git:https://github.com/EBI-IntAct/intact-search-interactors.git</developerConnection>
-        <url>https://github.com/EBI-IntAct/intact-search-interactors</url>
+        <connection>scm:git:https://github.com/intact-portal/intact-portal-search-interactors.git</connection>
+        <developerConnection>scm:git:https://github.com/intact-portal/intact-portal-search-interactors.git</developerConnection>
+        <url>https://github.com/intact-portal/intact-portal-search-interactors</url>
         <tag>HEAD</tag>
     </scm>
 
