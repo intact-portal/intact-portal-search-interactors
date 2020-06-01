@@ -29,6 +29,7 @@ public interface InteractorRepository extends SolrCrudRepository<SearchInteracto
                     INTERACTOR_DESCRIPTION,
                     INTERACTOR_PREFERRED_ID,
                     INTERACTOR_SPECIES_NAME,
+                    INTERACTOR_TAX_ID,
                     INTERACTOR_TYPE,
                     INTERACTION_COUNT })
     @Highlight(fields = {INTERACTOR_NAME,
