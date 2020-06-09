@@ -25,13 +25,10 @@ import static org.springframework.http.MediaType.APPLICATION_JSON_VALUE;
 @RestController
 public class InteractorSearchController {
 
+    public static final String UPLOADED_BATCH_FILE_PREFIX = "file_";
     //TODO temporary
     @Value("${server.upload.batch.file.path}")
     private String uploadBatchFilePath;
-
-    public static final String UPLOADED_BATCH_FILE_PREFIX = "file_";
-
-
     private InteractorSearchService interactorSearchService;
 
     @Autowired
@@ -74,7 +71,7 @@ public class InteractorSearchController {
         StringBuilder searchTerms = new StringBuilder();
 
         if (query.startsWith(UPLOADED_BATCH_FILE_PREFIX)) {
-            File uploadedBatchFile = new File(uploadBatchFilePath + query);
+            File uploadedBatchFile = new File(uploadBatchFilePath + File.separator + query);
             if (uploadedBatchFile.exists()) {
                 try {
                     BufferedReader bufferedReader = new BufferedReader(new FileReader(uploadedBatchFile));
