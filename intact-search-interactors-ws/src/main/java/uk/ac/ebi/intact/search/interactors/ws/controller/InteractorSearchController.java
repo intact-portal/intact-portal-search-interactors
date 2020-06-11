@@ -46,7 +46,7 @@ public class InteractorSearchController {
     @CrossOrigin(origins = "*")
     @PostMapping(value = "/list/resolve",
             produces = {APPLICATION_JSON_VALUE})
-    public Map<String, Page<SearchInteractor>> resolveInteractorList(@RequestParam(value = "query") String query) {
+    public Map<String, Page<SearchInteractor>> resolveInteractorList(@RequestParam(value = "query") String query, @RequestParam(value = "identifierSearch", required = false) boolean identifierSearch) {
 
         String searchTerms = extractSearchTerms(query);
         List<String> words = new ArrayList<>();
@@ -55,7 +55,7 @@ public class InteractorSearchController {
             words = Arrays.asList(searchTerms.split("[\\s,\\n]"));
         }
 
-        return this.interactorSearchService.resolveInteractorList(words);
+        return this.interactorSearchService.resolveInteractorList(words, identifierSearch);
     }
 
     @CrossOrigin(origins = "*")
