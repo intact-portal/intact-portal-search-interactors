@@ -11,10 +11,7 @@ import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 import static org.springframework.http.MediaType.APPLICATION_JSON_VALUE;
 
@@ -46,7 +43,9 @@ public class InteractorSearchController {
     @CrossOrigin(origins = "*")
     @PostMapping(value = "/list/resolve",
             produces = {APPLICATION_JSON_VALUE})
-    public Map<String, Page<SearchInteractor>> resolveInteractorList(@RequestParam(value = "query") String query, @RequestParam(value = "identifierSearch", required = false) boolean identifierSearch) {
+    public Map<String, Page<SearchInteractor>> resolveInteractorList(@RequestParam(value = "query") String query,
+                                                                     @RequestParam(value = "identifierSearch", required = false) boolean identifierSearch,
+                                                                     @RequestParam(value = "specieTaxIds", required = false) Set<Integer> specieTaxIds) {
 
         String searchTerms = extractSearchTerms(query);
         List<String> words = new ArrayList<>();
@@ -55,7 +54,7 @@ public class InteractorSearchController {
             words = Arrays.asList(searchTerms.split("[\\s,\\n]"));
         }
 
-        return this.interactorSearchService.resolveInteractorList(words, identifierSearch);
+        return this.interactorSearchService.resolveInteractorList(words, identifierSearch, specieTaxIds);
     }
 
     @CrossOrigin(origins = "*")
