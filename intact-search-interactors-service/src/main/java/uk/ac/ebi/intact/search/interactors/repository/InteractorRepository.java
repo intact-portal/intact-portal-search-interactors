@@ -31,16 +31,13 @@ public interface InteractorRepository extends SolrCrudRepository<SearchInteracto
                     INTERACTOR_SPECIES_NAME,
                     INTERACTOR_TAX_ID,
                     INTERACTOR_TYPE,
-                    INTERACTION_COUNT},
-            filters = {
-                    INTERACTOR_TAX_ID + ":" + "(?1)"
-            }
+                    INTERACTION_COUNT}
     )
     @Highlight(fields = {INTERACTOR_NAME,
             INTERACTOR_DESCRIPTION,
             INTERACTOR_ALIAS,
             INTERACTOR_IDENTIFIERS}, prefix = "<b>", postfix = "</b>")
-    Page<SearchInteractor> resolveInteractor(String query, String specieFilter, Pageable pageable);
+    Page<SearchInteractor> resolveInteractor(String query, Pageable pageable);
 
     @Query(value = INTERACTOR_NAME + ":?0 OR "
             + INTERACTOR_ALIAS + ":?0 OR "
@@ -52,13 +49,11 @@ public interface InteractorRepository extends SolrCrudRepository<SearchInteracto
                     INTERACTOR_SPECIES_NAME,
                     INTERACTOR_TAX_ID,
                     INTERACTOR_TYPE,
-                    INTERACTION_COUNT},
-            filters = {
-                    INTERACTOR_TAX_ID + ":" + "(?1)"
-            })
+                    INTERACTION_COUNT}
+    )
     @Highlight(fields = {INTERACTOR_NAME,
             INTERACTOR_ALIAS,
             INTERACTOR_IDENTIFIERS}, prefix = "<b>", postfix = "</b>")
-    Page<SearchInteractor> resolveInteractorByIdsOrName(String query, String specieFilter, Pageable pageable);
+    Page<SearchInteractor> resolveInteractorByIdsOrName(String query, Pageable pageable);
 
 }

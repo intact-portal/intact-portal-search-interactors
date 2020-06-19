@@ -10,7 +10,6 @@ import uk.ac.ebi.intact.search.interactors.repository.InteractorRepository;
 
 import java.util.*;
 
-import static uk.ac.ebi.intact.search.interactors.utils.SearchInteractorUtils.convertListIntoSolrFilterValue;
 import static uk.ac.ebi.intact.search.interactors.utils.SearchInteractorUtils.escapeQueryChars;
 
 /**
@@ -51,7 +50,7 @@ public class InteractorSearchService {
         return sortedMap;
     }
 
-    public Map<String, Page<SearchInteractor>> resolveInteractorList(List<String> terms, boolean fuzzySearch, Set<Integer> specieTaxIds) {
+    public Map<String, Page<SearchInteractor>> resolveInteractorList(List<String> terms, boolean fuzzySearch) {
 
         Map<String, Page<SearchInteractor>> results = new TreeMap<>();
 
@@ -63,18 +62,18 @@ public class InteractorSearchService {
             if (!fuzzySearch) {
                 termQuery = "\"" + term + "\"";
             }
-            results.put(term, resolveInteractor(termQuery, fuzzySearch, specieTaxIds));
+            results.put(term, resolveInteractor(termQuery, fuzzySearch));
         }
 
         return sortByTotalElements(results, false); //Descending
     }
 
-    public Page<SearchInteractor> resolveInteractor(String query, boolean fuzzySearch, Set<Integer> specieTaxIds) {
+    public Page<SearchInteractor> resolveInteractor(String query, boolean fuzzySearch) {
         //TODO Paginate the results (for know it should cover disambiguation with 50 elements per page)
         if (fuzzySearch) {
-            return interactorRepository.resolveInteractor(escapeQueryChars(query), convertListIntoSolrFilterValue(specieTaxIds), PageRequest.of(0, 50));
+            return interactorRepository.resolveInteractor(escapeQueryChars(query), PageRequest.of(0, 50));
         } else {
-            return interactorRepository.resolveInteractorByIdsOrName(query, convertListIntoSolrFilterValue(specieTaxIds), PageRequest.of(0, 50));
+            return interactorRepository.resolveInteractorByIdsOrName(query, PageRequest.of(0, 50));
         }
     }
 
