@@ -51,7 +51,7 @@ public class InteractorSearchService {
         return sortedMap;
     }
 
-    public Map<String, Page<SearchInteractor>> resolveInteractorList(List<String> terms, boolean identifierSearch, Set<Integer> specieTaxIds) {
+    public Map<String, Page<SearchInteractor>> resolveInteractorList(List<String> terms, boolean fuzzySearch, Set<Integer> specieTaxIds) {
 
         Map<String, Page<SearchInteractor>> results = new TreeMap<>();
 
@@ -59,18 +59,22 @@ public class InteractorSearchService {
         // From HashMap documentation: if the map previously contained a mapping for
         // the key, the old value is replaced by the specified value
         for (String term : terms) {
-            results.put(term, resolveInteractor(term, identifierSearch, specieTaxIds));
+            String termQuery = term;
+            if (!fuzzySearch) {
+                termQuery = "\"" + term + "\"";
+            }
+            results.put(term, resolveInteractor(termQuery, fuzzySearch, specieTaxIds));
         }
 
         return sortByTotalElements(results, false); //Descending
     }
 
-    public Page<SearchInteractor> resolveInteractor(String query, boolean identifierSearch, Set<Integer> specieTaxIds) {
+    public Page<SearchInteractor> resolveInteractor(String query, boolean fuzzySearch, Set<Integer> specieTaxIds) {
         //TODO Paginate the results (for know it should cover disambiguation with 50 elements per page)
-        if (identifierSearch) {
-            return interactorRepository.resolveInteractorByIdsOrName(escapeQueryChars(query), convertListIntoSolrFilterValue(specieTaxIds), PageRequest.of(0, 50));
-        } else {
+        if (fuzzySearch) {
             return interactorRepository.resolveInteractor(escapeQueryChars(query), convertListIntoSolrFilterValue(specieTaxIds), PageRequest.of(0, 50));
+        } else {
+            return interactorRepository.resolveInteractorByIdsOrName(query, convertListIntoSolrFilterValue(specieTaxIds), PageRequest.of(0, 50));
         }
     }
 
