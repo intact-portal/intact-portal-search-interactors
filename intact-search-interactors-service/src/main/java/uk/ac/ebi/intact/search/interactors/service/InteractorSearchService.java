@@ -50,7 +50,7 @@ public class InteractorSearchService {
         return sortedMap;
     }
 
-    public Map<String, Page<SearchInteractor>> resolveInteractorList(List<String> terms, boolean fuzzySearch) {
+    public Map<String, Page<SearchInteractor>> resolveInteractorList(List<String> terms, boolean fuzzySearch, int page, int pageSize) {
 
         Map<String, Page<SearchInteractor>> results = new TreeMap<>();
 
@@ -62,18 +62,18 @@ public class InteractorSearchService {
             if (!fuzzySearch) {
                 termQuery = "\"" + term + "\"";
             }
-            results.put(term, resolveInteractor(termQuery, fuzzySearch));
+            results.put(term, resolveInteractor(termQuery, fuzzySearch, page, pageSize));
         }
 
         return sortByTotalElements(results, false); //Descending
     }
 
-    public Page<SearchInteractor> resolveInteractor(String query, boolean fuzzySearch) {
+    public Page<SearchInteractor> resolveInteractor(String query, boolean fuzzySearch, int page, int pageSize) {
         //TODO Paginate the results (for know it should cover disambiguation with 50 elements per page)
         if (fuzzySearch) {
-            return interactorRepository.resolveInteractor(escapeQueryChars(query), PageRequest.of(0, 50));
+            return interactorRepository.resolveInteractor(escapeQueryChars(query), PageRequest.of(page, pageSize));
         } else {
-            return interactorRepository.resolveInteractorByIdsOrName(query, PageRequest.of(0, 50));
+            return interactorRepository.resolveInteractorByIdsOrName(query, PageRequest.of(page, pageSize));
         }
     }
 
