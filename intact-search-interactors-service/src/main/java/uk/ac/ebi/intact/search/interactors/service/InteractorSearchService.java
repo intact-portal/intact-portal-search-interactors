@@ -4,8 +4,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import uk.ac.ebi.intact.search.interactors.model.SearchInteractor;
+import uk.ac.ebi.intact.search.interactors.model.SearchInteractorFields;
 import uk.ac.ebi.intact.search.interactors.repository.InteractorRepository;
 
 import java.util.*;
@@ -71,9 +73,9 @@ public class InteractorSearchService {
     public Page<SearchInteractor> resolveInteractor(String query, boolean fuzzySearch, int page, int pageSize) {
         //TODO Paginate the results (for know it should cover disambiguation with 50 elements per page)
         if (fuzzySearch) {
-            return interactorRepository.resolveInteractor(escapeQueryChars(query), PageRequest.of(page, pageSize));
+            return interactorRepository.resolveInteractor(escapeQueryChars(query), PageRequest.of(page, pageSize, Sort.by(Sort.Direction.DESC, SearchInteractorFields.INTERACTION_COUNT)));
         } else {
-            return interactorRepository.resolveInteractorByIdsOrName(query, PageRequest.of(page, pageSize));
+            return interactorRepository.resolveInteractorByIdsOrName(query, PageRequest.of(page, pageSize, Sort.by(Sort.Direction.DESC, SearchInteractorFields.INTERACTION_COUNT)));
         }
     }
 
