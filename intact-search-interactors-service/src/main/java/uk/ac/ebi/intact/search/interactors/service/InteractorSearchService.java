@@ -12,7 +12,6 @@ import uk.ac.ebi.intact.search.interactors.repository.InteractorRepository;
 
 import java.util.*;
 
-import static uk.ac.ebi.intact.search.interactors.utils.SearchInteractorUtils.escapeQueryChars;
 
 /**
  * Custom and generic CRUD operations for searching purposes.
@@ -60,11 +59,7 @@ public class InteractorSearchService {
         // From HashMap documentation: if the map previously contained a mapping for
         // the key, the old value is replaced by the specified value
         for (String term : terms) {
-            String termQuery = term;
-            if (!fuzzySearch) {
-                termQuery = "\"" + term + "\"";
-            }
-            results.put(term, resolveInteractor(termQuery, fuzzySearch, page, pageSize));
+            results.put(term, resolveInteractor(term, fuzzySearch, page, pageSize));
         }
 
         return sortByTotalElements(results, false); //Descending
@@ -72,11 +67,7 @@ public class InteractorSearchService {
 
     public Page<SearchInteractor> resolveInteractor(String query, boolean fuzzySearch, int page, int pageSize) {
         //TODO Paginate the results (for know it should cover disambiguation with 50 elements per page)
-        if (fuzzySearch) {
-            return interactorRepository.resolveInteractor(escapeQueryChars(query), PageRequest.of(page, pageSize, Sort.by(Sort.Direction.DESC, SearchInteractorFields.INTERACTION_COUNT)));
-        } else {
-            return interactorRepository.resolveInteractorByIdsOrName(query, PageRequest.of(page, pageSize, Sort.by(Sort.Direction.DESC, SearchInteractorFields.INTERACTION_COUNT)));
-        }
+        return interactorRepository.resolveInteractor(query, fuzzySearch, Sort.by(Sort.Direction.DESC, SearchInteractorFields.INTERACTION_COUNT), PageRequest.of(page, pageSize));
     }
 
     public Page<SearchInteractor> findInteractor(String query) {

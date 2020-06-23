@@ -15,12 +15,12 @@ import static uk.ac.ebi.intact.search.interactors.model.SearchInteractorFields.*
  */
 
 @Repository
-public interface InteractorRepository extends SolrCrudRepository<SearchInteractor, String> {
+public interface InteractorRepository extends SolrCrudRepository<SearchInteractor, String>, CustomizedInteractorRepository {
 
     @Query(value = DEFAULT + ":?0")
     Page<SearchInteractor> findInteractor(String query, Pageable pageable);
 
-    @Query(value = INTERACTOR_NAME + ":?0 OR "
+/*    @Query(value = INTERACTOR_NAME + ":?0 OR "
             + INTERACTOR_DESCRIPTION + ":?0 OR "
             + INTERACTOR_ALIAS + ":?0 OR "
             + INTERACTOR_IDENTIFIERS + ":?0",
@@ -37,7 +37,7 @@ public interface InteractorRepository extends SolrCrudRepository<SearchInteracto
             INTERACTOR_DESCRIPTION,
             INTERACTOR_ALIAS,
             INTERACTOR_IDENTIFIERS}, prefix = "<b>", postfix = "</b>")
-    Page<SearchInteractor> resolveInteractor(String query, Pageable pageable);
+    Page<SearchInteractor> resolveInteractor(String query, Pageable pageable);*/
 
     @Query(value = INTERACTOR_NAME + ":?0 OR "
             + INTERACTOR_ALIAS + ":?0 OR "
