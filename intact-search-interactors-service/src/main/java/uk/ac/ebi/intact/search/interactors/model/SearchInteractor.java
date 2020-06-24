@@ -36,6 +36,9 @@ public class SearchInteractor {
     @Field(INTERACTOR_ALIAS)
     private Set<String> interactorAlias;
 
+    @Field(INTERACTOR_ALIAS_NAMES)
+    private Set<String> interactorAliasNames;
+
     @Field(INTERACTOR_ALT_IDS)
     private Set<String> interactorAltIds;
 
@@ -75,12 +78,13 @@ public class SearchInteractor {
     public SearchInteractor(String interactorAc, String interactorName, String interactorPreferredIdentifier, String interactorDescription, Set<String> interactorAlias,
                             Set<String> interactorAltIds, String interactorType, String interactorSpecies, Integer interactorTaxId,
                             Set<String> interactorXrefs, Integer interactionCount, Long interactionSearchCount,
-                            Set<String> interactionIds, Set<String> interactorFeatureShortLabels) {
+                            Set<String> interactionIds, Set<String> interactorFeatureShortLabels, Set<String> interactorAliasNames) {
         this.interactorAc = interactorAc;
         this.interactorName = interactorName;
         this.interactorPreferredIdentifier = interactorPreferredIdentifier;
         this.interactorDescription = interactorDescription;
         this.interactorAlias = interactorAlias;
+        this.interactorAliasNames = interactorAliasNames;
         this.interactorAltIds = interactorAltIds;
         this.interactorType = interactorType;
         this.interactorSpecies = interactorSpecies;
@@ -89,6 +93,14 @@ public class SearchInteractor {
         this.interactionCount = interactionCount;
         this.interactionSearchCount = interactionSearchCount;
         this.interactionIds = interactionIds;
+    }
+
+    public Set<String> getInteractorAliasNames() {
+        return interactorAliasNames;
+    }
+
+    public void setInteractorAliasNames(Set<String> interactorAliasNames) {
+        this.interactorAliasNames = interactorAliasNames;
     }
 
     public String getInteractorAc() {
@@ -224,16 +236,18 @@ public class SearchInteractor {
         return "SearchInteractor{" +
                 "interactorAc='" + interactorAc + '\'' +
                 ", interactorName='" + interactorName + '\'' +
+                ", interactorPreferredIdentifier='" + interactorPreferredIdentifier + '\'' +
                 ", interactorDescription='" + interactorDescription + '\'' +
                 ", interactorAlias=" + interactorAlias +
+                ", interactorAliasNames=" + interactorAliasNames +
                 ", interactorAltIds=" + interactorAltIds +
                 ", interactorType='" + interactorType + '\'' +
                 ", interactorSpecies='" + interactorSpecies + '\'' +
                 ", interactorTaxId=" + interactorTaxId +
                 ", interactorXrefs=" + interactorXrefs +
-                ", interactorFeatureShortLabels=" + interactorFeatureShortLabels +
                 ", interactionCount=" + interactionCount +
                 ", interactionIds=" + interactionIds +
+                ", interactorFeatureShortLabels=" + interactorFeatureShortLabels +
                 ", interactionSearchCount=" + interactionSearchCount +
                 '}';
     }

@@ -52,7 +52,8 @@ public class InteractorIndexServiceTest {
                 2,
                 2L,
                 new HashSet<>(Arrays.asList("interaction1", "interaction2")),
-                new HashSet<>(Arrays.asList("featureShortLabel1", "featureShortLabel2"))
+                new HashSet<>(Arrays.asList("featureShortLabel1", "featureShortLabel2")),
+                new HashSet<>(Arrays.asList("interactor1_alias_names1", "interactor1_alias_names2", "interactor1_alias_names3"))
         );
 
         searchInteractor2 = new SearchInteractor("EBI-TEST2",
@@ -68,7 +69,8 @@ public class InteractorIndexServiceTest {
                 2,
                 1L,
                 new HashSet<>(Arrays.asList("interaction1", "interaction2")),
-                new HashSet<>(Arrays.asList("featureshortlabel1", "featureshortlabel2"))
+                new HashSet<>(Arrays.asList("featureshortlabel1", "featureshortlabel2")),
+                new HashSet<>(Arrays.asList("interactor1_alias_names1", "interactor1_alias_names2", "interactor1_alias_names3"))
         );
 
         searchInteractor3 = new SearchInteractor("EBI-TEST3",
@@ -84,7 +86,8 @@ public class InteractorIndexServiceTest {
                 5,
                 3L,
                 new HashSet<>(Arrays.asList("interaction1", "interaction2", "interaction3", "interaction4", "interaction5")),
-                new HashSet<>(Arrays.asList("featureshortlabel1", "featureshortlabel2"))
+                new HashSet<>(Arrays.asList("featureshortlabel1", "featureshortlabel2")),
+                new HashSet<>(Arrays.asList("interactor1_alias_names1", "interactor1_alias_names2", "interactor1_alias_names3"))
         );
     }
 

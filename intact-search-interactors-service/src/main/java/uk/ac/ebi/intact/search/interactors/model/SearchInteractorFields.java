@@ -8,11 +8,16 @@ public class SearchInteractorFields {
     public static final String INTERACTOR_IDENTIFIERS = "interactor_identifiers";
 
     public static final String INTERACTOR_NAME = "interactor_name";
+    public static final String INTERACTOR_NAME_STR = "interactor_name_str";
 
     public static final String INTERACTOR_DESCRIPTION = "interactor_description";
+    public static final String INTERACTOR_DESCRIPTION_STR = "interactor_description_str";
+
     public static final String INTERACTOR_PREFERRED_ID = "interactor_preferred_id";
 
     public static final String INTERACTOR_ALIAS = "interactor_alias";
+    public static final String INTERACTOR_ALIAS_NAMES = "interactor_alias_names";
+    public static final String INTERACTOR_ALIAS_NAMES_STR = "interactor_alias_names_str";
 
     public static final String INTERACTOR_ALT_IDS = "interactor_alt_ids";
 

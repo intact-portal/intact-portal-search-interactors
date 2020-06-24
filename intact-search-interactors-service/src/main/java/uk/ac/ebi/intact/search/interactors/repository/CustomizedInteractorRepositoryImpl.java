@@ -57,6 +57,10 @@ public class CustomizedInteractorRepositoryImpl implements CustomizedInteractorR
 
         //highlighting
         search.setHighlightOptions(new HighlightOptions()
+                .addField(INTERACTOR_IDENTIFIERS)
+                .addField(INTERACTOR_NAME)
+                .addField(INTERACTOR_ALIAS)
+                .addField(INTERACTOR_DESCRIPTION)
                 .setSimplePrefix("<b>")
                 .setSimplePostfix("</b>"));
 
@@ -77,11 +81,12 @@ public class CustomizedInteractorRepositoryImpl implements CustomizedInteractorR
 
     public Criteria createFuzzySearchConditions(String searchTerm) {
         Criteria userConditions = null;
+        searchTerm = "\"" + searchTerm + "\"";
         if (searchTerm != null && !searchTerm.isEmpty()) {
-            Criteria identifierCriteria = new Criteria(INTERACTOR_IDENTIFIERS).boost(10).is(searchTerm);
-            Criteria nameCriteria = new Criteria(INTERACTOR_NAME).boost(8).is(searchTerm);
-            Criteria aliasCriteria = new Criteria(INTERACTOR_ALIAS).boost(2).is(searchTerm);
-            Criteria descriptionCriteria = new Criteria(INTERACTOR_DESCRIPTION).is(searchTerm);
+            Criteria identifierCriteria = new Criteria(INTERACTOR_IDENTIFIERS).boost(10).expression(searchTerm);
+            Criteria nameCriteria = new Criteria(INTERACTOR_NAME).boost(8).expression(searchTerm);
+            Criteria aliasCriteria = new Criteria(INTERACTOR_ALIAS).boost(2).expression(searchTerm);
+            Criteria descriptionCriteria = new Criteria(INTERACTOR_DESCRIPTION).expression(searchTerm);
             userConditions = identifierCriteria.or(nameCriteria).or(aliasCriteria).or(descriptionCriteria);
         }
         return userConditions;
@@ -92,8 +97,8 @@ public class CustomizedInteractorRepositoryImpl implements CustomizedInteractorR
         searchTerm = "\"" + searchTerm + "\"";
         if (searchTerm != null && !searchTerm.isEmpty()) {
             Criteria identifierCriteria = new Criteria(INTERACTOR_IDENTIFIERS).boost(10).expression(searchTerm);
-            Criteria nameCriteria = new Criteria(INTERACTOR_NAME).boost(8).expression(searchTerm);
-            Criteria aliasCriteria = new Criteria(INTERACTOR_ALIAS).boost(2).expression(searchTerm);
+            Criteria nameCriteria = new Criteria(INTERACTOR_NAME_STR).boost(8).expression(searchTerm);
+            Criteria aliasCriteria = new Criteria(INTERACTOR_ALIAS_NAMES_STR).boost(2).expression(searchTerm);
             userConditions = identifierCriteria.or(nameCriteria).or(aliasCriteria);
         }
         return userConditions;
