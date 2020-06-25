@@ -52,6 +52,7 @@ public class CustomizedInteractorRepositoryImpl implements CustomizedInteractorR
 
         // sorting
         if (sort != null) {
+            search.addSort(Sort.by(Sort.Direction.DESC, "score"));
             search.addSort(sort);
         }
 
