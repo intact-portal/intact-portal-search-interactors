@@ -57,7 +57,7 @@ public class InteractorSearchController {
         List<String> words = new ArrayList<>();
 
         if (!searchTerms.isEmpty()) {
-            words = Arrays.asList(searchTerms.split("[\\s,\\n]"));
+            words = Arrays.asList(searchTerms.split("[\\s,\\n,\\,]"));
         }
 
         return this.interactorSearchService.resolveInteractorList(words, fuzzySearch, page, pageSize);
