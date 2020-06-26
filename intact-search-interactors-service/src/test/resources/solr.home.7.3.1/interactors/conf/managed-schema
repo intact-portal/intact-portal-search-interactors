@@ -556,8 +556,6 @@
   <copyField source="interactor_alt_ids" dest="interactor_identifiers" maxChars="256"/>
   <copyField source="interactor_preferred_id" dest="interactor_identifiers" maxChars="256"/>
   <copyField source="interactor_name" dest="interactor_name_str" maxChars="256"/>
-  <copyField source="interactor_alias" dest="interactor_alias_str" maxChars="256"/>
-  <copyField source="interactor_description" dest="interactor_description_str" maxChars="256"/>
   <copyField source="*" dest="default"/>
   <copyField source="interactor_alias_names" dest="interactor_alias_names_str" maxChars="256"/>
 </schema>

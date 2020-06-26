@@ -11,7 +11,6 @@ public class SearchInteractorFields {
     public static final String INTERACTOR_NAME_STR = "interactor_name_str";
 
     public static final String INTERACTOR_DESCRIPTION = "interactor_description";
-    public static final String INTERACTOR_DESCRIPTION_STR = "interactor_description_str";
 
     public static final String INTERACTOR_PREFERRED_ID = "interactor_preferred_id";
 
