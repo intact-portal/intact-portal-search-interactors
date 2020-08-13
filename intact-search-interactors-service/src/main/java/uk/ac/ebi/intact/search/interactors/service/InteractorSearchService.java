@@ -72,7 +72,7 @@ public class InteractorSearchService {
 
     public Page<SearchInteractor> findInteractor(String query) {
         PageRequest pageRequest = PageRequest.of(0, 10);
-        return interactorRepository.findInteractor(query, pageRequest);
+        return interactorRepository.findInteractorSuggestions(query, pageRequest);
     }
 
     public Optional<SearchInteractor> findById(String id) {

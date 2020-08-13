@@ -1,13 +1,11 @@
 package uk.ac.ebi.intact.search.interactors.repository;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.solr.core.SolrOperations;
-import org.springframework.data.solr.core.query.Criteria;
-import org.springframework.data.solr.core.query.HighlightOptions;
-import org.springframework.data.solr.core.query.SimpleField;
-import org.springframework.data.solr.core.query.SimpleHighlightQuery;
+import org.springframework.data.solr.core.query.*;
 import org.springframework.data.solr.core.query.result.HighlightPage;
 import uk.ac.ebi.intact.search.interactors.model.SearchInteractor;
 
@@ -103,5 +101,51 @@ public class CustomizedInteractorRepositoryImpl implements CustomizedInteractorR
             userConditions = identifierCriteria.or(nameCriteria).or(aliasCriteria);
         }
         return userConditions;
+    }
+
+    @Override
+    public Page<SearchInteractor> findInteractorSuggestions(String query, Pageable pageable) {
+
+
+        // search query
+        SimpleQuery search = new SimpleQuery();
+
+        // search criterias
+        Criteria fuzzyInteractorSearchCriteria = createSuggestionSearchConditions(query);
+        search.addCriteria(fuzzyInteractorSearchCriteria);
+
+        // pagination
+        search.setPageRequest(pageable);
+
+        // sorting
+        search.addSort(Sort.by(Sort.Direction.DESC, "score"));
+        search.addSort(Sort.by(Sort.Direction.DESC, INTERACTION_COUNT));
+
+        //projection
+
+        //interactor details
+        search.addProjectionOnField(new SimpleField(INTERACTOR_AC));
+        search.addProjectionOnField(new SimpleField(INTERACTOR_NAME));
+        search.addProjectionOnField(new SimpleField(INTERACTOR_DESCRIPTION));
+        search.addProjectionOnField(new SimpleField(INTERACTOR_PREFERRED_ID));
+        search.addProjectionOnField(new SimpleField(INTERACTOR_SPECIES_NAME));
+        search.addProjectionOnField(new SimpleField(INTERACTOR_TAX_ID));
+        search.addProjectionOnField(new SimpleField(INTERACTOR_TYPE));
+        search.addProjectionOnField(new SimpleField(INTERACTION_COUNT));
+
+        return solrOperations.queryForPage(INTERACTORS, search, SearchInteractor.class);
+    }
+
+    public Criteria createSuggestionSearchConditions(String searchTerm) {
+        Criteria suggestionConditions = null;
+        if (searchTerm != null && !searchTerm.isEmpty()) {
+            Criteria identifierCriteria = new Criteria(INTERACTOR_IDENTIFIER_DEFAULT).boost(15).is(searchTerm);
+            Criteria nameCriteria = new Criteria(INTERACTOR_NAMES_DEFAULT).boost(8).is(searchTerm);
+            Criteria suggestCriteria = new Criteria(SUGGEST).boost(2).is(searchTerm);
+            Criteria defaultCriteria = new Criteria(DEFAULT).is(searchTerm);
+
+            suggestionConditions = identifierCriteria.or(nameCriteria).or(suggestCriteria).or(defaultCriteria);
+        }
+        return suggestionConditions;
     }
 }

@@ -1,5 +1,6 @@
 package uk.ac.ebi.intact.search.interactors.repository;
 
+import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.solr.core.query.result.HighlightPage;
@@ -13,4 +14,7 @@ import uk.ac.ebi.intact.search.interactors.model.SearchInteractor;
 public interface CustomizedInteractorRepository {
 
     HighlightPage<SearchInteractor> resolveInteractor(String query, boolean fuzzySearch, Sort sort, Pageable pageable);
+
+    Page<SearchInteractor> findInteractorSuggestions(String query, Pageable pageable);
+
 }

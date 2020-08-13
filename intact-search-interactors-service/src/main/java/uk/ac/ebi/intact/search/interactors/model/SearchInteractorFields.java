@@ -36,4 +36,7 @@ public class SearchInteractorFields {
     public static final String INTERACTION_IDS = "interaction_ids";
 
     public static final String DEFAULT = "default"; //Copy field for general search
+    public static final String SUGGEST = "suggest"; //Copy field for exact suggestion
+    public static final String INTERACTOR_IDENTIFIER_DEFAULT = "interactor_identifiers_default";
+    public static final String INTERACTOR_NAMES_DEFAULT = "interactor_names_default";
 }
