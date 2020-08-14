@@ -111,8 +111,8 @@ public class CustomizedInteractorRepositoryImpl implements CustomizedInteractorR
         SimpleQuery search = new SimpleQuery();
 
         // search criterias
-        Criteria fuzzyInteractorSearchCriteria = createSuggestionSearchConditions(query);
-        search.addCriteria(fuzzyInteractorSearchCriteria);
+        Criteria suggestionInteractorSearchCriteria = createSuggestionSearchConditions(query);
+        search.addCriteria(suggestionInteractorSearchCriteria);
 
         // pagination
         search.setPageRequest(pageable);
@@ -139,12 +139,16 @@ public class CustomizedInteractorRepositoryImpl implements CustomizedInteractorR
     public Criteria createSuggestionSearchConditions(String searchTerm) {
         Criteria suggestionConditions = null;
         if (searchTerm != null && !searchTerm.isEmpty()) {
-            Criteria identifierCriteria = new Criteria(INTERACTOR_IDENTIFIER_DEFAULT).boost(15).is(searchTerm);
-            Criteria nameCriteria = new Criteria(INTERACTOR_NAMES_DEFAULT).boost(8).is(searchTerm);
-            Criteria suggestCriteria = new Criteria(SUGGEST).boost(2).is(searchTerm);
+            Criteria suggestCriteria = new Criteria(SUGGEST).boost(15).is(searchTerm);
+            Criteria identifierCriteria = new Criteria(INTERACTOR_IDENTIFIER_DEFAULT).boost(8).is(searchTerm);
+            Criteria nameCriteria = new Criteria(INTERACTOR_NAMES_DEFAULT).boost(2).is(searchTerm);
             Criteria defaultCriteria = new Criteria(DEFAULT).is(searchTerm);
 
-            suggestionConditions = identifierCriteria.or(nameCriteria).or(suggestCriteria).or(defaultCriteria);
+            // to give more importance when term lies both in suggest(exact match) and other ranking fields
+            Criteria logicalBoostCriteria = suggestCriteria.and(identifierCriteria.or(nameCriteria));
+
+
+            suggestionConditions = logicalBoostCriteria.connect().or(suggestCriteria.or(identifierCriteria).or(nameCriteria).or(defaultCriteria));
         }
         return suggestionConditions;
     }
