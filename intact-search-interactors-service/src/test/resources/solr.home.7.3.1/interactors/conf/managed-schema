@@ -495,18 +495,19 @@
   <field name="interactor_description" type="text_general"/>
   <field name="interactor_feature_shortlabels" type="text_general"/>
   <field name="interactor_name" type="text_general"/>
+  <field name="interactor_intact_name" type="text_general"/>
   <field name="interactor_preferred_id" type="text_general"/>
   <field name="interactor_species_name" type="text_general"/>
   <field name="interactor_tax_id" type="plongs"/>
   <field name="interactor_type" type="text_general"/>
   <field name="interactor_xrefs" type="text_general"/>
+  <field name="interaction_xrefs" type="text_general"/>
   <dynamicField name="*_txt_en_split_tight" type="text_en_splitting_tight" indexed="true" stored="true"/>
   <dynamicField name="*_descendent_path" type="descendent_path" indexed="true" stored="true"/>
   <dynamicField name="*_ancestor_path" type="ancestor_path" indexed="true" stored="true"/>
   <dynamicField name="*_txt_en_split" type="text_en_splitting" indexed="true" stored="true"/>
   <dynamicField name="*_identifiers" type="intact_identifier" indexed="true" stored="true"/>
-  <dynamicField name="*_identifiers_default" type="text_en_splitting_tight_ngram" multiValued="true" indexed="true" stored="true"/>
-  <dynamicField name="*_names_default" type="text_en_splitting_tight_ngram" multiValued="true" indexed="true" stored="true"/>
+  <dynamicField name="*_default" type="text_en_splitting_tight_ngram" multiValued="true" indexed="true" stored="true"/>
   <dynamicField name="*_txt_sort" type="text_gen_sort" indexed="true" stored="true"/>
   <dynamicField name="*_txt_rev" type="text_general_rev" indexed="true" stored="true"/>
   <dynamicField name="*_phon_en" type="phonetic_en" indexed="true" stored="true"/>
@@ -577,7 +578,10 @@
   <copyField source="interactor_preferred_id" dest="interactor_identifiers_default"/>
   <copyField source="interactor_name" dest="interactor_name_str" maxChars="256"/>
   <copyField source="interactor_name" dest="interactor_names_default" maxChars="256"/>
+  <copyField source="interactor_intact_name" dest="interactor_names_default" maxChars="256"/>
+  <copyField source="interaction_xrefs" dest="interaction_xrefs_default" maxChars="256"/>
+  <copyField source="interactor_alias" dest="interactor_alias_default" maxChars="256"/>
   <copyField source="*" dest="default"/>
   <copyField source="*" dest="suggest"/>
   <copyField source="interactor_alias_names" dest="interactor_alias_names_str" maxChars="256"/>
-</schema>
+  </schema>
