@@ -53,7 +53,9 @@ public class InteractorIndexServiceTest {
                 2L,
                 new HashSet<>(Arrays.asList("interaction1", "interaction2")),
                 new HashSet<>(Arrays.asList("featureShortLabel1", "featureShortLabel2")),
-                new HashSet<>(Arrays.asList("interactor1_alias_names1", "interactor1_alias_names2", "interactor1_alias_names3"))
+                new HashSet<>(Arrays.asList("interactor1_alias_names1", "interactor1_alias_names2", "interactor1_alias_names3")),
+                "interactor1_intact_name",
+                new HashSet<>(Arrays.asList("interactor1_interaction_xref1", "interactor1_interaction_xref2", "interactor1_interaction_xref3"))
         );
 
         searchInteractor2 = new SearchInteractor("EBI-TEST2",
@@ -70,7 +72,9 @@ public class InteractorIndexServiceTest {
                 1L,
                 new HashSet<>(Arrays.asList("interaction1", "interaction2")),
                 new HashSet<>(Arrays.asList("featureshortlabel1", "featureshortlabel2")),
-                new HashSet<>(Arrays.asList("interactor1_alias_names1", "interactor1_alias_names2", "interactor1_alias_names3"))
+                new HashSet<>(Arrays.asList("interactor1_alias_names1", "interactor1_alias_names2", "interactor1_alias_names3")),
+                "interactor2_intact_name",
+                new HashSet<>(Arrays.asList("interactor2_interaction_xref1", "interactor2_interaction_xref2", "interactor2_interaction_xref3"))
         );
 
         searchInteractor3 = new SearchInteractor("EBI-TEST3",
@@ -87,7 +91,9 @@ public class InteractorIndexServiceTest {
                 3L,
                 new HashSet<>(Arrays.asList("interaction1", "interaction2", "interaction3", "interaction4", "interaction5")),
                 new HashSet<>(Arrays.asList("featureshortlabel1", "featureshortlabel2")),
-                new HashSet<>(Arrays.asList("interactor1_alias_names1", "interactor1_alias_names2", "interactor1_alias_names3"))
+                new HashSet<>(Arrays.asList("interactor1_alias_names1", "interactor1_alias_names2", "interactor1_alias_names3")),
+                "interactor3_intact_name",
+                new HashSet<>(Arrays.asList("interactor3_interaction_xref1", "interactor3_interaction_xref2", "interactor3_interaction_xref3"))
         );
     }
 

@@ -26,6 +26,10 @@ public class SearchInteractor {
     /* Prefer name of the interactor */
     private String interactorName;
 
+    @Field(INTERACTOR_INTACT_NAME)
+    /* Intact name/shortlabel of the interactor */
+    private String interactorIntactName;
+
     @Field(INTERACTOR_PREFERRED_ID)
     /* Prefer identifier of the interactor */
     private String interactorPreferredIdentifier;
@@ -60,6 +64,9 @@ public class SearchInteractor {
     @Field(INTERACTION_IDS)
     private Set<String> interactionIds;
 
+    @Field(INTERACTION_XREFS)
+    private Set<String> interactionXrefs;
+
     @Field(INTERACTOR_FEATURE_SHORTLABELS)
     private Set<String> interactorFeatureShortLabels;
 
@@ -78,7 +85,7 @@ public class SearchInteractor {
     public SearchInteractor(String interactorAc, String interactorName, String interactorPreferredIdentifier, String interactorDescription, Set<String> interactorAlias,
                             Set<String> interactorAltIds, String interactorType, String interactorSpecies, Integer interactorTaxId,
                             Set<String> interactorXrefs, Integer interactionCount, Long interactionSearchCount,
-                            Set<String> interactionIds, Set<String> interactorFeatureShortLabels, Set<String> interactorAliasNames) {
+                            Set<String> interactionIds, Set<String> interactorFeatureShortLabels, Set<String> interactorAliasNames, String interactorIntactName, Set<String> interactionXrefs) {
         this.interactorAc = interactorAc;
         this.interactorName = interactorName;
         this.interactorPreferredIdentifier = interactorPreferredIdentifier;
@@ -93,6 +100,24 @@ public class SearchInteractor {
         this.interactionCount = interactionCount;
         this.interactionSearchCount = interactionSearchCount;
         this.interactionIds = interactionIds;
+        this.interactorIntactName = interactorIntactName;
+        this.interactionXrefs = interactionXrefs;
+    }
+
+    public String getInteractorIntactName() {
+        return interactorIntactName;
+    }
+
+    public void setInteractorIntactName(String interactorIntactName) {
+        this.interactorIntactName = interactorIntactName;
+    }
+
+    public Set<String> getInteractionXrefs() {
+        return interactionXrefs;
+    }
+
+    public void setInteractionXrefs(Set<String> interactionXrefs) {
+        this.interactionXrefs = interactionXrefs;
     }
 
     public Set<String> getInteractorAliasNames() {
@@ -236,6 +261,7 @@ public class SearchInteractor {
         return "SearchInteractor{" +
                 "interactorAc='" + interactorAc + '\'' +
                 ", interactorName='" + interactorName + '\'' +
+                ", interactorIntactName='" + interactorIntactName + '\'' +
                 ", interactorPreferredIdentifier='" + interactorPreferredIdentifier + '\'' +
                 ", interactorDescription='" + interactorDescription + '\'' +
                 ", interactorAlias=" + interactorAlias +
@@ -247,6 +273,7 @@ public class SearchInteractor {
                 ", interactorXrefs=" + interactorXrefs +
                 ", interactionCount=" + interactionCount +
                 ", interactionIds=" + interactionIds +
+                ", interactionXrefs=" + interactionXrefs +
                 ", interactorFeatureShortLabels=" + interactorFeatureShortLabels +
                 ", interactionSearchCount=" + interactionSearchCount +
                 '}';

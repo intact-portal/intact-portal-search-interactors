@@ -10,6 +10,8 @@ public class SearchInteractorFields {
     public static final String INTERACTOR_NAME = "interactor_name";
     public static final String INTERACTOR_NAME_STR = "interactor_name_str";
 
+    public static final String INTERACTOR_INTACT_NAME = "interactor_intact_name";
+
     public static final String INTERACTOR_DESCRIPTION = "interactor_description";
 
     public static final String INTERACTOR_PREFERRED_ID = "interactor_preferred_id";
@@ -34,9 +36,12 @@ public class SearchInteractorFields {
 
     public static final String INTERACTION_COUNT = "interaction_count";
     public static final String INTERACTION_IDS = "interaction_ids";
+    public static final String INTERACTION_XREFS = "interaction_xrefs";
 
     public static final String DEFAULT = "default"; //Copy field for general search
     public static final String SUGGEST = "suggest"; //Copy field for exact suggestion
     public static final String INTERACTOR_IDENTIFIER_DEFAULT = "interactor_identifiers_default";
     public static final String INTERACTOR_NAMES_DEFAULT = "interactor_names_default";
+    public static final String INTERACTION_XREFS_DEFAULT = "interaction_xrefs_default";
+    public static final String INTERACTOR_ALIAS_DEFAULT = "interactor_alias_default";
 }
