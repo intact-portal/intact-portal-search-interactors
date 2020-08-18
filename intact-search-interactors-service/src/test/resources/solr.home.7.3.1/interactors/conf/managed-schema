@@ -485,7 +485,7 @@
   <field name="_text_" type="text_general" multiValued="true" indexed="true" stored="false"/>
   <field name="_version_" type="plong" indexed="false" stored="false"/>
   <field name="default" type="text_en_splitting_tight_ngram" multiValued="true" indexed="true" stored="false"/>
-  <field name="suggest" type="text_suggest" multiValued="true" indexed="true" stored="true"/>
+  <field name="suggest" type="text_suggest" multiValued="true" indexed="true" stored="false"/>
   <field name="interaction_count" type="plongs" indexed="false" stored="true"/>
   <field name="interaction_ids" type="text_general"/>
   <field name="interactor_ac" type="string" indexed="true" required="true" stored="true"/>
@@ -507,7 +507,7 @@
   <dynamicField name="*_ancestor_path" type="ancestor_path" indexed="true" stored="true"/>
   <dynamicField name="*_txt_en_split" type="text_en_splitting" indexed="true" stored="true"/>
   <dynamicField name="*_identifiers" type="intact_identifier" indexed="true" stored="true"/>
-  <dynamicField name="*_default" type="text_en_splitting_tight_ngram" multiValued="true" indexed="true" stored="true"/>
+  <dynamicField name="*_default" type="text_en_splitting_tight_ngram" multiValued="true" indexed="true" stored="false"/>
   <dynamicField name="*_txt_sort" type="text_gen_sort" indexed="true" stored="true"/>
   <dynamicField name="*_txt_rev" type="text_general_rev" indexed="true" stored="true"/>
   <dynamicField name="*_phon_en" type="phonetic_en" indexed="true" stored="true"/>
