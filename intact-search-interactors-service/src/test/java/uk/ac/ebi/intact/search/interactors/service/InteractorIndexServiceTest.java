@@ -32,6 +32,7 @@ public class InteractorIndexServiceTest {
     private SearchInteractor searchInteractor6;
     private SearchInteractor searchInteractor7;
     private SearchInteractor searchInteractor8;
+    private SearchInteractor searchInteractor9;
 
     @Resource
     private InteractorIndexService interactorIndexService;
@@ -125,7 +126,7 @@ public class InteractorIndexServiceTest {
         searchInteractor5 = new SearchInteractor("EBI-TEST5",
                 "interactorName5",
                 "preferredIdentifier5",
-                "Description5",
+                "Description5 exactmatch",
                 new HashSet<>(Arrays.asList("interactor5_alias1", "interactor5_alias1", "interactor5_alias3")),
                 new HashSet<>(Arrays.asList("interactor5_alt1", "interactor5_alt1")),
                 "protein",
@@ -144,7 +145,7 @@ public class InteractorIndexServiceTest {
         searchInteractor6 = new SearchInteractor("EBI-TEST6",
                 "interactorName6",
                 "preferredIdentifier6",
-                "This is Description6",
+                "This is Description6 exactmatch",
                 new HashSet<>(Arrays.asList("interactor6_alias1", "interactor6_alias1", "interactor6_alias3", "exactmatch")),
                 new HashSet<>(Arrays.asList("interactor6_alt1", "interactor6_alt1")),
                 "protein",
@@ -197,6 +198,25 @@ public class InteractorIndexServiceTest {
                 "interactor8_intact_name",
                 new HashSet<>(Arrays.asList("interactor8_interaction_xref1", "interactor8_interaction_xref2", "interactor8_interaction_xref3"))
         );
+
+        searchInteractor9 = new SearchInteractor("EBI-TEST9",
+                "interactorName9",
+                "preferredIdentifier9",
+                "This is Description9 exactmatchsimilar",
+                new HashSet<>(Arrays.asList("interactor9_alias1", "interactor9_alias1", "interactor9_alias3")),
+                new HashSet<>(Arrays.asList("interactor9_alt1", "interactor9_alt1")),
+                "protein",
+                "Homo sapiens (Human)",
+                9606,
+                new HashSet<>(Arrays.asList("interactor9_xref1", "interactor9_xref2", "interactor9_xref3", "interactor9_xref4")),
+                5,
+                3L,
+                new HashSet<>(Arrays.asList("interaction1", "interaction2", "interaction3", "interaction4", "interaction5")),
+                new HashSet<>(Arrays.asList("featureshortlabel1", "featureshortlabel2")),
+                new HashSet<>(Arrays.asList("interactor9_alias_names1", "interactor9_alias_names2", "interactor9_alias_names3", "exactmatchsimilar")),
+                "interactor8_intact_name",
+                new HashSet<>(Arrays.asList("interactor9_interaction_xref1", "interactor9_interaction_xref2", "interactor9_interaction_xref3"))
+        );
     }
 
     @After
@@ -228,17 +248,17 @@ public class InteractorIndexServiceTest {
      * 1.exact match in identifier,name,aliases in the order stated here
      * 2.exact match in other fields
      * 3.partial matches in identifier,name,aliases in the order stated here
-     * 4.The order will change if term was found in more than one times in a document
+     * 4.The order will not change if term was found in more than one times in ranking fields in a document
      * */
     @Test
     public void suggestionOrderTest() {
         // empty collection
         interactorIndexService.deleteAll();
-        interactorIndexService.saveAll(Arrays.asList(searchInteractor1, searchInteractor2, searchInteractor3, searchInteractor4, searchInteractor5, searchInteractor6, searchInteractor7, searchInteractor8));
+        interactorIndexService.saveAll(Arrays.asList(searchInteractor1, searchInteractor2, searchInteractor3, searchInteractor4, searchInteractor5, searchInteractor6, searchInteractor7, searchInteractor8, searchInteractor9));
         Page<SearchInteractor> suggestions = interactorSearchService.findInteractorSuggestions("exactmatch");
-        assertEquals(interactorSearchService.countTotal(), 8);
+        assertEquals(interactorSearchService.countTotal(), 9);
 
-        assertEquals(suggestions.getTotalElements(), 8);
+        assertEquals(suggestions.getTotalElements(), 9);
         Iterator<SearchInteractor> searchInteractorIterator = suggestions.iterator();
         assertEquals(searchInteractorIterator.next().getInteractorName(), "4EBP1");//identifier exact match
         assertEquals(searchInteractorIterator.next().getInteractorName(), "interactorName5");// name exact match
@@ -247,6 +267,7 @@ public class InteractorIndexServiceTest {
         assertEquals(searchInteractorIterator.next().getInteractorName(), "EIF4E");// identifier field partial match
         assertEquals(searchInteractorIterator.next().getInteractorName(), "SUMO1");// name field partial match
         assertEquals(searchInteractorIterator.next().getInteractorName(), "interactorName7");// alias field partial match
+        assertEquals(searchInteractorIterator.next().getInteractorName(), "interactorName9");// other field partial match(more number of terms)
         assertEquals(searchInteractorIterator.next().getInteractorName(), "interactorName8");// other field partial match
     }
 
