@@ -40,7 +40,7 @@ public class InteractorSearchController {
     @GetMapping(value = "/findInteractor/{query}",
             produces = {APPLICATION_JSON_VALUE})
     public Page<SearchInteractor> findInteractor(@PathVariable String query) {
-        return this.interactorSearchService.findInteractor(query);
+        return this.interactorSearchService.findInteractorSuggestions(query);
     }
 
     @CrossOrigin(origins = "*")

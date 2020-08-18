@@ -132,6 +132,7 @@ public class CustomizedInteractorRepositoryImpl implements CustomizedInteractorR
         search.addProjectionOnField(new SimpleField(INTERACTOR_TAX_ID));
         search.addProjectionOnField(new SimpleField(INTERACTOR_TYPE));
         search.addProjectionOnField(new SimpleField(INTERACTION_COUNT));
+        search.addProjectionOnField(new SimpleField("score"));
 
         return solrOperations.queryForPage(INTERACTORS, search, SearchInteractor.class);
     }
@@ -139,17 +140,23 @@ public class CustomizedInteractorRepositoryImpl implements CustomizedInteractorR
     public Criteria createSuggestionSearchConditions(String searchTerm) {
         Criteria suggestionConditions = null;
         if (searchTerm != null && !searchTerm.isEmpty()) {
-            Criteria suggestCriteria = new Criteria(SUGGEST).boost(23).is(searchTerm);
+            Criteria suggestCriteria = new Criteria(SUGGEST).boost(100).is(searchTerm);
             Criteria identifierCriteria = new Criteria(INTERACTOR_IDENTIFIER_DEFAULT).boost(15).is(searchTerm);
             Criteria nameCriteria = new Criteria(INTERACTOR_NAMES_DEFAULT).boost(8).is(searchTerm);
             Criteria aliasCriteria = new Criteria(INTERACTOR_ALIAS_DEFAULT).boost(2).is(searchTerm);
             Criteria defaultCriteria = new Criteria(DEFAULT).is(searchTerm);
 
             // to give more importance when term lies both in suggest(exact match) and other ranking fields
-            Criteria logicalBoostCriteria = suggestCriteria.and(identifierCriteria.or(nameCriteria).or(aliasCriteria));
+            Criteria logicalBoostCriteria = new SimpleStringCriteria("(" +
+                    SUGGEST + ":" + searchTerm
+                    + " AND " + "(" +
+                    INTERACTOR_IDENTIFIER_DEFAULT + ":" + searchTerm +
+                    " OR " + INTERACTOR_NAMES_DEFAULT + ":" + searchTerm +
+                    " OR " + INTERACTOR_ALIAS_DEFAULT + ":" + searchTerm + "))^=200.0");
+            //   Criteria logicalBoostCriteria = suggestCriteria.and(identifierCriteria.or(nameCriteria).or(aliasCriteria));
 
 
-            suggestionConditions = logicalBoostCriteria.connect().or(suggestCriteria.or(identifierCriteria).or(nameCriteria).or(aliasCriteria).or(defaultCriteria));
+            suggestionConditions = suggestCriteria.or(identifierCriteria).or(nameCriteria).or(aliasCriteria).or(defaultCriteria);
         }
         return suggestionConditions;
     }

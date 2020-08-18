@@ -22,6 +22,9 @@ public class SearchInteractor {
     @Field(INTERACTOR_AC)
     private String interactorAc;
 
+    @Field("score")
+    private String score;
+
     @Field(INTERACTOR_NAME)
     /* Prefer name of the interactor */
     private String interactorName;
