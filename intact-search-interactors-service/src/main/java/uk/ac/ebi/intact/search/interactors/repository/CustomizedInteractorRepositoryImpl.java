@@ -132,7 +132,6 @@ public class CustomizedInteractorRepositoryImpl implements CustomizedInteractorR
         search.addProjectionOnField(new SimpleField(INTERACTOR_TAX_ID));
         search.addProjectionOnField(new SimpleField(INTERACTOR_TYPE));
         search.addProjectionOnField(new SimpleField(INTERACTION_COUNT));
-        search.addProjectionOnField(new SimpleField("score"));
 
         return solrOperations.queryForPage(INTERACTORS, search, SearchInteractor.class);
     }
@@ -153,12 +152,19 @@ public class CustomizedInteractorRepositoryImpl implements CustomizedInteractorR
             */
 
             // to ignore scoring from solr and use just our constant scores
+            // numbers are important here, changing them would break the order
+            // suggest is for exact match
+            // others for partial matches
+            // ranking fields together with suggest (score gets added) cause exact match in ranking fields
+            //         to get higher score than partial matches
+            // any exact match with ranking fields should add up the score to be more than any partial match
+            // two partial matches can be more than one exact match
             suggestionConditions = new SimpleStringCriteria(
                     "(" +
-                            SUGGEST + ":" + searchTerm + "^=100.0" +
-                            " OR " + INTERACTOR_IDENTIFIER_DEFAULT + ":" + searchTerm + "^=15.0" +
-                            " OR " + INTERACTOR_NAMES_DEFAULT + ":" + searchTerm + "^=8.0" +
-                            " OR " + INTERACTOR_ALIAS_DEFAULT + ":" + searchTerm + "^=2.0" +
+                            SUGGEST + ":" + searchTerm + "^=45.0" +
+                            " OR " + INTERACTOR_IDENTIFIER_DEFAULT + ":" + searchTerm + "^=100.0" +
+                            " OR " + INTERACTOR_NAMES_DEFAULT + ":" + searchTerm + "^=70.0" +
+                            " OR " + INTERACTOR_ALIAS_DEFAULT + ":" + searchTerm + "^=65.0" +
                             " OR " + DEFAULT + ":" + searchTerm + ")");
 
 

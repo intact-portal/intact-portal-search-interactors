@@ -263,10 +263,10 @@ public class InteractorIndexServiceTest {
         assertEquals(searchInteractorIterator.next().getInteractorName(), "4EBP1");//identifier exact match
         assertEquals(searchInteractorIterator.next().getInteractorName(), "interactorName5");// name exact match
         assertEquals(searchInteractorIterator.next().getInteractorName(), "interactorName6");// alias exact match
-        assertEquals(searchInteractorIterator.next().getInteractorName(), "interactorName4");// other fields exact match
         assertEquals(searchInteractorIterator.next().getInteractorName(), "EIF4E");// identifier field partial match
         assertEquals(searchInteractorIterator.next().getInteractorName(), "SUMO1");// name field partial match
         assertEquals(searchInteractorIterator.next().getInteractorName(), "interactorName7");// alias field partial match
+        assertEquals(searchInteractorIterator.next().getInteractorName(), "interactorName4");// other fields exact match
         assertEquals(searchInteractorIterator.next().getInteractorName(), "interactorName9");// other field partial match(more number of terms)
         assertEquals(searchInteractorIterator.next().getInteractorName(), "interactorName8");// other field partial match
     }
