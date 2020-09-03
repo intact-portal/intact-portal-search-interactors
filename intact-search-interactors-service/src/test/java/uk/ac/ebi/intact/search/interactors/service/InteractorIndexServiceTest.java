@@ -63,7 +63,8 @@ public class InteractorIndexServiceTest {
                 new HashSet<>(Arrays.asList("featureShortLabel1", "featureShortLabel2")),
                 new HashSet<>(Arrays.asList("interactor1_alias_names1", "interactor1_alias_names2", "interactor1_alias_names3")),
                 "interactor1_intact_name",
-                new HashSet<>(Arrays.asList("interactor1_interaction_xref1", "interactor1_interaction_xref2", "interactor1_interaction_xref3"))
+                new HashSet<>(Arrays.asList("interactor1_interaction_xref1", "interactor1_interaction_xref2", "interactor1_interaction_xref3")),
+                new HashSet<>(Arrays.asList("interactor1_feature_type1", "interactor1_feature_type2", "interactor1_feature_type3"))
         );
 
         searchInteractor2 = new SearchInteractor("EBI-TEST2",
@@ -82,7 +83,8 @@ public class InteractorIndexServiceTest {
                 new HashSet<>(Arrays.asList("featureshortlabel1", "featureshortlabel2")),
                 new HashSet<>(Arrays.asList("interactor1_alias_names1", "interactor1_alias_names2", "interactor1_alias_names3")),
                 "interactor2_intact_name",
-                new HashSet<>(Arrays.asList("interactor2_interaction_xref1", "interactor2_interaction_xref2", "interactor2_interaction_xref3"))
+                new HashSet<>(Arrays.asList("interactor2_interaction_xref1", "interactor2_interaction_xref2", "interactor2_interaction_xref3")),
+                new HashSet<>(Arrays.asList("interactor2_feature_type1", "interactor2_feature_type2", "interactor2_feature_type3"))
         );
 
         searchInteractor3 = new SearchInteractor("EBI-TEST3",
@@ -101,7 +103,8 @@ public class InteractorIndexServiceTest {
                 new HashSet<>(Arrays.asList("featureshortlabel1", "featureshortlabel2")),
                 new HashSet<>(Arrays.asList("interactor1_alias_names1", "interactor1_alias_names2", "interactor1_alias_names3")),
                 "exactmatchsimilar",
-                new HashSet<>(Arrays.asList("interactor3_interaction_xref1", "interactor3_interaction_xref2", "interactor3_interaction_xref3"))
+                new HashSet<>(Arrays.asList("interactor3_interaction_xref1", "interactor3_interaction_xref2", "interactor3_interaction_xref3")),
+                new HashSet<>(Arrays.asList("interactor3_feature_type1", "interactor3_feature_type2", "interactor3_feature_type3"))
         );
 
         searchInteractor4 = new SearchInteractor("EBI-TEST4",
@@ -120,7 +123,8 @@ public class InteractorIndexServiceTest {
                 new HashSet<>(Arrays.asList("featureshortlabel1", "featureshortlabel2")),
                 new HashSet<>(Arrays.asList("interactor4_alias_names1", "interactor4_alias_names2", "interactor4_alias_names3")),
                 "interactor4_intact_name",
-                new HashSet<>(Arrays.asList("interactor4_interaction_xref1", "interactor4_interaction_xref2", "interactor4_interaction_xref3"))
+                new HashSet<>(Arrays.asList("interactor4_interaction_xref1", "interactor4_interaction_xref2", "interactor4_interaction_xref3")),
+                new HashSet<>(Arrays.asList("interactor4_feature_type1", "interactor4_feature_type2", "interactor4_feature_type3"))
         );
 
         searchInteractor5 = new SearchInteractor("EBI-TEST5",
@@ -139,7 +143,8 @@ public class InteractorIndexServiceTest {
                 new HashSet<>(Arrays.asList("featureshortlabel1", "featureshortlabel2")),
                 new HashSet<>(Arrays.asList("interactor5_alias_names1", "interactor5_alias_names2", "interactor5_alias_names3")),
                 "exactmatch",
-                new HashSet<>(Arrays.asList("interactor5_interaction_xref1", "interactor5_interaction_xref2", "interactor5_interaction_xref3"))
+                new HashSet<>(Arrays.asList("interactor5_interaction_xref1", "interactor5_interaction_xref2", "interactor5_interaction_xref3")),
+                new HashSet<>(Arrays.asList("interactor5_feature_type1", "interactor5_feature_type2", "interactor5_feature_type3"))
         );
 
         searchInteractor6 = new SearchInteractor("EBI-TEST6",
@@ -158,7 +163,8 @@ public class InteractorIndexServiceTest {
                 new HashSet<>(Arrays.asList("featureshortlabel1", "featureshortlabel2")),
                 new HashSet<>(Arrays.asList("interactor6_alias_names1", "interactor6_alias_names2", "interactor6_alias_names3")),
                 "interactor6_intact_name",
-                new HashSet<>(Arrays.asList("interactor6_interaction_xref1", "interactor6_interaction_xref2", "interactor6_interaction_xref3"))
+                new HashSet<>(Arrays.asList("interactor6_interaction_xref1", "interactor6_interaction_xref2", "interactor6_interaction_xref3")),
+                new HashSet<>(Arrays.asList("interactor6_feature_type1", "interactor6_feature_type2", "interactor6_feature_type3"))
         );
 
         searchInteractor7 = new SearchInteractor("EBI-TEST7",
@@ -177,7 +183,8 @@ public class InteractorIndexServiceTest {
                 new HashSet<>(Arrays.asList("featureshortlabel1", "featureshortlabel2")),
                 new HashSet<>(Arrays.asList("interactor7_alias_names1", "interactor7_alias_names2", "interactor7_alias_names3")),
                 "interactor7_intact_name",
-                new HashSet<>(Arrays.asList("interactor7_interaction_xref1", "interactor7_interaction_xref2", "interactor7_interaction_xref3"))
+                new HashSet<>(Arrays.asList("interactor7_interaction_xref1", "interactor7_interaction_xref2", "interactor7_interaction_xref3")),
+                new HashSet<>(Arrays.asList("interactor7_feature_type1", "interactor7_feature_type2", "interactor7_feature_type3"))
         );
 
         searchInteractor8 = new SearchInteractor("EBI-TEST8",
@@ -196,7 +203,8 @@ public class InteractorIndexServiceTest {
                 new HashSet<>(Arrays.asList("featureshortlabel1", "featureshortlabel2")),
                 new HashSet<>(Arrays.asList("interactor8_alias_names1", "interactor8_alias_names2", "interactor8_alias_names3")),
                 "interactor8_intact_name",
-                new HashSet<>(Arrays.asList("interactor8_interaction_xref1", "interactor8_interaction_xref2", "interactor8_interaction_xref3"))
+                new HashSet<>(Arrays.asList("interactor8_interaction_xref1", "interactor8_interaction_xref2", "interactor8_interaction_xref3")),
+                new HashSet<>(Arrays.asList("interactor8_feature_type1", "interactor8_feature_type2", "interactor8_feature_type3"))
         );
 
         searchInteractor9 = new SearchInteractor("EBI-TEST9",
@@ -212,10 +220,11 @@ public class InteractorIndexServiceTest {
                 5,
                 3L,
                 new HashSet<>(Arrays.asList("interaction1", "interaction2", "interaction3", "interaction4", "interaction5")),
-                new HashSet<>(Arrays.asList("featureshortlabel1", "featureshortlabel2")),
-                new HashSet<>(Arrays.asList("interactor9_alias_names1", "interactor9_alias_names2", "interactor9_alias_names3", "exactmatchsimilar")),
+                new HashSet<>(Arrays.asList("featureshortlabel1", "featureshortlabel2", "exactmatchsimilar")),
+                new HashSet<>(Arrays.asList("interactor9_alias_names1", "interactor9_alias_names2", "interactor9_alias_names3")),
                 "interactor8_intact_name",
-                new HashSet<>(Arrays.asList("interactor9_interaction_xref1", "interactor9_interaction_xref2", "interactor9_interaction_xref3"))
+                new HashSet<>(Arrays.asList("interactor9_interaction_xref1", "interactor9_interaction_xref2", "interactor9_interaction_xref3")),
+                new HashSet<>(Arrays.asList("interactor9_feature_type1", "interactor9_feature_type2", "interactor9_feature_type3"))
         );
     }
 
@@ -260,15 +269,15 @@ public class InteractorIndexServiceTest {
 
         assertEquals(suggestions.getTotalElements(), 9);
         Iterator<SearchInteractor> searchInteractorIterator = suggestions.iterator();
-        assertEquals(searchInteractorIterator.next().getInteractorName(), "4EBP1");//identifier exact match
-        assertEquals(searchInteractorIterator.next().getInteractorName(), "interactorName5");// name exact match
-        assertEquals(searchInteractorIterator.next().getInteractorName(), "interactorName6");// alias exact match
-        assertEquals(searchInteractorIterator.next().getInteractorName(), "EIF4E");// identifier field partial match
-        assertEquals(searchInteractorIterator.next().getInteractorName(), "SUMO1");// name field partial match
-        assertEquals(searchInteractorIterator.next().getInteractorName(), "interactorName7");// alias field partial match
-        assertEquals(searchInteractorIterator.next().getInteractorName(), "interactorName4");// other fields exact match
-        assertEquals(searchInteractorIterator.next().getInteractorName(), "interactorName9");// other field partial match(more number of terms)
-        assertEquals(searchInteractorIterator.next().getInteractorName(), "interactorName8");// other field partial match
+        assertEquals("4EBP1", searchInteractorIterator.next().getInteractorName());//identifier exact match
+        assertEquals("interactorName5", searchInteractorIterator.next().getInteractorName());// name exact match
+        assertEquals("interactorName6", searchInteractorIterator.next().getInteractorName());// alias exact match
+        assertEquals("EIF4E", searchInteractorIterator.next().getInteractorName());// identifier field partial match
+        assertEquals("SUMO1", searchInteractorIterator.next().getInteractorName());// name field partial match
+        assertEquals("interactorName7", searchInteractorIterator.next().getInteractorName());// alias field partial match
+        assertEquals("interactorName4", searchInteractorIterator.next().getInteractorName());// other fields exact match
+        assertEquals("interactorName9", searchInteractorIterator.next().getInteractorName());// other field partial match(more number of terms)
+        assertEquals("interactorName8", searchInteractorIterator.next().getInteractorName());// other field partial match
     }
 
 

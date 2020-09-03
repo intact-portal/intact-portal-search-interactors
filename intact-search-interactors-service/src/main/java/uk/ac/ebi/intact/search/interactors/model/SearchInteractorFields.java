@@ -44,4 +44,5 @@ public class SearchInteractorFields {
     public static final String INTERACTOR_NAMES_DEFAULT = "interactor_names_default";
     public static final String INTERACTION_XREFS_DEFAULT = "interaction_xrefs_default";
     public static final String INTERACTOR_ALIAS_DEFAULT = "interactor_alias_default";
+    public static final String INTERACTOR_FEATURE_TYPES = "interactor_feature_types";
 }

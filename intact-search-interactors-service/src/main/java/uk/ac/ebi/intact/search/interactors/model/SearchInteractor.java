@@ -70,6 +70,9 @@ public class SearchInteractor {
     @Field(INTERACTOR_FEATURE_SHORTLABELS)
     private Set<String> interactorFeatureShortLabels;
 
+    @Field(INTERACTOR_FEATURE_TYPES)
+    private Set<String> interactorFeatureTypes;
+
 
     /**
      * This field is not part of the solr doc.
@@ -85,7 +88,7 @@ public class SearchInteractor {
     public SearchInteractor(String interactorAc, String interactorName, String interactorPreferredIdentifier, String interactorDescription, Set<String> interactorAlias,
                             Set<String> interactorAltIds, String interactorType, String interactorSpecies, Integer interactorTaxId,
                             Set<String> interactorXrefs, Integer interactionCount, Long interactionSearchCount,
-                            Set<String> interactionIds, Set<String> interactorFeatureShortLabels, Set<String> interactorAliasNames, String interactorIntactName, Set<String> interactionXrefs) {
+                            Set<String> interactionIds, Set<String> interactorFeatureShortLabels, Set<String> interactorAliasNames, String interactorIntactName, Set<String> interactionXrefs, Set<String> interactorFeatureTypes) {
         this.interactorAc = interactorAc;
         this.interactorName = interactorName;
         this.interactorPreferredIdentifier = interactorPreferredIdentifier;
@@ -102,6 +105,16 @@ public class SearchInteractor {
         this.interactionIds = interactionIds;
         this.interactorIntactName = interactorIntactName;
         this.interactionXrefs = interactionXrefs;
+        this.interactorFeatureTypes = interactorFeatureTypes;
+        this.interactorFeatureShortLabels = interactorFeatureShortLabels;
+    }
+
+    public Set<String> getInteractorFeatureTypes() {
+        return interactorFeatureTypes;
+    }
+
+    public void setInteractorFeatureTypes(Set<String> interactorFeatureTypes) {
+        this.interactorFeatureTypes = interactorFeatureTypes;
     }
 
     public String getInteractorIntactName() {
@@ -275,6 +288,7 @@ public class SearchInteractor {
                 ", interactionIds=" + interactionIds +
                 ", interactionXrefs=" + interactionXrefs +
                 ", interactorFeatureShortLabels=" + interactorFeatureShortLabels +
+                ", interactorFeatureTypes=" + interactorFeatureTypes +
                 ", interactionSearchCount=" + interactionSearchCount +
                 '}';
     }
