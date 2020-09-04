@@ -12,7 +12,7 @@ public class SearchInteractorUtils {
             char c = s.charAt(i);
             // These characters are part of the query syntax and must be escaped
             if (c == '\\' || c == '+' || c == '-' || c == '!' || c == '(' || c == ')' || c == ':'
-                    || c == '^' || c == '[' || c == ']' || c == '\"' || c == '{' || c == '}' || c == '~'
+                    || c == '^' || c == '[' || c == ']' || c == '{' || c == '}' || c == '~'
                     || c == '?' || c == '|' || c == '&' || c == ';' || c == '/'
                     || Character.isWhitespace(c)) {
                 sb.append('\\');

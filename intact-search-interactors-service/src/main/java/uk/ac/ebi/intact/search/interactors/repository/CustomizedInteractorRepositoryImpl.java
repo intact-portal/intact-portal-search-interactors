@@ -8,6 +8,7 @@ import org.springframework.data.solr.core.SolrOperations;
 import org.springframework.data.solr.core.query.*;
 import org.springframework.data.solr.core.query.result.HighlightPage;
 import uk.ac.ebi.intact.search.interactors.model.SearchInteractor;
+import uk.ac.ebi.intact.search.interactors.utils.SearchInteractorUtils;
 
 import static uk.ac.ebi.intact.search.interactors.model.SearchInteractor.INTERACTORS;
 import static uk.ac.ebi.intact.search.interactors.model.SearchInteractorFields.*;
@@ -138,6 +139,7 @@ public class CustomizedInteractorRepositoryImpl implements CustomizedInteractorR
 
     public Criteria createSuggestionSearchConditions(String searchTerm) {
         Criteria suggestionConditions = null;
+        searchTerm = SearchInteractorUtils.escapeQueryChars(searchTerm);
         if (searchTerm != null && !searchTerm.isEmpty()) {
 
             // Keep this until we are sure we want to ignore the score calculated by solr and just assign constant score
