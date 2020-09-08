@@ -13,7 +13,6 @@ import javax.annotation.Resource;
 import java.util.Arrays;
 import java.util.HashSet;
 import java.util.Iterator;
-import java.util.Optional;
 
 import static org.junit.Assert.assertEquals;
 
@@ -226,6 +225,10 @@ public class InteractorSearchServiceTest {
                 new HashSet<>(Arrays.asList("interactor9_interaction_xref1", "interactor9_interaction_xref2", "interactor9_interaction_xref3")),
                 new HashSet<>(Arrays.asList("interactor9_feature_type1", "interactor9_feature_type2", "interactor9_feature_type3"))
         );
+
+        interactorIndexService.deleteAll();
+        interactorIndexService.saveAll(Arrays.asList(searchInteractor1, searchInteractor2, searchInteractor3, searchInteractor4, searchInteractor5, searchInteractor6, searchInteractor7, searchInteractor8, searchInteractor9));
+        assertEquals(interactorSearchService.countTotal(), 9);
     }
 
     @After
@@ -243,8 +246,6 @@ public class InteractorSearchServiceTest {
     @Test
     public void suggestionOrderTest() {
         // empty collection
-        interactorIndexService.deleteAll();
-        interactorIndexService.saveAll(Arrays.asList(searchInteractor1, searchInteractor2, searchInteractor3, searchInteractor4, searchInteractor5, searchInteractor6, searchInteractor7, searchInteractor8, searchInteractor9));
         Page<SearchInteractor> suggestions = interactorSearchService.findInteractorSuggestions("exactmatch");
         assertEquals(interactorSearchService.countTotal(), 9);
 
@@ -260,5 +261,106 @@ public class InteractorSearchServiceTest {
         assertEquals("interactorName9", searchInteractorIterator.next().getInteractorName());// other field partial match(more number of terms)
         assertEquals("interactorName8", searchInteractorIterator.next().getInteractorName());// other field partial match
     }
+
+    /**
+     * Behaviour If the User types "SearchInteractor Interactor Intact name" in search box
+     */
+    @Test
+    public void findByInteractorIntactName() {
+        Page<SearchInteractor> interactionOp = interactorSearchService.findInteractorSuggestions("interactor1_intact_name");
+        assertEquals(1, interactionOp.getTotalElements());
+    }
+
+    /**
+     * Behaviour If the User types "SearchInteractor Interactor Full name" in search box
+     */
+    @Test
+    public void findByInteractorFullName() {
+        Page<SearchInteractor> interactionOp = interactorSearchService.findInteractorSuggestions("\"Eukaryotic translation\"");
+        assertEquals(2, interactionOp.getTotalElements());
+    }
+
+    /**
+     * Behaviour If the User types "SearchInteractor Interactor Xref" in search box
+     * includes preserve original test
+     */
+    @Test
+    public void findByInteractorXref() {
+        Page<SearchInteractor> interactionOp = interactorSearchService.findInteractorSuggestions("interactor7_xref1");
+        assertEquals(1, interactionOp.getTotalElements());
+    }
+
+    /**
+     * Behaviour If the User types "SearchInteractor Interactor Aliases" in search box
+     */
+    @Test
+    public void findByInteractorAliases() {
+        Page<SearchInteractor> interactionOp = interactorSearchService.findInteractorSuggestions("interactor1_alias1");
+        assertEquals(1, interactionOp.getTotalElements());
+    }
+
+    /**
+     * Behaviour If the User types "SearchInteractor Interaction Xref" in search box
+     */
+    @Test
+    public void findByInteractionXref() {
+        Page<SearchInteractor> interactionOp = interactorSearchService.findInteractorSuggestions("interaction1");
+        assertEquals(9, interactionOp.getTotalElements());
+    }
+
+    /**
+     * Behaviour If the User types "SearchInteractor Feature ShortLabel" in search box
+     */
+    @Test
+    public void findByfeatureShortLabel() {
+        Page<SearchInteractor> interactionOp = interactorSearchService.findInteractorSuggestions("featureshortlabel1");
+        assertEquals(9, interactionOp.getTotalElements());
+    }
+
+    /**
+     * Behaviour If the User types "SearchInteractor Feature Type" in search box
+     */
+    @Test
+    public void findByfeatureType() {
+        Page<SearchInteractor> interactionOp = interactorSearchService.findInteractorSuggestions("interactor4_feature_type1");
+        assertEquals(1, interactionOp.getTotalElements());
+    }
+
+    /**
+     * Behaviour If the User types "middle chunk of a word with delimiter" in search box
+     */
+    @Test
+    public void edgeNGramsTest1() {
+        Page<SearchInteractor> interactionOp = interactorSearchService.findInteractorSuggestions("or1_al");
+        assertEquals(0, interactionOp.getTotalElements());
+    }
+
+    /**
+     * Behaviour If the User types "middle chunk of a word "in search box
+     */
+    @Test
+    public void edgeNGramsTest2() {
+        Page<SearchInteractor> interactionOp = interactorSearchService.findInteractorSuggestions("nteractor");
+        assertEquals(0, interactionOp.getTotalElements());
+    }
+
+    /**
+     * Behaviour If the User types "word separated by delimiter" in search box
+     */
+    @Test
+    public void wordPartIndexTimeGeneration() {
+        Page<SearchInteractor> interactionOp = interactorSearchService.findInteractorSuggestions("interactor2");
+        assertEquals(1, interactionOp.getTotalElements());
+    }
+
+    /**
+     * Behaviour If the User types "concatenation after removing delimiter" in search box
+     */
+    @Test
+    public void concatenationOfDelimitedTerm() {
+        Page<SearchInteractor> interactionOp = interactorSearchService.findInteractorSuggestions("interactor2xref1");
+        assertEquals(1, interactionOp.getTotalElements());
+    }
+
 
 }
