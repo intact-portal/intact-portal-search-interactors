@@ -1,0 +1,10 @@
+stages:
+  - build
+
+maven-build:
+  image: maven:3-jdk-8
+  stage: build
+  script: "mvn package -s settings.xml -Pip-solr-indexing-hx"
+  artifacts:
+    paths:
+      - target/*.jar
