@@ -22,8 +22,8 @@ docker-build:
     - docker --version
     - echo ${CONTAINER_IMAGE}
   script:
-    - docker build -t ${CONTAINER_IMAGE} --no-cache .
+    - docker build --privileged -t ${CONTAINER_IMAGE} --no-cache .
     - docker image ls
-    - docker push ${CONTAINER_IMAGE}
-    - docker rmi ${CONTAINER_IMAGE}
+    - docker push --privileged ${CONTAINER_IMAGE}
+    - docker rmi --privileged ${CONTAINER_IMAGE}
     - docker logout "$CI_REGISTRY"
