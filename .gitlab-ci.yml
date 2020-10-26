@@ -1,5 +1,6 @@
 variables:
   CONTAINER_IMAGE: ${CI_REGISTRY_IMAGE}:latest
+  DOCKER_TLS_CERTDIR: ""
 stages:
   - build-jar
   - build-docker-image
