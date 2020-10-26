@@ -10,7 +10,7 @@ maven-build:
   script: "mvn package -s settings.xml -Pip-solr-indexing-hx"
   artifacts:
     paths:
-      - target/*.jar
+      - target/intact-search-interactors-ws-1.0.3-SNAPSHOT.jar
 
 docker-build:
   image: docker:latest
