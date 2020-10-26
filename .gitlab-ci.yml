@@ -1,12 +1,12 @@
 variables:
   CONTAINER_IMAGE: ${CI_REGISTRY_IMAGE}:latest
 stages:
-  - build
-  - package
+  - build-jar
+  - build-docker-image
 
 maven-build:
   image: maven:3-jdk-8
-  stage: build
+  stage: build-jar
   script: "mvn package -s settings.xml -Pip-solr-indexing-hx"
   artifacts:
     paths:
@@ -14,11 +14,9 @@ maven-build:
 
 docker-build:
   image: docker:latest
-    tags:
-      - dind
-    services:
+  services:
       - docker:dind
-  stage: package
+  stage: build-docker-image
   before_script:
     - echo "$CI_REGISTRY_PASSWORD" | docker login -u $CI_REGISTRY_USER $CI_REGISTRY --password-stdin
     - docker --version
