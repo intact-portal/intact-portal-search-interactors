@@ -12,9 +12,11 @@ maven-build:
   image: maven:3-jdk-8
   stage: build-jar
   script: "mvn package -B -s settings.xml -Pip-solr-indexing-hx"
+  after_script:
+    -cp $CI_PROJECT_PATH/target/intact-search-interactors-ws-1.0.3-SNAPSHOT.jar target/
   artifacts:
     paths:
-      - build/
+      - target/*.jar
 
 docker-build:
   stage: build-docker-image
