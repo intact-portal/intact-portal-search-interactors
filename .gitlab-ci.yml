@@ -1,3 +1,6 @@
+image: docker:latest
+services:
+  - docker:dind
 variables:
   CONTAINER_IMAGE: ${CI_REGISTRY_IMAGE}:latest
   DOCKER_TLS_CERTDIR: ""
@@ -11,12 +14,9 @@ maven-build:
   script: "mvn package -s settings.xml -Pip-solr-indexing-hx"
   artifacts:
     paths:
-      - target/intact-search-interactors-ws-1.0.3-SNAPSHOT.jar
+      - target/*.jar
 
 docker-build:
-  image: docker:latest
-  services:
-      - docker:dind
   stage: build-docker-image
   before_script:
     - echo "$CI_REGISTRY_PASSWORD" | docker login -u $CI_REGISTRY_USER $CI_REGISTRY --password-stdin
