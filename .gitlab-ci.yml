@@ -14,7 +14,7 @@ maven-build:
   script: "mvn package -B -s settings.xml -Pip-solr-indexing-hx"
   artifacts:
     paths:
-      - target/*.jar
+      - build/
 
 docker-build:
   stage: build-docker-image
