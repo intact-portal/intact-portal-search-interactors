@@ -13,6 +13,7 @@ maven-build:
   stage: build-jar
   script: "mvn package -B -s settings.xml -Pip-solr-indexing-hx"
   after_script:
+    - "mkdir /builds/intact-ci/intact-portal-search-interactors/target/"
     - "cp /builds/intact-ci/intact-portal-search-interactors/intact-search-interactors-ws/target/intact-search-interactors-ws-1.0.3-SNAPSHOT.jar /builds/intact-ci/intact-portal-search-interactors/target/"
   artifacts:
     paths:
