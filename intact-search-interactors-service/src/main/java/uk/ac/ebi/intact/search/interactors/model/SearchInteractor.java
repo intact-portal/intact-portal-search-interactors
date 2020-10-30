@@ -49,6 +49,9 @@ public class SearchInteractor {
     @Field(INTERACTOR_TYPE)
     private String interactorType;
 
+    @Field(INTERACTOR_TYPE_MI_IDENTIFIER)
+    private String interactorTypeMIIdentifier;
+
     @Field(INTERACTOR_SPECIES_NAME)
     private String interactorSpecies;
 
@@ -88,7 +91,9 @@ public class SearchInteractor {
     public SearchInteractor(String interactorAc, String interactorName, String interactorPreferredIdentifier, String interactorDescription, Set<String> interactorAlias,
                             Set<String> interactorAltIds, String interactorType, String interactorSpecies, Integer interactorTaxId,
                             Set<String> interactorXrefs, Integer interactionCount, Long interactionSearchCount,
-                            Set<String> interactionIds, Set<String> interactorFeatureShortLabels, Set<String> interactorAliasNames, String interactorIntactName, Set<String> interactionXrefs, Set<String> interactorFeatureTypes) {
+                            Set<String> interactionIds, Set<String> interactorFeatureShortLabels, Set<String> interactorAliasNames,
+                            String interactorIntactName, Set<String> interactionXrefs, Set<String> interactorFeatureTypes,
+                            String interactorTypeMIIdentifier) {
         this.interactorAc = interactorAc;
         this.interactorName = interactorName;
         this.interactorPreferredIdentifier = interactorPreferredIdentifier;
@@ -107,6 +112,15 @@ public class SearchInteractor {
         this.interactionXrefs = interactionXrefs;
         this.interactorFeatureTypes = interactorFeatureTypes;
         this.interactorFeatureShortLabels = interactorFeatureShortLabels;
+        this.interactorTypeMIIdentifier = interactorTypeMIIdentifier;
+    }
+
+    public String getInteractorTypeMIIdentifier() {
+        return interactorTypeMIIdentifier;
+    }
+
+    public void setInteractorTypeMIIdentifier(String interactorTypeMIIdentifier) {
+        this.interactorTypeMIIdentifier = interactorTypeMIIdentifier;
     }
 
     public Set<String> getInteractorFeatureTypes() {

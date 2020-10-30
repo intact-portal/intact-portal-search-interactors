@@ -500,6 +500,7 @@
   <field name="interactor_species_name" type="text_general"/>
   <field name="interactor_tax_id" type="plongs"/>
   <field name="interactor_type" type="text_general"/>
+  <field name="interactor_type_mi_identifier" type="text_general"/>
   <field name="interactor_xrefs" type="text_general"/>
   <field name="interaction_xrefs" type="text_general"/>
   <dynamicField name="*_txt_en_split_tight" type="text_en_splitting_tight" indexed="true" stored="true"/>
@@ -596,6 +597,12 @@
   <copyField source="interactor_feature_shortlabels" dest="default"/>
   <copyField source="interactor_feature_types" dest="default"/>
 
+  <!-- To be decided to be kept or not -->
+
+  <copyField source="interactor_species_name" dest="default"/>
+  <copyField source="interactor_tax_id" dest="default"/>
+  <copyField source="interactor_type" dest="default"/>
+  <copyField source="interactor_type_mi_identifier" dest="default"/>
 
   <!--copy selected fields into suggest-->
 
@@ -610,4 +617,11 @@
   <copyField source="interactor_alt_ids" dest="suggest"/>
   <copyField source="interactor_feature_shortlabels" dest="suggest"/>
   <copyField source="interactor_feature_types" dest="suggest"/>
+
+   <!-- To be decided to be kept or not -->
+
+  <copyField source="interactor_species_name" dest="suggest"/>
+  <copyField source="interactor_tax_id" dest="suggest"/>
+  <copyField source="interactor_type" dest="suggest"/>
+  <copyField source="interactor_type_mi_identifier" dest="suggest"/>
   </schema>

@@ -5,14 +5,12 @@ import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.data.domain.Page;
 import org.springframework.test.context.junit4.SpringRunner;
 import uk.ac.ebi.intact.search.interactors.model.SearchInteractor;
 
 import javax.annotation.Resource;
 import java.util.Arrays;
 import java.util.HashSet;
-import java.util.Iterator;
 import java.util.Optional;
 
 import static org.junit.Assert.assertEquals;
@@ -58,7 +56,8 @@ public class InteractorIndexServiceTest {
                 new HashSet<>(Arrays.asList("interactor1_alias_names1", "interactor1_alias_names2", "interactor1_alias_names3")),
                 "interactor1_intact_name",
                 new HashSet<>(Arrays.asList("interactor1_interaction_xref1", "interactor1_interaction_xref2", "interactor1_interaction_xref3")),
-                new HashSet<>(Arrays.asList("interactor1_feature_type1", "interactor1_feature_type2", "interactor1_feature_type3"))
+                new HashSet<>(Arrays.asList("interactor1_feature_type1", "interactor1_feature_type2", "interactor1_feature_type3")),
+                "MI:1231"
         );
 
         searchInteractor2 = new SearchInteractor("EBI-TEST2",
@@ -78,7 +77,8 @@ public class InteractorIndexServiceTest {
                 new HashSet<>(Arrays.asList("interactor1_alias_names1", "interactor1_alias_names2", "interactor1_alias_names3")),
                 "interactor2_intact_name",
                 new HashSet<>(Arrays.asList("interactor2_interaction_xref1", "interactor2_interaction_xref2", "interactor2_interaction_xref3")),
-                new HashSet<>(Arrays.asList("interactor2_feature_type1", "interactor2_feature_type2", "interactor2_feature_type3"))
+                new HashSet<>(Arrays.asList("interactor2_feature_type1", "interactor2_feature_type2", "interactor2_feature_type3")),
+                "MI:1232"
         );
 
         searchInteractor3 = new SearchInteractor("EBI-TEST3",
@@ -98,7 +98,8 @@ public class InteractorIndexServiceTest {
                 new HashSet<>(Arrays.asList("interactor1_alias_names1", "interactor1_alias_names2", "interactor1_alias_names3")),
                 "exactmatchsimilar",
                 new HashSet<>(Arrays.asList("interactor3_interaction_xref1", "interactor3_interaction_xref2", "interactor3_interaction_xref3")),
-                new HashSet<>(Arrays.asList("interactor3_feature_type1", "interactor3_feature_type2", "interactor3_feature_type3"))
+                new HashSet<>(Arrays.asList("interactor3_feature_type1", "interactor3_feature_type2", "interactor3_feature_type3")),
+                "MI:1233"
         );
     }
 
