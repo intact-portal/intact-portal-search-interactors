@@ -255,7 +255,7 @@ public class InteractorSearchServiceTest {
     @Test
     public void suggestionOrderTest() {
         // empty collection
-        Page<SearchInteractor> suggestions = interactorSearchService.findInteractorSuggestions("exactmatch");
+        Page<SearchInteractor> suggestions = interactorSearchService.findInteractorSuggestions("exactmatch", 0, 10);
         assertEquals(interactorSearchService.countTotal(), 9);
 
         assertEquals(suggestions.getTotalElements(), 9);
@@ -276,7 +276,7 @@ public class InteractorSearchServiceTest {
      */
     @Test
     public void findByInteractorIntactName() {
-        Page<SearchInteractor> interactionOp = interactorSearchService.findInteractorSuggestions("interactor1_intact_name");
+        Page<SearchInteractor> interactionOp = interactorSearchService.findInteractorSuggestions("interactor1_intact_name", 0, 10);
         assertEquals(1, interactionOp.getTotalElements());
     }
 
@@ -285,7 +285,7 @@ public class InteractorSearchServiceTest {
      */
     @Test
     public void findByInteractorFullName() {
-        Page<SearchInteractor> interactionOp = interactorSearchService.findInteractorSuggestions("\"Eukaryotic translation\"");
+        Page<SearchInteractor> interactionOp = interactorSearchService.findInteractorSuggestions("\"Eukaryotic translation\"", 0, 10);
         assertEquals(2, interactionOp.getTotalElements());
     }
 
@@ -295,7 +295,7 @@ public class InteractorSearchServiceTest {
      */
     @Test
     public void findByInteractorXref() {
-        Page<SearchInteractor> interactionOp = interactorSearchService.findInteractorSuggestions("interactor7_xref1");
+        Page<SearchInteractor> interactionOp = interactorSearchService.findInteractorSuggestions("interactor7_xref1", 0, 10);
         assertEquals(1, interactionOp.getTotalElements());
     }
 
@@ -304,7 +304,7 @@ public class InteractorSearchServiceTest {
      */
     @Test
     public void findByInteractorAliases() {
-        Page<SearchInteractor> interactionOp = interactorSearchService.findInteractorSuggestions("interactor1_alias1");
+        Page<SearchInteractor> interactionOp = interactorSearchService.findInteractorSuggestions("interactor1_alias1", 0, 10);
         assertEquals(1, interactionOp.getTotalElements());
     }
 
@@ -313,7 +313,7 @@ public class InteractorSearchServiceTest {
      */
     @Test
     public void findByInteractionXref() {
-        Page<SearchInteractor> interactionOp = interactorSearchService.findInteractorSuggestions("interaction1");
+        Page<SearchInteractor> interactionOp = interactorSearchService.findInteractorSuggestions("interaction1", 0, 10);
         assertEquals(9, interactionOp.getTotalElements());
     }
 
@@ -322,7 +322,7 @@ public class InteractorSearchServiceTest {
      */
     @Test
     public void findByfeatureShortLabel() {
-        Page<SearchInteractor> interactionOp = interactorSearchService.findInteractorSuggestions("featureshortlabel1");
+        Page<SearchInteractor> interactionOp = interactorSearchService.findInteractorSuggestions("featureshortlabel1", 0, 10);
         assertEquals(9, interactionOp.getTotalElements());
     }
 
@@ -331,7 +331,7 @@ public class InteractorSearchServiceTest {
      */
     @Test
     public void findByfeatureType() {
-        Page<SearchInteractor> interactionOp = interactorSearchService.findInteractorSuggestions("interactor4_feature_type1");
+        Page<SearchInteractor> interactionOp = interactorSearchService.findInteractorSuggestions("interactor4_feature_type1", 0, 10);
         assertEquals(1, interactionOp.getTotalElements());
     }
 
@@ -340,7 +340,7 @@ public class InteractorSearchServiceTest {
      */
     @Test
     public void edgeNGramsTest1() {
-        Page<SearchInteractor> interactionOp = interactorSearchService.findInteractorSuggestions("or1_al");
+        Page<SearchInteractor> interactionOp = interactorSearchService.findInteractorSuggestions("or1_al", 0, 10);
         assertEquals(0, interactionOp.getTotalElements());
     }
 
@@ -349,7 +349,7 @@ public class InteractorSearchServiceTest {
      */
     @Test
     public void edgeNGramsTest2() {
-        Page<SearchInteractor> interactionOp = interactorSearchService.findInteractorSuggestions("nteractor");
+        Page<SearchInteractor> interactionOp = interactorSearchService.findInteractorSuggestions("nteractor", 0, 10);
         assertEquals(0, interactionOp.getTotalElements());
     }
 
@@ -358,7 +358,7 @@ public class InteractorSearchServiceTest {
      */
     @Test
     public void wordPartIndexTimeGeneration() {
-        Page<SearchInteractor> interactionOp = interactorSearchService.findInteractorSuggestions("interactor2");
+        Page<SearchInteractor> interactionOp = interactorSearchService.findInteractorSuggestions("interactor2", 0, 10);
         assertEquals(1, interactionOp.getTotalElements());
     }
 
@@ -367,7 +367,7 @@ public class InteractorSearchServiceTest {
      */
     @Test
     public void concatenationOfDelimitedTerm() {
-        Page<SearchInteractor> interactionOp = interactorSearchService.findInteractorSuggestions("interactor2xref1");
+        Page<SearchInteractor> interactionOp = interactorSearchService.findInteractorSuggestions("interactor2xref1", 0, 10);
         assertEquals(1, interactionOp.getTotalElements());
     }
 

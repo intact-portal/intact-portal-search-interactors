@@ -70,8 +70,8 @@ public class InteractorSearchService {
         return interactorRepository.resolveInteractor(query, fuzzySearch, Sort.by(Sort.Direction.DESC, SearchInteractorFields.INTERACTION_COUNT), PageRequest.of(page, pageSize));
     }
 
-    public Page<SearchInteractor> findInteractorSuggestions(String query) {
-        PageRequest pageRequest = PageRequest.of(0, 10);
+    public Page<SearchInteractor> findInteractorSuggestions(String query, int page, int pageSize) {
+        PageRequest pageRequest = PageRequest.of(page, pageSize);
         return interactorRepository.findInteractorSuggestions(query, pageRequest);
     }
 

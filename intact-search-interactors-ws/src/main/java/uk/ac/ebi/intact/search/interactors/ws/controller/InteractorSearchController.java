@@ -39,8 +39,10 @@ public class InteractorSearchController {
     @CrossOrigin(origins = "*")
     @GetMapping(value = "/findInteractor/{query}",
             produces = {APPLICATION_JSON_VALUE})
-    public Page<SearchInteractor> findInteractor(@PathVariable String query) {
-        return this.interactorSearchService.findInteractorSuggestions(query);
+    public Page<SearchInteractor> findInteractor(@PathVariable String query,
+                                                 @RequestParam(value = "page", defaultValue = "0", required = false) int page,
+                                                 @RequestParam(value = "pageSize", defaultValue = "10", required = false) int pageSize) {
+        return this.interactorSearchService.findInteractorSuggestions(query, page, pageSize);
     }
 
     @CrossOrigin(origins = "*")
