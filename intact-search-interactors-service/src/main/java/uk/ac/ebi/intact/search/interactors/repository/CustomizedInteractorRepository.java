@@ -3,7 +3,7 @@ package uk.ac.ebi.intact.search.interactors.repository;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
-import org.springframework.data.solr.core.query.result.HighlightPage;
+import org.springframework.data.solr.core.query.result.FacetAndHighlightPage;
 import org.springframework.stereotype.Repository;
 import uk.ac.ebi.intact.search.interactors.model.SearchInteractor;
 
@@ -13,7 +13,7 @@ import uk.ac.ebi.intact.search.interactors.model.SearchInteractor;
 @Repository
 public interface CustomizedInteractorRepository {
 
-    HighlightPage<SearchInteractor> resolveInteractor(String query, boolean fuzzySearch, Sort sort, Pageable pageable);
+    FacetAndHighlightPage<SearchInteractor> resolveInteractor(String query, boolean fuzzySearch, Sort sort, Pageable pageable);
 
     Page<SearchInteractor> findInteractorSuggestions(String query, Pageable pageable);
 

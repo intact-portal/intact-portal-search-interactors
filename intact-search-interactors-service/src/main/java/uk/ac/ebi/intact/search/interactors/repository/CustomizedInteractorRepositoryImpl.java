@@ -6,7 +6,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.solr.core.SolrOperations;
 import org.springframework.data.solr.core.query.*;
-import org.springframework.data.solr.core.query.result.HighlightPage;
+import org.springframework.data.solr.core.query.result.FacetAndHighlightPage;
 import uk.ac.ebi.intact.search.interactors.model.SearchInteractor;
 import uk.ac.ebi.intact.search.interactors.utils.SearchInteractorUtils;
 
@@ -31,11 +31,11 @@ public class CustomizedInteractorRepositoryImpl implements CustomizedInteractorR
     }
 
     @Override
-    public HighlightPage<SearchInteractor> resolveInteractor(String query, boolean fuzzySearch, Sort sort, Pageable pageable) {
+    public FacetAndHighlightPage<SearchInteractor> resolveInteractor(String query, boolean fuzzySearch, Sort sort, Pageable pageable) {
 
 
         // search query
-        SimpleHighlightQuery search = new SimpleHighlightQuery();
+        SimpleFacetAndHighlightQuery search = new SimpleFacetAndHighlightQuery();
 
         // search criterias
         if (fuzzySearch) {
@@ -66,6 +66,22 @@ public class CustomizedInteractorRepositoryImpl implements CustomizedInteractorR
 
         //projection
 
+        // facet
+        // Adds exclude tags in solr to allow calculate properly the facets for multiselection in species and interactor type
+        FacetOptions facetOptions = new FacetOptions(
+                INTERACTOR_SPECIES_NAME,
+                INTERACTOR_SPECIES_NAME_STR,
+                INTERACTOR_TYPE,
+                INTERACTOR_TYPE_STR
+        );
+//        facetOptions.setFacetLimit(FACET_MIN_COUNT);
+
+//        facetOptions.getFieldsWithParameters().add(new FacetOptions.FieldWithFacetParameters(INTERACTOR_SPECIES_NAME_STR).setMethod("enum"));
+//        facetOptions.getFieldsWithParameters().add(new FacetOptions.FieldWithFacetParameters(INTERACTOR_TYPE_STR).setMethod("enum"));
+
+//        facetOptions.setFacetSort(FacetOptions.FacetSort.COUNT);
+        search.setFacetOptions(facetOptions);
+
         //interactor details
         search.addProjectionOnField(new SimpleField(INTERACTOR_AC));
         search.addProjectionOnField(new SimpleField(INTERACTOR_NAME));
@@ -76,7 +92,7 @@ public class CustomizedInteractorRepositoryImpl implements CustomizedInteractorR
         search.addProjectionOnField(new SimpleField(INTERACTOR_TYPE));
         search.addProjectionOnField(new SimpleField(INTERACTION_COUNT));
 
-        return solrOperations.queryForHighlightPage(INTERACTORS, search, SearchInteractor.class);
+        return solrOperations.queryForFacetAndHighlightPage(INTERACTORS, search, SearchInteractor.class);
     }
 
     public Criteria createFuzzySearchConditions(String searchTerm) {
