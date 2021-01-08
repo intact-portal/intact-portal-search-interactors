@@ -21,7 +21,7 @@ spec:
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: intact-portal-search-interactors
+  name: intact-portal-search-interactors-deployment
 spec:
   selector:
     matchLabels:
