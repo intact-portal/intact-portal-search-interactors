@@ -41,7 +41,7 @@ kubernetes-deploy:
     - curl -LO https://storage.googleapis.com/kubernetes-release/release/$(curl -s https://storage.googleapis.com/kubernetes-release/release/stable.txt)/bin/linux/amd64/kubectl
     - chmod +x ./kubectl
     - mv ./kubectl /usr/local/bin/kubectl
-    - git clone https://k8s-config-token:${K8S_CONFIG_TOKEN}@gitlab.ebi.ac.uk/intact-ci/test-kubernetes/k8s-config
+    - git clone https://k8s-config-token:${K8S_CONFIG_TOKEN}@gitlab.ebi.ac.uk/intact-portal-search-interactors/test-kubernetes-config-file k8s-config
     - mkdir ~/.kube
     - cp k8s-config/config ~/.kube/
     - kubectl config use-context intact-admin-hx-wp-webadmin-24
