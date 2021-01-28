@@ -69,9 +69,7 @@ public class CustomizedInteractorRepositoryImpl implements CustomizedInteractorR
         // facet
         // Adds exclude tags in solr to allow calculate properly the facets for multiselection in species and interactor type
         FacetOptions facetOptions = new FacetOptions(
-                INTERACTOR_SPECIES_NAME,
                 INTERACTOR_SPECIES_NAME_STR,
-                INTERACTOR_TYPE,
                 INTERACTOR_TYPE_STR
         );
 //        facetOptions.setFacetLimit(FACET_MIN_COUNT);
@@ -90,6 +88,7 @@ public class CustomizedInteractorRepositoryImpl implements CustomizedInteractorR
         search.addProjectionOnField(new SimpleField(INTERACTOR_SPECIES_NAME));
         search.addProjectionOnField(new SimpleField(INTERACTOR_TAX_ID));
         search.addProjectionOnField(new SimpleField(INTERACTOR_TYPE));
+        search.addProjectionOnField(new SimpleField(INTERACTOR_TYPE_MI_IDENTIFIER));
         search.addProjectionOnField(new SimpleField(INTERACTION_COUNT));
 
         return solrOperations.queryForFacetAndHighlightPage(INTERACTORS, search, SearchInteractor.class);
