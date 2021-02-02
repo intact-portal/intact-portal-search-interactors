@@ -4,7 +4,9 @@ import org.apache.solr.client.solrj.beans.Field;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.annotation.Transient;
 import org.springframework.data.solr.core.mapping.SolrDocument;
+import uk.ac.ebi.intact.style.model.shapes.NodeShape;
 
+import java.awt.*;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -76,6 +78,10 @@ public class SearchInteractor {
     @Field(INTERACTOR_FEATURE_TYPES)
     private Set<String> interactorFeatureTypes;
 
+    @Transient
+    private Color color;
+    @Transient
+    private NodeShape shape;
 
     /**
      * This field is not part of the solr doc.
@@ -281,6 +287,22 @@ public class SearchInteractor {
 
     public void setInteractorFeatureShortLabels(Set<String> interactorFeatureShortLabels) {
         this.interactorFeatureShortLabels = interactorFeatureShortLabels;
+    }
+
+    public Color getColor() {
+        return color;
+    }
+
+    public void setColor(Color color) {
+        this.color = color;
+    }
+
+    public NodeShape getShape() {
+        return shape;
+    }
+
+    public void setShape(NodeShape shape) {
+        this.shape = shape;
     }
 
     @Override

@@ -1,14 +1,15 @@
 package uk.ac.ebi.intact.search.interactors.service;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
+import org.springframework.data.solr.core.query.result.FacetAndHighlightPage;
 import org.springframework.stereotype.Service;
 import uk.ac.ebi.intact.search.interactors.model.SearchInteractor;
 import uk.ac.ebi.intact.search.interactors.model.SearchInteractorFields;
 import uk.ac.ebi.intact.search.interactors.repository.InteractorRepository;
+import uk.ac.ebi.intact.style.service.StyleService;
 
 import java.util.*;
 
@@ -23,10 +24,13 @@ import java.util.*;
 public class InteractorSearchService {
 
     private final InteractorRepository interactorRepository;
+    private final StyleService styleService;
+
 
     @Autowired
-    public InteractorSearchService(@Qualifier("interactorRepository") InteractorRepository interactorRepository) {
+    public InteractorSearchService(InteractorRepository interactorRepository, StyleService styleService) {
         this.interactorRepository = interactorRepository;
+        this.styleService = styleService;
     }
 
     private static Map<String, Page<SearchInteractor>> sortByTotalElements(Map<String, Page<SearchInteractor>> unsortMap, final boolean order) {
@@ -67,7 +71,12 @@ public class InteractorSearchService {
 
     public Page<SearchInteractor> resolveInteractor(String query, boolean fuzzySearch, int page, int pageSize) {
         //TODO Paginate the results (for know it should cover disambiguation with 50 elements per page)
-        return interactorRepository.resolveInteractor(query, fuzzySearch, Sort.by(Sort.Direction.DESC, SearchInteractorFields.INTERACTION_COUNT), PageRequest.of(page, pageSize));
+        FacetAndHighlightPage<SearchInteractor> searchInteractors = interactorRepository.resolveInteractor(query, fuzzySearch, Sort.by(Sort.Direction.DESC, SearchInteractorFields.INTERACTION_COUNT), PageRequest.of(page, pageSize));
+        for (SearchInteractor interactor: searchInteractors.getContent()) {
+            interactor.setColor(styleService.getInteractorColor(interactor.getInteractorTaxId().toString()));
+            interactor.setShape(styleService.getInteractorShape(interactor.getInteractorTypeMIIdentifier()));
+        }
+        return searchInteractors;
     }
 
     public Page<SearchInteractor> findInteractorSuggestions(String query, int page, int pageSize) {
