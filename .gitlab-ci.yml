@@ -50,7 +50,7 @@ kubernetes-staging-deploy:
     - kubectl apply -f k8s_deploy.yml
     - kubectl rollout restart deployment/intact-portal-search-interactors-deployment
     - kubectl get nodes
-  - when: manual
+  when: manual
 
 kubernetes-production-deploy:
   stage: kubernetes-deploy
