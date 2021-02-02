@@ -33,7 +33,7 @@ docker-build:
     - docker rmi ${CONTAINER_IMAGE}
     - docker logout "$CI_REGISTRY"
 
-kubernetes-deploy:
+kubernetes-staging-deploy:
   stage: kubernetes-deploy
   image: alpine
   script:
@@ -50,4 +50,12 @@ kubernetes-deploy:
     - kubectl apply -f k8s_deploy.yml
     - kubectl rollout restart deployment/intact-portal-search-interactors-deployment
     - kubectl get nodes
+    - when: manual
+
+kubernetes-production-deploy:
+  stage: kubernetes-deploy
+  image: alpine
+  script:
+    - echo "Deploy to production server"
+  when: manual
 
