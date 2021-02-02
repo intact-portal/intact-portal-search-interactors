@@ -61,8 +61,8 @@ public class InteractorSearchController {
         if (!searchTerms.isEmpty()) {
             if (searchTerms.startsWith("\"") && searchTerms.endsWith("\"")) {
                 words.add(searchTerms.substring(1, searchTerms.length() - 1));
-            } else if (searchTerms.contains(",")) {
-                words = Arrays.asList(searchTerms.split("[,]"));
+            } else if (searchTerms.indexOf(",") != -1) {
+                words = Arrays.asList(searchTerms.split("[\\,]"));
             } else {
                 words = Arrays.asList(searchTerms.split("[\\s,\\n]"));
             }
