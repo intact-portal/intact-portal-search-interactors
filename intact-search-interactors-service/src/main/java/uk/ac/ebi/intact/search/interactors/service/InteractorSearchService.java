@@ -72,6 +72,7 @@ public class InteractorSearchService {
     public Page<SearchInteractor> resolveInteractor(String query, boolean fuzzySearch, int page, int pageSize) {
         //TODO Paginate the results (for know it should cover disambiguation with 50 elements per page)
         FacetAndHighlightPage<SearchInteractor> searchInteractors = interactorRepository.resolveInteractor(query, fuzzySearch, Sort.by(Sort.Direction.DESC, SearchInteractorFields.INTERACTION_COUNT), PageRequest.of(page, pageSize));
+        // Include style of interactors
         for (SearchInteractor interactor: searchInteractors.getContent()) {
             interactor.setColor(styleService.getInteractorColor(interactor.getInteractorTaxId().toString()));
             interactor.setShape(styleService.getInteractorShape(interactor.getInteractorTypeMIIdentifier()));
