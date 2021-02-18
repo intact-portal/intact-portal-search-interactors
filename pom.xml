@@ -23,7 +23,6 @@
         <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
         <java.version>1.8</java.version>
         <intact.search.interactions.version>1.0.3-SNAPSHOT</intact.search.interactions.version>
-        <intact.style.version>0.0.1-SNAPSHOT</intact.style.version>
     </properties>
 
     <modules>
@@ -37,14 +36,6 @@
         <url>https://github.com/intact-portal/intact-portal-search-interactors</url>
         <tag>HEAD</tag>
     </scm>
-
-    <dependencies>
-        <dependency>
-            <groupId>uk.ac.ebi.intact.style</groupId>
-            <artifactId>intact-style-service</artifactId>
-            <version>${intact.style.version}</version>
-        </dependency>
-    </dependencies>
 
     <build>
         <plugins>
