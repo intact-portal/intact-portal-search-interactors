@@ -5,23 +5,16 @@ import org.apache.solr.client.solrj.impl.HttpSolrClient;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
-import org.springframework.boot.autoconfigure.jackson.Jackson2ObjectMapperBuilderCustomizer;
 import org.springframework.boot.builder.SpringApplicationBuilder;
 import org.springframework.boot.web.servlet.support.SpringBootServletInitializer;
 import org.springframework.context.annotation.Bean;
 import org.springframework.data.solr.core.SolrOperations;
 import org.springframework.data.solr.core.SolrTemplate;
 import org.springframework.data.solr.repository.config.EnableSolrRepositories;
-import uk.ac.ebi.intact.style.mapper.ontology.archetypes.Archetype;
-import uk.ac.ebi.intact.style.model.serializer.ArchetypeSerializer;
-import uk.ac.ebi.intact.style.model.serializer.ColorDeserializer;
-import uk.ac.ebi.intact.style.model.serializer.ColorSerializer;
 
-import java.awt.*;
-
-@EnableSolrRepositories(basePackages = "uk.ac.ebi.intact",
+@EnableSolrRepositories(basePackages = "uk.ac.ebi.intact.search",
 		schemaCreationSupport = true)
-@SpringBootApplication(scanBasePackages = "uk.ac.ebi.intact")
+@SpringBootApplication(scanBasePackages = "uk.ac.ebi.intact.search")
 public class InteractorSearchServiceApplication extends SpringBootServletInitializer {
 
 	@Value("${spring.data.solr.host}")
@@ -31,15 +24,6 @@ public class InteractorSearchServiceApplication extends SpringBootServletInitial
 	@Override
 	protected SpringApplicationBuilder configure(SpringApplicationBuilder application) {
 		return application.sources(InteractorSearchServiceApplication.class);
-	}
-
-	@Bean
-	public Jackson2ObjectMapperBuilderCustomizer jsonSerialization() {
-		return mapperBuilder -> {
-			mapperBuilder.deserializerByType(Color.class, new ColorDeserializer());
-			mapperBuilder.serializerByType(Color.class, new ColorSerializer());
-			mapperBuilder.serializerByType(Archetype.class, new ArchetypeSerializer());
-		};
 	}
 
 	@Bean

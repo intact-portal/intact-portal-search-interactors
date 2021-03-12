@@ -28,7 +28,7 @@ public class InteractorSearchService {
 
 
     @Autowired
-    public InteractorSearchService(InteractorRepository interactorRepository, StyleService styleService) {
+    public InteractorSearchService(@Qualifier("interactorRepository") InteractorRepository interactorRepository, StyleService styleService) {
         this.interactorRepository = interactorRepository;
         this.styleService = styleService;
     }
