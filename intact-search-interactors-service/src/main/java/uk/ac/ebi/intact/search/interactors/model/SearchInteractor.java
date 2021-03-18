@@ -76,7 +76,6 @@ public class SearchInteractor {
     @Field(INTERACTOR_FEATURE_TYPES)
     private Set<String> interactorFeatureTypes;
 
-
     /**
      * This field is not part of the solr doc.
      * it is being added after a second call to interactions search service

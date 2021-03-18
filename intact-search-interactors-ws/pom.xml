@@ -28,12 +28,13 @@
         </dependency>
 
         <dependency>
-            <groupId>uk.ac.ebi.intact.search.interactions</groupId>
-            <artifactId>intact-search-interactions-service</artifactId>
-            <version>${intact.search.interactions.version}</version>
+            <groupId>uk.ac.ebi.intact.style</groupId>
+            <artifactId>intact-style-service</artifactId>
+            <version>${intact.style.version}</version>
         </dependency>
 
         <!-- Simple java library to work with json -->
+        <!-- TODO Check where is used-->
         <dependency>
             <groupId>com.googlecode.json-simple</groupId>
             <artifactId>json-simple</artifactId>

@@ -90,6 +90,7 @@ public class CustomizedInteractorRepositoryImpl implements CustomizedInteractorR
         search.addProjectionOnField(new SimpleField(INTERACTOR_SPECIES_NAME));
         search.addProjectionOnField(new SimpleField(INTERACTOR_TAX_ID));
         search.addProjectionOnField(new SimpleField(INTERACTOR_TYPE));
+        search.addProjectionOnField(new SimpleField(INTERACTOR_TYPE_MI_IDENTIFIER));
         search.addProjectionOnField(new SimpleField(INTERACTION_COUNT));
 
         return solrOperations.queryForFacetAndHighlightPage(INTERACTORS, search, SearchInteractor.class);

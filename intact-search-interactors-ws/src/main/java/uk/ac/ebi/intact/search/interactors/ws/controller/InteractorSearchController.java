@@ -10,12 +10,11 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import uk.ac.ebi.intact.search.interactors.model.SearchInteractor;
 import uk.ac.ebi.intact.search.interactors.service.InteractorSearchService;
+import uk.ac.ebi.intact.search.interactors.ws.controller.model.StyledSearchInteractor;
+import uk.ac.ebi.intact.style.service.StyleService;
 
 import java.io.*;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 import static org.springframework.http.MediaType.APPLICATION_JSON_VALUE;
 
@@ -27,14 +26,17 @@ import static org.springframework.http.MediaType.APPLICATION_JSON_VALUE;
 public class InteractorSearchController {
 
     public static final String UPLOADED_BATCH_FILE_PREFIX = "file_";
+    private final InteractorSearchService interactorSearchService;
+    private final StyleService styleService;
+
     //TODO temporary
     @Value("${server.upload.batch.file.path}")
     private String uploadBatchFilePath;
-    private InteractorSearchService interactorSearchService;
 
     @Autowired
-    public InteractorSearchController(InteractorSearchService interactorSearchService) {
+    public InteractorSearchController(InteractorSearchService interactorSearchService, StyleService styleService) {
         this.interactorSearchService = interactorSearchService;
+        this.styleService = styleService;
     }
 
     @CrossOrigin(origins = "*")
@@ -49,7 +51,7 @@ public class InteractorSearchController {
     @CrossOrigin(origins = "*")
     @PostMapping(value = "/list/resolve",
             produces = {APPLICATION_JSON_VALUE})
-    public Map<String, Page<SearchInteractor>> resolveInteractorList(
+    public Map<String, Page<StyledSearchInteractor>> resolveInteractorList(
             @RequestParam(value = "query") String query,
             @RequestParam(value = "fuzzySearch", defaultValue = "true", required = false) boolean fuzzySearch,
             @RequestParam(value = "page", defaultValue = "0", required = false) int page,
@@ -62,14 +64,26 @@ public class InteractorSearchController {
         if (!searchTerms.isEmpty()) {
             if (searchTerms.startsWith("\"") && searchTerms.endsWith("\"")) {
                 words.add(searchTerms.substring(1, searchTerms.length() - 1));
-            } else if (searchTerms.indexOf(",") != -1) {
-                words = Arrays.asList(searchTerms.split("[\\,]"));
+            } else if (searchTerms.contains(",")) {
+                words = Arrays.asList(searchTerms.split("[,]"));
             } else {
                 words = Arrays.asList(searchTerms.split("[\\s,\\n]"));
             }
         }
 
-        return this.interactorSearchService.resolveInteractorList(words, fuzzySearch, page, pageSize);
+        final Map<String, Page<SearchInteractor>> resolveInteractorList = this.interactorSearchService.resolveInteractorList(words, fuzzySearch, page, pageSize);
+        final Map<String, Page<StyledSearchInteractor>> result = new HashMap<>();
+
+        //TODO replace with the stream as Eliot suggested
+        resolveInteractorList.forEach((key, value) -> {
+            Page<StyledSearchInteractor> styledPage = value
+                    .map(searchInteractor -> new StyledSearchInteractor(searchInteractor,
+                            styleService.getInteractorColor(searchInteractor.getInteractorTaxId().toString()),
+                            styleService.getInteractorShape(searchInteractor.getInteractorTypeMIIdentifier())));
+            result.put(key, styledPage);
+        });
+
+        return result;
     }
 
     @CrossOrigin(origins = "*")
