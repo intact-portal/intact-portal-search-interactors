@@ -15,6 +15,7 @@ import uk.ac.ebi.intact.style.service.StyleService;
 
 import java.io.*;
 import java.util.*;
+import java.util.stream.Collectors;
 
 import static org.springframework.http.MediaType.APPLICATION_JSON_VALUE;
 
@@ -71,19 +72,14 @@ public class InteractorSearchController {
             }
         }
 
-        final Map<String, Page<SearchInteractor>> resolveInteractorList = this.interactorSearchService.resolveInteractorList(words, fuzzySearch, page, pageSize);
-        final Map<String, Page<StyledSearchInteractor>> result = new HashMap<>();
-
-        //TODO replace with the stream as Eliot suggested
-        resolveInteractorList.forEach((key, value) -> {
-            Page<StyledSearchInteractor> styledPage = value
-                    .map(searchInteractor -> new StyledSearchInteractor(searchInteractor,
-                            styleService.getInteractorColor(searchInteractor.getInteractorTaxId().toString()),
-                            styleService.getInteractorShape(searchInteractor.getInteractorTypeMIIdentifier())));
-            result.put(key, styledPage);
-        });
-
-        return result;
+        return this.interactorSearchService.resolveInteractorList(words, fuzzySearch, page, pageSize)
+                .entrySet().stream()
+                .collect(Collectors.toMap(
+                        Map.Entry::getKey,
+                        entry -> entry.getValue().map(searchInteractor -> new StyledSearchInteractor(searchInteractor,
+                                styleService.getInteractorColor(searchInteractor.getInteractorTaxId().toString()),
+                                styleService.getInteractorShape(searchInteractor.getInteractorTypeMIIdentifier())))
+                ));
     }
 
     @CrossOrigin(origins = "*")
