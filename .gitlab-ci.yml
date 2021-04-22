@@ -33,7 +33,7 @@ docker-build:
     - docker rmi ${CONTAINER_IMAGE}
     - docker logout "$CI_REGISTRY"
 
-hh-kubernetes-production-deploy:
+hh-production-deploy:
   stage: kubernetes-deploy
   image: alpine
   script:
@@ -52,7 +52,7 @@ hh-kubernetes-production-deploy:
     - kubectl get nodes
   when: manual
 
-hx-kubernetes-production-deploy:
+hx-production-deploy:
     stage: kubernetes-deploy
     image: alpine
     script:
@@ -71,7 +71,7 @@ hx-kubernetes-production-deploy:
       - kubectl get nodes
     when: manual
 
-kubernetes-staging-deploy:
+hx-test-deploy:
   stage: kubernetes-deploy
   image: alpine
   script:
