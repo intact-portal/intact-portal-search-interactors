@@ -47,7 +47,7 @@ hh-production-deploy:
     - kubectl config use-context prod
     - 'printf "$(kubectl create secret docker-registry gitlab-registry --docker-server=$CI_REGISTRY --docker-username=$CI_DEPLOY_USER --docker-password=$CI_DEPLOY_PASSWORD --docker-email=$GITLAB_USER_EMAIL -o yaml --dry-run=client)" | kubectl apply -f -'
     - kubectl get secrets gitlab-registry -o yaml
-    - kubectl apply -f k8s_deploy.yml
+    - kubectl apply -f k8s-production/k8s_deploy.yml
     - kubectl rollout restart deployment/intact-portal-search-interactors-deployment
     - kubectl get nodes
   when: manual
@@ -66,7 +66,7 @@ hx-production-deploy:
       - kubectl config use-context prod
       - 'printf "$(kubectl create secret docker-registry gitlab-registry --docker-server=$CI_REGISTRY --docker-username=$CI_DEPLOY_USER --docker-password=$CI_DEPLOY_PASSWORD --docker-email=$GITLAB_USER_EMAIL -o yaml --dry-run=client)" | kubectl apply -f -'
       - kubectl get secrets gitlab-registry -o yaml
-      - kubectl apply -f k8s_deploy.yml
+      - kubectl apply -f k8s-production/k8s_deploy.yml
       - kubectl rollout restart deployment/intact-portal-search-interactors-deployment
       - kubectl get nodes
     when: manual
@@ -85,7 +85,7 @@ hx-test-deploy:
     - kubectl config use-context team-admin-hx-wp-webadmin-24
     - 'printf "$(kubectl create secret docker-registry gitlab-registry --docker-server=$CI_REGISTRY --docker-username=$CI_DEPLOY_USER --docker-password=$CI_DEPLOY_PASSWORD --docker-email=$GITLAB_USER_EMAIL -o yaml --dry-run=client)" | kubectl apply -f -'
     - kubectl get secrets gitlab-registry -o yaml
-    - kubectl apply -f k8s_deploy.yml
+    - kubectl apply -f k8s-test/k8s_deploy.yml
     - kubectl rollout restart deployment/intact-portal-search-interactors-deployment
     - kubectl get nodes
   when: manual
