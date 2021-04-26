@@ -52,11 +52,17 @@ public class SearchInteractor {
     @Field(INTERACTOR_TYPE_MI_IDENTIFIER)
     private String interactorTypeMIIdentifier;
 
+    @Field(INTERACTOR_TYPE_MI_IDENTIFIER_STYLED)
+    private String interactorTypeMIIdentifierStyled;
+
     @Field(INTERACTOR_SPECIES_NAME)
     private String interactorSpecies;
 
     @Field(INTERACTOR_TAX_ID)
     private Integer interactorTaxId;
+
+    @Field(INTERACTOR_TAX_ID_STYLED)
+    private String interactorTaxIdStyled;
 
     @Field(INTERACTOR_XREFS)
     private Set<String> interactorXrefs;
@@ -87,11 +93,24 @@ public class SearchInteractor {
     public SearchInteractor() {
     }
 
-    public SearchInteractor(String interactorAc, String interactorName, String interactorPreferredIdentifier, String interactorDescription, Set<String> interactorAlias,
-                            Set<String> interactorAltIds, String interactorType, String interactorSpecies, Integer interactorTaxId,
-                            Set<String> interactorXrefs, Integer interactionCount, Long interactionSearchCount,
-                            Set<String> interactionIds, Set<String> interactorFeatureShortLabels, Set<String> interactorAliasNames,
-                            String interactorIntactName, Set<String> interactionXrefs, Set<String> interactorFeatureTypes,
+    public SearchInteractor(String interactorAc,
+                            String interactorName,
+                            String interactorPreferredIdentifier,
+                            String interactorDescription,
+                            Set<String> interactorAlias,
+                            Set<String> interactorAltIds,
+                            String interactorType,
+                            String interactorSpecies,
+                            Integer interactorTaxId,
+                            Set<String> interactorXrefs,
+                            Integer interactionCount,
+                            Long interactionSearchCount,
+                            Set<String> interactionIds,
+                            Set<String> interactorFeatureShortLabels,
+                            Set<String> interactorAliasNames,
+                            String interactorIntactName,
+                            Set<String> interactionXrefs,
+                            Set<String> interactorFeatureTypes,
                             String interactorTypeMIIdentifier) {
         this.interactorAc = interactorAc;
         this.interactorName = interactorName;
@@ -120,6 +139,14 @@ public class SearchInteractor {
 
     public void setInteractorTypeMIIdentifier(String interactorTypeMIIdentifier) {
         this.interactorTypeMIIdentifier = interactorTypeMIIdentifier;
+    }
+
+    public String getInteractorTypeMIIdentifierStyled() {
+        return interactorTypeMIIdentifierStyled;
+    }
+
+    public void setInteractorTypeMIIdentifierStyled(String interactorTypeMIIdentifierStyled) {
+        this.interactorTypeMIIdentifierStyled = interactorTypeMIIdentifierStyled;
     }
 
     public Set<String> getInteractorFeatureTypes() {
@@ -276,6 +303,14 @@ public class SearchInteractor {
             this.interactorFeatureShortLabels = new HashSet<>();
         }
         return interactorFeatureShortLabels;
+    }
+
+    public String getInteractorTaxIdStyled() {
+        return interactorTaxIdStyled;
+    }
+
+    public void setInteractorTaxIdStyled(String interactorTaxIdStyled) {
+        this.interactorTaxIdStyled = interactorTaxIdStyled;
     }
 
     public void setInteractorFeatureShortLabels(Set<String> interactorFeatureShortLabels) {

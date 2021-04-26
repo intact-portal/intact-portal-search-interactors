@@ -23,6 +23,7 @@ public class SearchInteractorFields {
     public static final String INTERACTOR_ALT_IDS = "interactor_alt_ids";
 
     public static final String INTERACTOR_TAX_ID = "interactor_tax_id";
+    public static final String INTERACTOR_TAX_ID_STYLED = "interactor_tax_id_styled";
 
     public static final String INTERACTOR_XREFS = "interactor_xrefs";
 
@@ -30,6 +31,7 @@ public class SearchInteractorFields {
     public static final String INTERACTOR_TYPE_STR = "interactor_type_str";
 
     public static final String INTERACTOR_TYPE_MI_IDENTIFIER = "interactor_type_mi_identifier";
+    public static final String INTERACTOR_TYPE_MI_IDENTIFIER_STYLED = "interactor_type_mi_identifier_styled";
 
     public static final String INTERACTOR_SPECIES_NAME = "interactor_species_name";
     public static final String INTERACTOR_SPECIES_NAME_STR = "interactor_species_name_str";
