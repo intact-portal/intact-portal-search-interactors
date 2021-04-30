@@ -89,6 +89,7 @@ public class InteractorSearchController {
         return this.interactorSearchService.countTotal();
     }
 
+    @CrossOrigin(origins = "*")
     @PostMapping(value = "/uploadFile",
             produces = {APPLICATION_JSON_VALUE})
     public ResponseEntity<String> uploadBatchFile(
@@ -120,9 +121,6 @@ public class InteractorSearchController {
             httpStatus = HttpStatus.EXPECTATION_FAILED;
         }
 
-//        JSONObject result = new JSONObject();
-//        result.put("data", uploadBatchFileName);
-
         HttpHeaders headers = new HttpHeaders();
         headers.add("Content-Type", APPLICATION_JSON_VALUE);
         headers.add("X-Clacks-Overhead", "headers");
@@ -130,7 +128,6 @@ public class InteractorSearchController {
         return new ResponseEntity<String>(uploadBatchFileName, headers, httpStatus);
     }
 
-    //TODO temporary
     private String extractSearchTerms(String query) {
 
         StringBuilder searchTerms = new StringBuilder();
