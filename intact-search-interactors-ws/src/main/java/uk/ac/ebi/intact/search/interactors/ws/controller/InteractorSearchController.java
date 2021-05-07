@@ -10,12 +10,12 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import uk.ac.ebi.intact.search.interactors.model.SearchInteractor;
 import uk.ac.ebi.intact.search.interactors.service.InteractorSearchService;
-import uk.ac.ebi.intact.search.interactors.ws.controller.model.StyledSearchInteractor;
-import uk.ac.ebi.intact.style.service.StyleService;
 
 import java.io.*;
-import java.util.*;
-import java.util.stream.Collectors;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+import java.util.Map;
 
 import static org.springframework.http.MediaType.APPLICATION_JSON_VALUE;
 
@@ -28,16 +28,14 @@ public class InteractorSearchController {
 
     public static final String UPLOADED_BATCH_FILE_PREFIX = "file_";
     private final InteractorSearchService interactorSearchService;
-    private final StyleService styleService;
 
     //TODO temporary
     @Value("${server.upload.batch.file.path}")
     private String uploadBatchFilePath;
 
     @Autowired
-    public InteractorSearchController(InteractorSearchService interactorSearchService, StyleService styleService) {
+    public InteractorSearchController(InteractorSearchService interactorSearchService) {
         this.interactorSearchService = interactorSearchService;
-        this.styleService = styleService;
     }
 
     @CrossOrigin(origins = "*")
@@ -52,7 +50,7 @@ public class InteractorSearchController {
     @CrossOrigin(origins = "*")
     @PostMapping(value = "/list/resolve",
             produces = {APPLICATION_JSON_VALUE})
-    public Map<String, Page<StyledSearchInteractor>> resolveInteractorList(
+    public Map<String, Page<SearchInteractor>> resolveInteractorList(
             @RequestParam(value = "query") String query,
             @RequestParam(value = "fuzzySearch", defaultValue = "true", required = false) boolean fuzzySearch,
             @RequestParam(value = "page", defaultValue = "0", required = false) int page,
@@ -72,14 +70,7 @@ public class InteractorSearchController {
             }
         }
 
-        return this.interactorSearchService.resolveInteractorList(words, fuzzySearch, page, pageSize)
-                .entrySet().stream()
-                .collect(Collectors.toMap(
-                        Map.Entry::getKey,
-                        entry -> entry.getValue().map(searchInteractor -> new StyledSearchInteractor(searchInteractor,
-                                styleService.getInteractorColor(searchInteractor.getInteractorTaxId().toString()),
-                                styleService.getInteractorShape(searchInteractor.getInteractorTypeMIIdentifier())))
-                ));
+        return this.interactorSearchService.resolveInteractorList(words, fuzzySearch, page, pageSize);
     }
 
     @CrossOrigin(origins = "*")

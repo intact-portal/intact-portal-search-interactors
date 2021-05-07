@@ -8,9 +8,6 @@ import org.apache.http.client.methods.HttpPost;
 import org.apache.http.impl.client.CloseableHttpClient;
 import org.apache.http.impl.client.HttpClients;
 import org.apache.http.message.BasicNameValuePair;
-import org.json.simple.JSONObject;
-import org.json.simple.parser.JSONParser;
-import org.junit.ClassRule;
 import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -22,7 +19,6 @@ import org.springframework.boot.web.server.LocalServerPort;
 import org.springframework.http.*;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.util.LinkedMultiValueMap;
-import sun.net.www.http.HttpClient;
 
 import java.io.BufferedReader;
 import java.io.InputStream;
@@ -111,12 +107,12 @@ public class InteractorSearchControllerTest {
             CloseableHttpClient httpclient = HttpClients.createDefault();
             HttpPost httppost = new HttpPost("http://localhost:" + port + wsContextPath + "/findInteractionWithFacet");
 
-// Request parameters and other properties.
+            // Request parameters and other properties.
             List<NameValuePair> params = new ArrayList<NameValuePair>(2);
             params.add(new BasicNameValuePair("query", "EBI-724102"));
             httppost.setEntity(new UrlEncodedFormEntity(params, "UTF-8"));
 
-//Execute and get the response.
+            // Execute and get the response.
             HttpResponse response = httpclient.execute(httppost);
             org.apache.http.HttpEntity entity = response.getEntity();
 
@@ -128,8 +124,6 @@ public class InteractorSearchControllerTest {
                     String line = null;
                     while ((line = is.readLine()) != null) {
                         System.out.println(line);
-
-
                     }
                 }
             }

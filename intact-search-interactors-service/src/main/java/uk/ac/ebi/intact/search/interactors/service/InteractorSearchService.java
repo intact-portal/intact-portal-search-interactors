@@ -33,7 +33,7 @@ public class InteractorSearchService {
 
         List<Map.Entry<String, Page<SearchInteractor>>> list = new LinkedList<>(unsortMap.entrySet());
 
-        // Sorting the list based on values
+        // Sorting the list based on total elements
         list.sort((o1, o2) -> {
             if (order) {
                 return Long.compare(o1.getValue().getTotalElements(), o2.getValue().getTotalElements());

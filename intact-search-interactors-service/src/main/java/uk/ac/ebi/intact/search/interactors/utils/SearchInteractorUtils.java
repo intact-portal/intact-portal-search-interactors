@@ -24,8 +24,7 @@ public class SearchInteractorUtils {
 
     public static String convertListIntoSolrFilterValue(Collection<Integer> list) {
         if (list != null) {
-            String spaceSeparatedString = list.stream().map(String::valueOf).collect(Collectors.joining(" OR "));
-            return spaceSeparatedString;
+            return list.stream().map(String::valueOf).collect(Collectors.joining(" OR "));
         } else {
             return "*:*";
         }

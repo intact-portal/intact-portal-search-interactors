@@ -82,6 +82,13 @@ public class SearchInteractor {
     @Field(INTERACTOR_FEATURE_TYPES)
     private Set<String> interactorFeatureTypes;
 
+    /** Maybe we can stored directly in solr the color and shape without connecting to taxId or interactor type **/
+    @Transient
+    private String interactorColor;
+
+    @Transient
+    private String interactorShape;
+
     /**
      * This field is not part of the solr doc.
      * it is being added after a second call to interactions search service
@@ -315,6 +322,27 @@ public class SearchInteractor {
 
     public void setInteractorFeatureShortLabels(Set<String> interactorFeatureShortLabels) {
         this.interactorFeatureShortLabels = interactorFeatureShortLabels;
+    }
+
+    public String getInteractorColor() {
+        if(this.interactorTaxIdStyled != null) {
+            String[] styledValue = this.interactorTaxIdStyled.split("__");
+            if (styledValue.length == 3) {
+                interactorColor = styledValue[2];
+            }
+        }
+        return interactorColor;
+    }
+
+
+    public String getInteractorShape() {
+        if(this.interactorTypeMIIdentifierStyled != null) {
+            String[] styledValue = this.interactorTypeMIIdentifierStyled.split("__");
+            if (styledValue.length == 3) {
+                interactorShape = styledValue[2];
+            }
+        }
+        return interactorShape;
     }
 
     @Override
