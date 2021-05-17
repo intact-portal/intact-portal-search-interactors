@@ -9,7 +9,6 @@ import org.springframework.stereotype.Service;
 import uk.ac.ebi.intact.search.interactors.model.SearchInteractor;
 import uk.ac.ebi.intact.search.interactors.model.SearchInteractorFields;
 import uk.ac.ebi.intact.search.interactors.repository.InteractorRepository;
-
 import java.util.*;
 
 
@@ -24,6 +23,7 @@ public class InteractorSearchService {
 
     private final InteractorRepository interactorRepository;
 
+
     @Autowired
     public InteractorSearchService(@Qualifier("interactorRepository") InteractorRepository interactorRepository) {
         this.interactorRepository = interactorRepository;
@@ -33,7 +33,7 @@ public class InteractorSearchService {
 
         List<Map.Entry<String, Page<SearchInteractor>>> list = new LinkedList<>(unsortMap.entrySet());
 
-        // Sorting the list based on values
+        // Sorting the list based on total elements
         list.sort((o1, o2) -> {
             if (order) {
                 return Long.compare(o1.getValue().getTotalElements(), o2.getValue().getTotalElements());
@@ -52,7 +52,7 @@ public class InteractorSearchService {
     }
 
     public Map<String, Page<SearchInteractor>> resolveInteractorList(List<String> terms, boolean fuzzySearch, int page, int pageSize) {
-
+        // TODO add the comparator used in sortByTotalElements in the TreeMap so we insert the elements sorted directly.
         Map<String, Page<SearchInteractor>> results = new TreeMap<>();
 
         // If we have duplicated query terms we keep the result for the last one
@@ -66,7 +66,6 @@ public class InteractorSearchService {
     }
 
     public Page<SearchInteractor> resolveInteractor(String query, boolean fuzzySearch, int page, int pageSize) {
-        //TODO Paginate the results (for know it should cover disambiguation with 50 elements per page)
         return interactorRepository.resolveInteractor(query, fuzzySearch, Sort.by(Sort.Direction.DESC, SearchInteractorFields.INTERACTION_COUNT), PageRequest.of(page, pageSize));
     }
 

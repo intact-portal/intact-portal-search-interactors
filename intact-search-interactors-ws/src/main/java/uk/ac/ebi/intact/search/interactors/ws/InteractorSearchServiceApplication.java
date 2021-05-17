@@ -14,7 +14,7 @@ import org.springframework.data.solr.repository.config.EnableSolrRepositories;
 
 @EnableSolrRepositories(basePackages = "uk.ac.ebi.intact.search",
 		schemaCreationSupport = true)
-@SpringBootApplication(scanBasePackages = "uk.ac.ebi.intact.search")
+@SpringBootApplication(scanBasePackages = {"uk.ac.ebi.intact.search"})
 public class InteractorSearchServiceApplication extends SpringBootServletInitializer {
 
 	@Value("${spring.data.solr.host}")

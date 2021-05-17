@@ -27,10 +27,11 @@ import static org.springframework.http.MediaType.APPLICATION_JSON_VALUE;
 public class InteractorSearchController {
 
     public static final String UPLOADED_BATCH_FILE_PREFIX = "file_";
+    private final InteractorSearchService interactorSearchService;
+
     //TODO temporary
     @Value("${server.upload.batch.file.path}")
     private String uploadBatchFilePath;
-    private InteractorSearchService interactorSearchService;
 
     @Autowired
     public InteractorSearchController(InteractorSearchService interactorSearchService) {
@@ -62,8 +63,8 @@ public class InteractorSearchController {
         if (!searchTerms.isEmpty()) {
             if (searchTerms.startsWith("\"") && searchTerms.endsWith("\"")) {
                 words.add(searchTerms.substring(1, searchTerms.length() - 1));
-            } else if (searchTerms.indexOf(",") != -1) {
-                words = Arrays.asList(searchTerms.split("[\\,]"));
+            } else if (searchTerms.contains(",")) {
+                words = Arrays.asList(searchTerms.split("[,]"));
             } else {
                 words = Arrays.asList(searchTerms.split("[\\s,\\n]"));
             }
@@ -79,6 +80,7 @@ public class InteractorSearchController {
         return this.interactorSearchService.countTotal();
     }
 
+    @CrossOrigin(origins = "*")
     @PostMapping(value = "/uploadFile",
             produces = {APPLICATION_JSON_VALUE})
     public ResponseEntity<String> uploadBatchFile(
@@ -110,9 +112,6 @@ public class InteractorSearchController {
             httpStatus = HttpStatus.EXPECTATION_FAILED;
         }
 
-//        JSONObject result = new JSONObject();
-//        result.put("data", uploadBatchFileName);
-
         HttpHeaders headers = new HttpHeaders();
         headers.add("Content-Type", APPLICATION_JSON_VALUE);
         headers.add("X-Clacks-Overhead", "headers");
@@ -120,7 +119,6 @@ public class InteractorSearchController {
         return new ResponseEntity<String>(uploadBatchFileName, headers, httpStatus);
     }
 
-    //TODO temporary
     private String extractSearchTerms(String query) {
 
         StringBuilder searchTerms = new StringBuilder();
