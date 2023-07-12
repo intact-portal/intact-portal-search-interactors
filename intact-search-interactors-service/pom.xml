@@ -40,6 +40,12 @@
             <scope>test</scope>
         </dependency>
 
+        <dependency>
+            <groupId>uk.ac.ebi.intact.style</groupId>
+            <artifactId>intact-style-service</artifactId>
+            <version>1.0.2-SNAPSHOT</version>
+        </dependency>
+
         <!-- The version of this dependence needs to change to avoid this issue with solr embedded mode-->
         <!-- https://github.com/spring-projects/spring-boot/issues/15110-->
         <dependency>
