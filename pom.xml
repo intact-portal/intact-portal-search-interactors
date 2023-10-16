@@ -22,7 +22,17 @@
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
         <java.version>11</java.version>
+        <style.full.index>true</style.full.index>
     </properties>
+
+    <profiles>
+        <profile>
+            <id>debug</id>
+            <properties>
+                <style.full.index>false</style.full.index>
+            </properties>
+        </profile>
+    </profiles>
 
     <modules>
         <module>intact-search-interactors-service</module>
