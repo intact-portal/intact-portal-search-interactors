@@ -43,7 +43,7 @@
         <dependency>
             <groupId>uk.ac.ebi.intact.style</groupId>
             <artifactId>intact-style-service</artifactId>
-            <version>1.0.2-SNAPSHOT</version>
+            <version>1.0.2</version>
         </dependency>
 
         <!-- The version of this dependence needs to change to avoid this issue with solr embedded mode-->
