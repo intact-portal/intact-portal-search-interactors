@@ -23,6 +23,7 @@
         <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
         <java.version>11</java.version>
         <style.full.index>true</style.full.index>
+        <finalName>${project.artifactId}-${project.version}</finalName>
     </properties>
 
     <profiles>
@@ -47,6 +48,7 @@
     </scm>
 
     <build>
+        <finalName>${finalName}</finalName>
         <plugins>
             <plugin>
                 <groupId>external.atlassian.jgitflow</groupId>
